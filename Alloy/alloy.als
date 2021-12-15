@@ -104,6 +104,7 @@ sig Invisible extends Visibility {}
 -----------------------------------------------------------------------------------------------------------------
 //Facts
 
+
 fact { //Each policyMakerId is unique
 	no disj p1, p2: PolicyMaker | p1.policyMakerId = p2.policyMakerId
 }
@@ -135,7 +136,7 @@ fact { //There can not be two Discussions with the same discussionId
 fact { //There can not be two Topics with the same topicId
 	no disj t1, t2: Topic | t1.topicUid = t2.topicUid
 }
-
+/*
 fact { //If a Post has a postId greater than another Post, then its timestamp is greater or equal respect to the other Post
 	all p1, p2: Post | (p1.postUid > p2.postUid and not p1.timestamp < p2.timestamp)
 }
@@ -146,7 +147,7 @@ fact { //If a Discussion has a discussionId greater than another Discussion, the
 
 fact { //If a Topic has a topicId greater than another Topic, then its timestamp is greater or equal respect to the other Topic
 	all t1, t2: Topic | (t1.topicUid > t2.topicUid and not t1.timestamp < t2.timestamp)
-}
+}*/
 
 fact { //Two Users can not be creators of the same Post
 	all p: Post | (no disj u1, u2: User | (p.creatorId in u1.userUid and p.creatorId in u2.userUid))
@@ -155,7 +156,6 @@ fact { //Two Users can not be creators of the same Post
 fact { //Two Policy makers can not be creators of the same Discussion
 	all d: Discussion | (no disj p1, p2: PolicyMaker | (d.creatorId in p1.userUid and d.creatorId in p2.userUid))
 }
-
 fact { //A Post always belong to one Discussion
 	all p: Post | one d: Discussion | p.discussionId = d.discussionUid
 }
@@ -213,7 +213,7 @@ fact { //A Discussion can contain more than one Post
 }
 
 fact { //An User could have created more than one Post
-	all u: User | some p: Post | u.userUid = p.creatorId
+	all u: User | some p: Post | u.userUid = p.creatorId // QUESTO
 }
 
 fact { //A Policy maker could have created more than one Discussion
@@ -231,6 +231,8 @@ fact { //A Post is visible if it has been accepted
 -----------------------------------------------------------------------------------------------------------------
 //Assertions
 
+
+/*
 // G_i: Allow a User to publish a Post
 assert publishAPost {
 	all p: Post | one u: User, d: Discussion | p.status = PENDING implies
@@ -238,6 +240,7 @@ assert publishAPost {
 (d.discussionUid = p.discussionId and u.userUid = p.creatorId and (u.policyMakerId != none))
 }
 check publishAPost for 5
+
 
 // G_i: Allow a Policy maker to accept a Post
 assert confirmAPost {
@@ -250,16 +253,14 @@ assert createADiscussion {
 	
 }
 check createADiscussion for 5
-
+*/
 -----------------------------------------------------------------------------------------------------------------
 //Predicates
 
-pred world1 {
-	# User = 4
-	# PolicyMaker = 1
-	# Administrator = 1
-	# Email = 6
-	# Password = 1
+pred world1 {	
+//	# Administrator > 0
+	//# PolicyMaker = 10
+	# User > 0	
 }
 run world1
 
