@@ -25,15 +25,17 @@ sig Uid in Int {}
 }
 
 sig PolicyMaker extends User {
-	policyMakerId: one Text,
+	policyMakerId: one PolicyMakerId,
 }
+
+sig PolicyMakerId {}
 
 sig Post {
 	text: one Text,
 	creatorId: one Uid,
 	timestamp: one DateTime,
 	discussionId: one Uid,
-	attachment: lone Object,
+	attachment: lone Attachment,
 	status: one Status,
 	postUid: one Uid,
 	visibility: one Visibility,
@@ -51,7 +53,7 @@ sig ACCEPTED extends Status {}
 
 sig REJECTED extends Status {}
 
-sig Object {}
+sig Attachment {}
 
 sig Discussion {
 	title: one Title,
@@ -84,11 +86,13 @@ sig Password {}
 sig DataSource {
 	name: one Name,
 	source: one Source,
-	description: lone Text,
+	description: lone Description,
 	dataType: one DataType,
 }
 
 sig Source {}
+
+sig Description {}
 
 sig DataType {
 	name: one Name,
@@ -136,8 +140,8 @@ fact { //There can not be two Discussions with the same discussionId
 fact { //There can not be two Topics with the same topicId
 	no disj t1, t2: Topic | t1.topicUid = t2.topicUid
 }
-/*
-fact { //If a Post has a postId greater than another Post, then its timestamp is greater or equal respect to the other Post
+
+/*fact { //If a Post has a postId greater than another Post, then its timestamp is greater or equal respect to the other Post
 	all p1, p2: Post | (p1.postUid > p2.postUid and not p1.timestamp < p2.timestamp)
 }
 
@@ -212,9 +216,9 @@ fact { //A Discussion can contain more than one Post
 	all d: Discussion | some p: Post | d.discussionUid = p.discussionId
 }
 
-fact { //An User could have created more than one Post
+/*fact { //An User could have created more than one Post
 	all u: User | some p: Post | u.userUid = p.creatorId // QUESTO
-}
+}*/
 
 fact { //A Policy maker could have created more than one Discussion
 	all p: PolicyMaker | some d: Discussion | p.userUid = d.creatorId
@@ -227,6 +231,40 @@ fact { //A Post is not visible if it has been rejected or is still in the pendin
 fact { //A Post is visible if it has been accepted
 	all p: Post | p.status = ACCEPTED implies p.visibility = Visible
 }
+
+fact { //A text exist only if it's present a Discussion or a Post
+	all t: Text | one d: Discussion, p: Post | d.text = t or p.text = t
+}
+
+fact { //A title exist only if it's present a Discussion or a Topic
+	all t: Title | one d: Discussion, to: Topic | d.title = t or to.title = t
+}
+
+fact { //An attachment exist only if it's present a Post
+	all a: Attachment | one p: Post | p.attachment = a
+}
+
+fact { //A description exist only if it's present a DataSource
+	all d: Description | one ds: DataSource | ds.description = d
+}
+
+fact { //A name exist only if it's present an User
+	all n: Name | one u: User | u.name = n
+}
+
+fact { //A surname exist only if it's present an User
+	all s: Surname | one u: User | u.surname = s
+}
+
+fact { //A source exist only if it's present a DataSource
+	all s: Source | one ds: DataSource | ds.source = s
+}
+
+fact { //An email exist only if it's present an User or an Administrator
+	all e: Email | one u: User, a: Administrator | u.email = e or a.email = e
+}
+
+//A policyMakerId could exist even if it's not present a Policy
 
 -----------------------------------------------------------------------------------------------------------------
 //Assertions
@@ -260,7 +298,13 @@ check createADiscussion for 5
 pred world1 {	
 //	# Administrator > 0
 	//# PolicyMaker = 10
-	# User > 0	
+	//# User > 0
+	//# Administrator = 1
+	//# PolicyMaker = 10
+//	# User > 0
+//	# Text = 3
+//	# Topic = 3
+	//# Discussion = 4
 }
 run world1
 
