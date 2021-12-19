@@ -108,7 +108,6 @@ sig Invisible extends Visibility {}
 -----------------------------------------------------------------------------------------------------------------
 //Facts
 
-
 fact { //Each policyMakerId is unique
 	no disj p1, p2: PolicyMaker | p1.policyMakerId = p2.policyMakerId
 }
@@ -116,11 +115,11 @@ fact { //Each policyMakerId is unique
 fact { //Each User has an unique email
 	no disj u1, u2 : User | u1.email = u2.email
 }
-
+/*
 fact { //Each Policy maker has an unique email
 	no disj p1, p2 : PolicyMaker | p1.email = p2.email
 }
-
+*/
 fact { //Each Administrator has an unique email
 	no disj a1, a2 : Administrator | a1.email = a2.email
 }
@@ -141,17 +140,7 @@ fact { //There can not be two Topics with the same topicId
 	no disj t1, t2: Topic | t1.topicUid = t2.topicUid
 }
 
-/*fact { //If a Post has a postId greater than another Post, then its timestamp is greater or equal respect to the other Post
-	all p1, p2: Post | (p1.postUid > p2.postUid and not p1.timestamp < p2.timestamp)
-}
 
-fact { //If a Discussion has a discussionId greater than another Discussion, then its timestamp is greater or equal respect to the other Discussion
-	all d1, d2: Discussion | (d1.discussionUid > d2.discussionUid and not d1.timestamp < d2.timestamp)
-}
-
-fact { //If a Topic has a topicId greater than another Topic, then its timestamp is greater or equal respect to the other Topic
-	all t1, t2: Topic | (t1.topicUid > t2.topicUid and not t1.timestamp < t2.timestamp)
-}*/
 
 fact { //Two Users can not be creators of the same Post
 	all p: Post | (no disj u1, u2: User | (p.creatorId in u1.userUid and p.creatorId in u2.userUid))
@@ -179,13 +168,17 @@ fact { //A Topic has always a title
 fact { //A Post can not exists without a creator
 	all p: Post | one u: User | p.creatorId = u.userUid
 }
-
+/*
 fact { //A Discussion can not exists without a creator
 	all d: Discussion | one p: PolicyMaker | d.creatorId = p.userUid
+}*/
+
+fact {
+	
 }
 
 fact { //A Discussion can be created only by a Policy maker
-	all d: Discussion | all p: PolicyMaker | d.creatorId = p.userUid and not p.policyMakerId = none
+	all d: Discussion | one p: PolicyMaker | d.creatorId = p.userUid and not p.policyMakerId = none
 }
 
 fact { //Each User has an unique userUid
@@ -216,9 +209,6 @@ fact { //A Discussion can contain more than one Post
 	all d: Discussion | some p: Post | d.discussionUid = p.discussionId
 }
 
-/*fact { //An User could have created more than one Post
-	all u: User | some p: Post | u.userUid = p.creatorId // QUESTO
-}*/
 
 fact { //A Policy maker could have created more than one Discussion
 	all p: PolicyMaker | some d: Discussion | p.userUid = d.creatorId
@@ -231,15 +221,15 @@ fact { //A Post is not visible if it has been rejected or is still in the pendin
 fact { //A Post is visible if it has been accepted
 	all p: Post | p.status = ACCEPTED implies p.visibility = Visible
 }
-
+/*
 fact { //A text exist only if it's present a Discussion or a Post
 	all t: Text | one d: Discussion, p: Post | d.text = t or p.text = t
 }
-
+*/ /*
 fact { //A title exist only if it's present a Discussion or a Topic
 	all t: Title | one d: Discussion, to: Topic | d.title = t or to.title = t
 }
-
+*/
 fact { //An attachment exist only if it's present a Post
 	all a: Attachment | one p: Post | p.attachment = a
 }
@@ -260,10 +250,12 @@ fact { //A source exist only if it's present a DataSource
 	all s: Source | one ds: DataSource | ds.source = s
 }
 
+
+/*
 fact { //An email exist only if it's present an User or an Administrator
 	all e: Email | one u: User, a: Administrator | u.email = e or a.email = e
 }
-
+*/
 //A policyMakerId could exist even if it's not present a Policy
 
 -----------------------------------------------------------------------------------------------------------------
@@ -301,12 +293,13 @@ pred world1 {
 	//# User > 0
 	//# Administrator = 1
 	//# PolicyMaker = 10
-//	# User > 0
-//	# Text = 3
-//	# Topic = 3
+	# User > 4
+	# Topic > 0
+	# PolicyMaker > 1
+	# Discussion > 5
 	//# Discussion = 4
 }
-run world1
+run world1 for 10
 
 
 
