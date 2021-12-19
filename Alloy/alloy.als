@@ -50,13 +50,15 @@ sig Attachment {}
 
 sig Discussion {
 	title: one Title,
-	text: one Text,
+	subTitle: one SubTitle,
 	timestamp: one DateTime,
 	creator: one PolicyMaker,
 	posts: some Post,
 }
 
 sig Title {}
+
+sig SubTitle {}
 
 sig Topic {
 	title: one Title,
@@ -75,18 +77,20 @@ sig Password {}
 }
 
 sig DataSource {
-	name: one Name,
+	name: one DataName,
 	source: one Source,
 	description: lone Description,
 	dataType: one DataType,
 }
+
+sig DataName {}
 
 sig Source {}
 
 sig Description {}
 
 sig DataType {
-	name: one Name,
+	name: one DataName,
 }
 
 abstract sig Visibility {}
@@ -110,7 +114,9 @@ fact { //Each Administrator has an unique email
 	no disj a1, a2 : Administrator | a1.email = a2.email
 }
 
-
+fact { //Administrators and Users  have different emails
+	no disj a: Administrator, u: User | a.email = u.email
+}
 
 fact { //If a post exist, it must be PENDING, ACCEPTED or REJECTED
 	all p: Post | p.status = PENDING or p.status = ACCEPTED or p.status = REJECTED
@@ -156,11 +162,6 @@ fact { //A Data source can not exist without a source
 	all d: DataSource | one s: Source | d.source = s
 }
 
-/*
-fact { //A Policy maker could have created more than one Discussion
-	all p: PolicyMaker | some d: Discussion | p.userUid = d.creatorId
-}*/
-
 fact { //A Post is not visible if it has been rejected or is still in the pending list
 	all p: Post | (p.status = PENDING or p.status = REJECTED) implies p.visibility = Invisible
 }
@@ -168,15 +169,7 @@ fact { //A Post is not visible if it has been rejected or is still in the pendin
 fact { //A Post is visible if it has been accepted
 	all p: Post | p.status = ACCEPTED implies p.visibility = Visible
 }
-/*
-fact { //A text exist only if it's present a Discussion or a Post
-	all t: Text | one d: Discussion, p: Post | d.text = t or p.text = t
-}
 
-fact { //A title exist only if it's present a Discussion or a Topic
-	all t: Title | one d: Discussion, to: Topic | d.title = t or to.title = t
-}
-*/
 fact { //An attachment exist only if it's present a Post
 	all a: Attachment | one p: Post | p.attachment = a
 }
@@ -197,13 +190,33 @@ fact { //A source exist only if it's present a DataSource
 	all s: Source | one ds: DataSource | ds.source = s
 }
 
+fact { //DataSource and DataType have different names
+	no disj ds: DataSource, dt: DataType | ds.name = dt.name
+}
+
+fact { //Two DataType have different names
+	no disj dt1, dt2: DataType | dt1.name = dt2.name
+}
+
+fact { //A text exist only if it's present a Post
+	all t: Text | one p: Post | p.text = t
+}
+
+fact { //A subTitle exist only if it's present a Discussion
+	all s: SubTitle | one d: Discussion | d.subTitle = s
+}
 
 /*
-fact { //An email exist only if it's present an User or an Administrator
-	all e: Email | one u: User | not (u.email = e) implies (one a:Administrator | a.email = e)
-}*/
+fact { //A text exist only if it's present a Discussion or a Post
+	all t: Text | one d: Discussion, p: Post | d.text = t or p.text = t
+}
 
-//A policyMakerId could exist even if it's not present a Policy
+fact { //A title exist only if it's present a Discussion or a Topic
+	all t: Title | one d: Discussion, to: Topic | d.title = t or to.title = t
+}
+*/
+
+//A policyMakerId could exist even if it's not present a Policy maker
 
 -----------------------------------------------------------------------------------------------------------------
 //Assertions
@@ -235,17 +248,13 @@ check createADiscussion for 5
 //Predicates
 
 pred forum {	
-	# Administrator = 1
-	# DataType = 0
 	# User = 4
 	# Topic = 2
 	# PolicyMaker = 2
 	# Discussion = 3
 	# Post = 7
-	//# Email = 6
 }
 run forum for 10
-
 
 
 
