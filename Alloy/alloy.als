@@ -6,7 +6,6 @@ sig User {
 	email: one Email,
 	dateOfBirth: one Date,
 	areaOfResidence: one AreaOfResidence,
-	userUid: one Uid,
 }
 
 sig Name {}
@@ -19,10 +18,6 @@ sig Date {}
 
 sig AreaOfResidence {}
 
-sig Uid in Int {}
-{
-	Uid > 0
-}
 
 sig PolicyMaker extends User {
 	policyMakerId: one PolicyMakerId,
@@ -32,12 +27,10 @@ sig PolicyMakerId {}
 
 sig Post {
 	text: one Text,
-	creatorId: one Uid,
+	creator: one User,
 	timestamp: one DateTime,
-	discussionId: one Uid,
 	attachment: lone Attachment,
 	status: one Status,
-	postUid: one Uid,
 	visibility: one Visibility,
 }
 
@@ -58,10 +51,9 @@ sig Attachment {}
 sig Discussion {
 	title: one Title,
 	text: one Text,
-	topicId: one Uid,
 	timestamp: one DateTime,
-	creatorId: one Uid,
-	discussionUid: one Uid,
+	creator: one PolicyMaker,
+	posts: some Post,
 }
 
 sig Title {}
@@ -69,13 +61,12 @@ sig Title {}
 sig Topic {
 	title: one Title,
 	timestamp: one DateTime,
-	topicUid: one Uid,
+	discussions: some Discussion,
 }
 
 sig Administrator {
 	email: one Email,
 	password: one Password,
-	administratorUid: one Uid,
 }
 
 sig Password {}
@@ -96,7 +87,6 @@ sig Description {}
 
 sig DataType {
 	name: one Name,
-	dataTypeUid: one Uid,
 }
 
 abstract sig Visibility {}
@@ -115,46 +105,31 @@ fact { //Each policyMakerId is unique
 fact { //Each User has an unique email
 	no disj u1, u2 : User | u1.email = u2.email
 }
-/*
-fact { //Each Policy maker has an unique email
-	no disj p1, p2 : PolicyMaker | p1.email = p2.email
-}
-*/
+
 fact { //Each Administrator has an unique email
 	no disj a1, a2 : Administrator | a1.email = a2.email
 }
+
+
 
 fact { //If a post exist, it must be PENDING, ACCEPTED or REJECTED
 	all p: Post | p.status = PENDING or p.status = ACCEPTED or p.status = REJECTED
 }
 
-fact { //There can not be two Posts with the same postId
-	no disj p1, p2: Post | p1.postUid = p2.postUid
-}
-
-fact { //There can not be two Discussions with the same discussionId
-	no disj d1, d2: Discussion | d1.discussionUid = d2.discussionUid
-}
-
-fact { //There can not be two Topics with the same topicId
-	no disj t1, t2: Topic | t1.topicUid = t2.topicUid
-}
-
-
-
 fact { //Two Users can not be creators of the same Post
-	all p: Post | (no disj u1, u2: User | (p.creatorId in u1.userUid and p.creatorId in u2.userUid))
+	all p: Post | (no disj u1, u2: User | (u1 = p.creator and u2 = p.creator and u1 != u2))
 }
 
 fact { //Two Policy makers can not be creators of the same Discussion
-	all d: Discussion | (no disj p1, p2: PolicyMaker | (d.creatorId in p1.userUid and d.creatorId in p2.userUid))
+	all d: Discussion | (no disj p1, p2: PolicyMaker | (p1 = d.creator and p2 = d.creator and p1 != p2))
 }
+
 fact { //A Post always belong to one Discussion
-	all p: Post | one d: Discussion | p.discussionId = d.discussionUid
+	all p: Post | one d: Discussion | p in d.posts
 }
 
 fact { //A Discussion always belong to one Topic
-	all d: Discussion | one t: Topic | d.topicId = t.topicUid
+	all d: Discussion | one t: Topic | d in t.discussions
 }
 
 fact { //A Discussion has always a title
@@ -166,31 +141,11 @@ fact { //A Topic has always a title
 }
 
 fact { //A Post can not exists without a creator
-	all p: Post | one u: User | p.creatorId = u.userUid
-}
-/*
-fact { //A Discussion can not exists without a creator
-	all d: Discussion | one p: PolicyMaker | d.creatorId = p.userUid
-}*/
-
-fact {
-	
+	all p: Post | one u: User | u = p.creator
 }
 
 fact { //A Discussion can be created only by a Policy maker
-	all d: Discussion | one p: PolicyMaker | d.creatorId = p.userUid and not p.policyMakerId = none
-}
-
-fact { //Each User has an unique userUid
-	no disj u1, u2 : User | u1.userUid = u2.userUid
-}
-
-fact { //Each Policy maker has an unique userUid
-	no disj p1, p2 : PolicyMaker | p1.userUid = p2.userUid
-}
-
-fact { //Each Administrator has an unique administratorUid
-	no disj a1, a2 : Administrator | a1.administratorUid = a2.administratorUid
+	all d: Discussion | one p: PolicyMaker | p = d.creator and p.policyMakerId != none
 }
 
 fact { //There can not exist a Post without Text and without Attachment
@@ -201,18 +156,10 @@ fact { //A Data source can not exist without a source
 	all d: DataSource | one s: Source | d.source = s
 }
 
-fact { //A Topic can contain more than one Discussion
-	all t: Topic | some d: Discussion | d.topicId = t.topicUid
-}
-
-fact { //A Discussion can contain more than one Post
-	all d: Discussion | some p: Post | d.discussionUid = p.discussionId
-}
-
-
+/*
 fact { //A Policy maker could have created more than one Discussion
 	all p: PolicyMaker | some d: Discussion | p.userUid = d.creatorId
-}
+}*/
 
 fact { //A Post is not visible if it has been rejected or is still in the pending list
 	all p: Post | (p.status = PENDING or p.status = REJECTED) implies p.visibility = Invisible
@@ -225,7 +172,7 @@ fact { //A Post is visible if it has been accepted
 fact { //A text exist only if it's present a Discussion or a Post
 	all t: Text | one d: Discussion, p: Post | d.text = t or p.text = t
 }
-*/ /*
+
 fact { //A title exist only if it's present a Discussion or a Topic
 	all t: Title | one d: Discussion, to: Topic | d.title = t or to.title = t
 }
@@ -253,9 +200,9 @@ fact { //A source exist only if it's present a DataSource
 
 /*
 fact { //An email exist only if it's present an User or an Administrator
-	all e: Email | one u: User, a: Administrator | u.email = e or a.email = e
-}
-*/
+	all e: Email | one u: User | not (u.email = e) implies (one a:Administrator | a.email = e)
+}*/
+
 //A policyMakerId could exist even if it's not present a Policy
 
 -----------------------------------------------------------------------------------------------------------------
@@ -287,19 +234,17 @@ check createADiscussion for 5
 -----------------------------------------------------------------------------------------------------------------
 //Predicates
 
-pred world1 {	
-//	# Administrator > 0
-	//# PolicyMaker = 10
-	//# User > 0
-	//# Administrator = 1
-	//# PolicyMaker = 10
-	# User > 4
-	# Topic > 0
-	# PolicyMaker > 1
-	# Discussion > 5
-	//# Discussion = 4
+pred forum {	
+	# Administrator = 1
+	# DataType = 0
+	# User = 4
+	# Topic = 2
+	# PolicyMaker = 2
+	# Discussion = 3
+	# Post = 7
+	//# Email = 6
 }
-run world1 for 10
+run forum for 10
 
 
 
