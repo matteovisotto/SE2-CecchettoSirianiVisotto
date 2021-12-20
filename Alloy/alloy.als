@@ -18,7 +18,6 @@ sig Date {}
 
 sig AreaOfResidence {}
 
-
 sig PolicyMaker extends User {
 	policyMakerId: one PolicyMakerId,
 }
@@ -49,22 +48,24 @@ sig REJECTED extends Status {}
 sig Attachment {}
 
 sig Discussion {
-	title: one Title,
+	title: one DiscussionTitle,
 	subTitle: one SubTitle,
 	timestamp: one DateTime,
 	creator: one PolicyMaker,
 	posts: some Post,
 }
 
-sig Title {}
+sig DiscussionTitle {}
 
 sig SubTitle {}
 
 sig Topic {
-	title: one Title,
+	title: one TopicTitle,
 	timestamp: one DateTime,
 	discussions: some Discussion,
 }
+
+sig TopicTitle {}
 
 sig Administrator {
 	email: one Email,
@@ -139,11 +140,11 @@ fact { //A Discussion always belong to one Topic
 }
 
 fact { //A Discussion has always a title
-	all d: Discussion | one t: Title | d.title = t
+	all d: Discussion | one t: DiscussionTitle | d.title = t
 }
 
 fact { //A Topic has always a title
-	all to: Topic | one ti: Title | to.title = ti
+	all to: Topic | one ti: TopicTitle | to.title = ti
 }
 
 fact { //A Post can not exists without a creator
@@ -206,60 +207,106 @@ fact { //A subTitle exist only if it's present a Discussion
 	all s: SubTitle | one d: Discussion | d.subTitle = s
 }
 
-/*
-fact { //A text exist only if it's present a Discussion or a Post
-	all t: Text | one d: Discussion, p: Post | d.text = t or p.text = t
+fact { //A discussion has at least one ACCEPTED post
+	all d: Discussion | some p: Post | p.status = ACCEPTED and p in d.posts
 }
 
-fact { //A title exist only if it's present a Discussion or a Topic
-	all t: Title | one d: Discussion, to: Topic | d.title = t or to.title = t
+fact { //Each post is unique
+	no disj p1, p2: Post | p1 = p2
 }
-*/
 
-//A policyMakerId could exist even if it's not present a Policy maker
+fact { //Each discussion is unique
+	no disj d1, d2: Discussion | d1 = d2
+}
+
+fact { //Each topic is unique
+	no disj t1, t2: Topic | t1 = t2
+}
+
+fact { //A post of a Policy maker is always accepted
+	no p: Post | one pm: PolicyMaker | pm = p.creator and p.status != ACCEPTED
+}
+
+fact { //Each topic has an unique title
+	no disj t1, t2 : Topic | t1.title = t2.title
+}
+
+fact { //Each discussion has an unique title
+	no disj d1, d2 : Discussion | d1.title = d2.title
+}
 
 -----------------------------------------------------------------------------------------------------------------
 //Assertions
 
+/*
+//G2: Allow the platform Administrator to decide which public data should be used in the Deviance computation
+assert dataSourceIsInserted {
+	all ds: DataSource | one dt: DataType, s: Source | ds.source = s and ds.dataType = dt
+}
+check dataSourceIsInserted for 40
+*/
 
 /*
-// G_i: Allow a User to publish a Post
+// G3: Allow people to interact and build a knowledge network
 assert publishAPost {
-	all p: Post | one u: User, d: Discussion | p.status = PENDING implies
-(d.discussionUid = p.discussionId and u.userUid = p.creatorId and (u.policyMakerId = none)) else p.status = ACCEPTED and
-(d.discussionUid = p.discussionId and u.userUid = p.creatorId and (u.policyMakerId != none))
+	no p: Post | all d: Discussion | some u: User | u = p.creator and p not in d.posts
 }
-check publishAPost for 5
-
-
-// G_i: Allow a Policy maker to accept a Post
-assert confirmAPost {
-	no p: Post | one d: Discussion | p.status = ACCEPTED and p.visibility = Invisible and p.discussionId = d.discussionUid
-}
-check confirmAPost for 5
-
-// G_i: Allow a Policy maker to create a Discussion
-assert createADiscussion {
-	
-}
-check createADiscussion for 5
+check publishAPost for 40
 */
+
+/*
+// G3: Allow people to interact and build a knowledge network
+assert confirmAPost {
+	no p: Post | one d: Discussion | p.status = ACCEPTED and p.visibility = Invisible and p in d.posts
+}
+check confirmAPost for 40
+*/
+
+/*
+// G5: Allow Policy Makers to release publicly their reports based on the Deviance result
+assert createADiscussion {
+	all d: Discussion | some p: Post | one pm: PolicyMaker, t: Topic | p in d.posts and d.creator = pm and d in t.discussions and p.status = ACCEPTED
+}
+check createADiscussion for 20
+*/
+
 -----------------------------------------------------------------------------------------------------------------
 //Predicates
 
-pred forum {	
-	# User = 4
-	# Topic = 2
-	# PolicyMaker = 2
-	# Discussion = 3
-	# Post = 7
+
+pred dataAdministration {	
+	# Administrator > 0
+	# DataSource > 3
+	# Topic = 0
+	# Discussion = 0
+	# Post = 0
+	# User = 0
+}
+run dataAdministration for 10
+
+
+/*
+pred forum {
+	# Topic > 2
+	# Discussion > 3
+	# Post > 3
+	# DataSource = 0
+	# DataType = 0
 }
 run forum for 10
+*/
 
-
-
-
-
+/*
+pred accounts {
+	# Administrator > 2
+	# PolicyMaker > 2
+	# User > 4
+	# DataSource = 0
+	# DataType = 0
+	# Topic = 0
+}
+run accounts for 10
+*/
 
 
 
