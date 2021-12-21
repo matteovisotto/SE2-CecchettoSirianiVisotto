@@ -239,7 +239,7 @@ fact { //Two DataType have different names
 
 -----------------------------------------------------------------------------------------------------------------
 //Assertions
-
+/*
 //G2: Allow the platform Administrator to decide which public data should be used in the Deviance computation
 assert dataSourceIsInserted {
 	all ds: DataSource | one dt: DataType, s: Source | ds.source = s and ds.dataType = dt
@@ -263,11 +263,11 @@ assert createADiscussion {
 	all d: Discussion | some p: Post | one pm: PolicyMaker, t: Topic | p in d.posts and d.creator = pm and d in t.discussions and p.status = ACCEPTED
 }
 check createADiscussion for 20
-
+*/
 -----------------------------------------------------------------------------------------------------------------
 //Predicates
 
-
+/*
 pred dataAdministration {	
 	# Administrator > 0
 	# DataSource > 3
@@ -277,17 +277,18 @@ pred dataAdministration {
 	# User = 0
 }
 run dataAdministration for 10
-
+*/
 
 pred forum {
 	# Topic > 2
 	# Discussion > 3
 	# Post > 3
+	# User > 3
 	# DataSource = 0
 	# DataType = 0
 }
 run forum for 10
-
+/*
 pred accounts {
 	# Administrator > 2
 	# PolicyMaker > 2
@@ -297,9 +298,7 @@ pred accounts {
 	# Topic = 0
 }
 run accounts for 10
-
-
-
+*/
 
 
 
