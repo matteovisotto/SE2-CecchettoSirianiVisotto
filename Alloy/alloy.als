@@ -123,7 +123,7 @@ fact { //Each Administrator has an unique email
 	no disj a1, a2 : Administrator | a1.email = a2.email
 }
 
-fact { //Administrators and Users  have different emails
+fact { //Administrators and Users have different emails
 	no disj a: Administrator, u: User | a.email = u.email
 }
 
