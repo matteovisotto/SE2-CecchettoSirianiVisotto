@@ -1,3 +1,11 @@
+p {
+    font-size: 14px;
+}
+
+.small {
+    font-size: 12px;
+}
+
 .svg-secondary {
     filter: invert(46%) sepia(6%) saturate(21%) hue-rotate(319deg) brightness(92%) contrast(91%);
 }
@@ -87,8 +95,14 @@
 
 .card-text {
     color: var(--bs-secondary);
+    text-align: justify;
 }
 
+.card-profile {
+    width: 60%;
+    height: auto;
+    border-radius: 50%;
+}
 
 
 /* SIDEBAR */
