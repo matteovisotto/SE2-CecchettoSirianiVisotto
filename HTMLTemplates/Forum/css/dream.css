@@ -1,0 +1,51 @@
+.title {
+    color: var(--bs-secondary);
+}
+
+.nav-item .btn {
+    margin-right: 5px;
+}
+
+.profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.logo {
+    height: 40px;
+    width: auto;
+    color: var(--bs-primary);
+}
+
+.side-menu {
+
+}
+
+.side-menu {
+    padding: 10px;
+    list-style: none;
+}
+
+.side-menu li {
+    margin-bottom: 5px;
+    padding: 5px;
+    padding-left: 10px;
+}
+
+.side-menu li.active {
+    background: rgba(13, 110, 253, 0.3);
+    border-left: 4px solid var(--bs-primary);
+}
+
+.side-menu li.active > * {
+    color: var(--bs-primary);
+}
+
+.side-menu li > * {
+    color: var(--bs-secondary);
+}
+
+.side-menu li a {
+    text-decoration: none;
+}
