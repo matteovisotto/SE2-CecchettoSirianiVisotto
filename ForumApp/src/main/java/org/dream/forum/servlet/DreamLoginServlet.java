@@ -19,6 +19,13 @@ public class DreamLoginServlet extends HttpServlet {
         String commonName = (String) req.getAttribute("cn");
         String mail = (String) req.getAttribute("mail");
         String displayName = (String) req.getAttribute("displayName");
+
+        //TODO:- Controllare attributi ricevuti, se utente esiste loggare, altrimenti registrare e loggare
+
+        resp.getWriter().println("<html><body>");
+        resp.getWriter().println("<h1>Completing login...</h1><br/>");
+        resp.getWriter().println("<a href=\""+getServletContext().getContextPath()+"/\">Click if not redirect</a>");
+        resp.getWriter().println("</html></body>");
     }
 
     @Override
