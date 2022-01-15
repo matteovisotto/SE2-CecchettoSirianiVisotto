@@ -31,7 +31,7 @@ public class LoginChecker implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession s = req.getSession();
         if (s.getAttribute("user") != null) {
-            res.sendRedirect(req.getServletContext().getContextPath());
+            res.sendRedirect(req.getContextPath());
             return;
         }
         // pass the request along the filter chain
