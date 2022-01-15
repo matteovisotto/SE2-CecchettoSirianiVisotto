@@ -11,5 +11,4 @@ import java.util.List;
 @ApplicationPath("/api")
 public class ForumApplication extends Application {
 
-
 }

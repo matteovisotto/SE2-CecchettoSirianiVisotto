@@ -53,7 +53,7 @@
                 </div>
                 <div class="col-md-7">
                     <h5 class="title">Topics</h5>
-                    <div class="row">
+                    <div class="row" id="topicContainer">
 
                     </div>
                 </div>
@@ -96,8 +96,9 @@
                 </div>
             </div>
         </div>
-        <!-- Bootstrap core JS-->
-        <script src="../static/js/bootstrap/bootstrap.bundle.min.js" data-th-src="@{/static/js/bootstrap/bootstrap.bundle.min.js}"></script>
 
+        <script src="../static/js/jQuery.js" data-th-src="@{/static/js/jQuery.js}"></script>
+        <script src="../static/js/bootstrap/bootstrap.bundle.min.js" data-th-src="@{/static/js/bootstrap/bootstrap.bundle.min.js}"></script>
+        <script data-th-src="@{/static/js/TopicManager.js}"></script>
     </body>
 </html>

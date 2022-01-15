@@ -6,6 +6,7 @@
     <persistence-unit name="forum-persistence-provider" transaction-type="JTA">
         <jta-data-source>DreamForumDB</jta-data-source>
         <class>org.dream.forum.entities.User</class>
+        <class>org.dream.forum.entities.Topic</class>
         <properties>
             <property name="eclipselink.logging.level" value="FINE" />
         </properties>

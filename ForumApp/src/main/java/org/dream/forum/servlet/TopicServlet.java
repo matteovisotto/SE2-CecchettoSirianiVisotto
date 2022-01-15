@@ -1,9 +1,11 @@
 package org.dream.forum.servlet;
 
+import org.dream.forum.services.TopicService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +16,6 @@ import java.io.PrintWriter;
 
 @WebServlet("/topic")
 public class TopicServlet extends HttpServlet {
-
     private static final long serialVersionUID = 1L;
     private TemplateEngine templateEngine;
 
@@ -31,6 +32,7 @@ public class TopicServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter out = resp.getWriter();
         out.println("This is the DREAM forum topic");
+
         /*String path = "templates/topic";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());

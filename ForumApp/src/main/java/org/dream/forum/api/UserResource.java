@@ -7,6 +7,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 
 @Path("/user")
 public class UserResource {
@@ -16,8 +17,8 @@ public class UserResource {
     @GET
     @Produces("application/json")
     @RolesAllowed({"user", "policy_maker"})
-    public String getUser() {
-        return "Current user info";
+    public Response getUser() {
+        return Response.ok().entity("Current user info").build();
     }
 
     @GET
