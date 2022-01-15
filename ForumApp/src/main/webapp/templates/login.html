@@ -9,7 +9,7 @@
     <title>Dream Forum - Login</title>
 
     <link href="../static/assets/fontawesome/css/all.css" data-th-href="@{/static/assets/fontawesome/css/all.css}" rel="stylesheet" />
-    <script defer src="../static/assets/fontawesome/js/all.js" data-th-href="@{/static/assets/fontawesome/js/all.js}"></script>
+    <script defer src="../static/assets/fontawesome/js/all.js" data-th-src="@{/static/assets/fontawesome/js/all.js}"></script>
     <link href="../static/css/styles.css" data-th-href="@{/static/css/styles.css}" rel="stylesheet" />
     <link href="../static/css/login.css" data-th-href="@{/static/css/login.css}" rel="stylesheet" />
 
@@ -39,7 +39,7 @@
             <input type="email" id="inputEmail" class="form-control" placeholder="Email" required="" autofocus="" />
             <label for="inputPassword" class="sr-only">Password</label>
             <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="" />
-            <input class="btn btn-lg btn-primary col-12" type="submit" value="Login"></input>
+        <input class="btn btn-lg btn-primary col-12" type="submit" value="Login"/>
     </div>
 
 </div>
@@ -47,7 +47,7 @@
 </form>
 
 <!-- Bootstrap core JS-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script><!-- jQuery Custom Scroller CDN -->
+<script src="../static/js/bootstrap/bootstrap.bundle.min.js" data-th-src="@{/static/js/bootstrap/bootstrap.bundle.min.js}"></script>
 
 </body>
 

@@ -1,5 +1,6 @@
 package org.dream.forum.servlet;
 
+import org.dream.forum.entities.User;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -31,12 +32,14 @@ public class HomeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        PrintWriter out = resp.getWriter();
-        out.println("This is the DREAM forum home");
-        /*String path = "templates/home";
+        String path = "templates/home";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
-        templateEngine.process(path, ctx, resp.getWriter());*/
+        if(req.getSession().getAttribute("user")!=null){
+            ctx.setVariable("user", req.getSession().getAttribute("user"));
+            ctx.setVariable("isPolicyMaker", !(((User) req.getSession().getAttribute("user")).getPolicyMakerID()==null));
+        }
+        templateEngine.process(path, ctx, resp.getWriter());
     }
 
     @Override
