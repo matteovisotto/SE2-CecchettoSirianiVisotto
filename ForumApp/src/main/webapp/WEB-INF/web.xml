@@ -5,6 +5,25 @@
          version="4.0">
 
     <welcome-file-list>
-        <welcome-file>login</welcome-file>
+        <welcome-file>home</welcome-file>
     </welcome-file-list>
+
+    <!--Servlet filter -->
+    <filter>
+        <filter-name>LoginChecker</filter-name>
+        <filter-class>org.dream.forum.filtes.LoginChecker</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LoginChecker</filter-name>
+        <url-pattern>/login</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>PolicyMakerChecker</filter-name>
+        <filter-class>org.dream.forum.filtes.PolicyMakerChecker</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>PolicyMakerChecker</filter-name>
+        <url-pattern>/moderator/*</url-pattern>
+    </filter-mapping>
 </web-app>

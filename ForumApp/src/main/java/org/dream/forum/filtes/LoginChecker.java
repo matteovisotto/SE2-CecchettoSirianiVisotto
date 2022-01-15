@@ -1,18 +1,16 @@
 package org.dream.forum.filtes;
 
-import org.dream.forum.entities.User;
-
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class PolicyMakerChecker implements Filter {
+public class LoginChecker implements Filter {
     /**
      * Default constructor.
      */
-    public PolicyMakerChecker() {
+    public LoginChecker() {
         // TODO Auto-generated constructor stub
     }
 
@@ -32,11 +30,8 @@ public class PolicyMakerChecker implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession s = req.getSession();
-        if (s.isNew() || s.getAttribute("user") == null) {
-            res.sendError(HttpServletResponse.SC_UNAUTHORIZED); //No authenticated user
-            return;
-        } else if (((User) s.getAttribute("user")).getPolicyMakerID() == null) {
-            res.sendError(HttpServletResponse.SC_FORBIDDEN); //Not authorized
+        if (s.getAttribute("user") != null) {
+            res.sendRedirect(req.getServletContext().getContextPath());
             return;
         }
         // pass the request along the filter chain

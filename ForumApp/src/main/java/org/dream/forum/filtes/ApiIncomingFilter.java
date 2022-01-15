@@ -1,5 +1,6 @@
 package org.dream.forum.filtes;
 
+import org.dream.forum.entities.User;
 import org.dream.forum.utils.AuthorizationRoleEnum;
 
 import javax.annotation.security.RolesAllowed;
@@ -24,23 +25,26 @@ public class ApiIncomingFilter implements ContainerRequestFilter {
     @Override
     public void filter(ContainerRequestContext containerRequestContext) throws IOException {
         AuthorizationRoleEnum requestingRole = AuthorizationRoleEnum.VISITOR;
-        // User user = null;
+        User user = null;
         if (request.getParameter("wstoken") != null){
             String token = request.getParameter("wstoken");
-            //In this case the API are RESTFul
+            //In this case the API are RESTFul -> No session required, but we need to add a token for each user created
         } else {
-            //User authenticate with the session
+            //User authenticate with the session -> Primary authentication mechanism
             HttpSession session = request.getSession();
-            if (!session.isNew() && session.getAttribute("user") != null) {
-                // user = (User) session.getAttribute("user")
+            if (!session.isNew() && session.getAttribute("user") != null) { //A logged user exists
+                 user = (User) session.getAttribute("user");
             }
         }
 
-        /*
-            if(user != null){ //A valid user exists
-                //TODO:- Create the user role for further permission check
+
+        if(user != null){ //A valid user exists
+            if(user.getPolicyMakerID() == null || user.getPolicyMakerID().isEmpty()){
+                requestingRole = AuthorizationRoleEnum.USER;
+            } else {
+                requestingRole = AuthorizationRoleEnum.POLICY_MAKER;
             }
-         */
+        }
 
         if(resourceInfo.getResourceMethod() == null || resourceInfo.getResourceMethod().getAnnotation(RolesAllowed.class) == null){
             return; //No security constraints are required
@@ -49,8 +53,8 @@ public class ApiIncomingFilter implements ContainerRequestFilter {
         RolesAllowed rolesAllowed = resourceInfo.getResourceMethod().getAnnotation(RolesAllowed.class);
 
         if (!Arrays.asList(rolesAllowed.value()).contains(requestingRole.toString())) {
-            containerRequestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
-            return; //The user doesn't respect the required role
+            containerRequestContext.abortWith(Response.status(Response.Status.FORBIDDEN).build());
+            //The user doesn't respect the required role
         }
 
     }
