@@ -17,4 +17,16 @@ public class TopicService {
     public List<Topic> findAllTopics() {
         return em.createNamedQuery("Topic.findAll", Topic.class).getResultList();
     }
+
+    public Topic findById(Long topicId){
+        return em.find(Topic.class, topicId);
+    }
+
+    public Long createTopic(String title){
+        Topic c = new Topic();
+        c.setTitle(title);
+        em.persist(c);
+        em.flush();
+        return c.getTopicId();
+    }
 }

@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 @Table(name="User", schema="dream_forum")
 public class User implements Serializable {
 
-    private long userId;
+    private Long userId;
     private String name;
     private String surname;
     private String mail;
@@ -21,11 +21,11 @@ public class User implements Serializable {
     @Id
     @Column(columnDefinition="integer")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    public long getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

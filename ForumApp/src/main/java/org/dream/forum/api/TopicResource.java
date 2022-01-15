@@ -7,6 +7,7 @@ import org.dream.forum.services.TopicService;
 import javax.ejb.EJB;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -15,17 +16,22 @@ import java.util.List;
 public class TopicResource {
    @EJB(name = "org.dream.forum.services/TopicService")
     private TopicService topicService;
-
+    private Gson gson = new Gson();
 
     @GET
     @Produces("application/json")
     public Response getAllTopics() {
         List<Topic> topics = topicService.findAllTopics();
-        Gson gson = new Gson();
         String resp = gson.toJson(topics);
-        System.out.println(resp);
         return Response.ok().entity(resp).build();
     }
 
+    @GET
+    @Produces("application/json")
+    @Path("/{topicId: [0-9]+}")
+    public Response getTopicById(@PathParam("topicId") Long topicId){
+        Topic topic = topicService.findById(topicId);
+        return Response.ok().entity(gson.toJson(topic)).build();
+    }
 
 }

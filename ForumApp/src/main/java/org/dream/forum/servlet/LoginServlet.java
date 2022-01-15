@@ -38,7 +38,7 @@ public class LoginServlet extends HttpServlet {
         if(pathInfo!=null && pathInfo.equals("/user")){
             System.out.println("In user");
             User user = new User();
-            user.setUserId(1);
+            user.setUserId(1L);
             user.setName("Test");
             user.setSurname("User");
             user.setAreaOfResidence("Milano");
@@ -50,7 +50,7 @@ public class LoginServlet extends HttpServlet {
             return;
         } else if(pathInfo!=null && pathInfo.equals("/policymaker")) {
             User user = new User();
-            user.setUserId(1);
+            user.setUserId(1L);
             user.setName("Test");
             user.setSurname("PolicyMaker");
             user.setAreaOfResidence("Milano");
