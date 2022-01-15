@@ -1,9 +1,6 @@
 package org.dream.forum.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -23,6 +20,7 @@ public class User implements Serializable {
 
     @Id
     @Column(columnDefinition="integer")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     public long getUserId() {
         return userId;
     }
