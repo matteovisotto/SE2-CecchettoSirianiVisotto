@@ -7,6 +7,7 @@
         <jta-data-source>DreamForumDB</jta-data-source>
         <class>org.dream.forum.entities.User</class>
         <class>org.dream.forum.entities.Topic</class>
+        <class>org.dream.forum.entities.Discussion</class>
         <properties>
             <property name="eclipselink.logging.level" value="FINE" />
         </properties>
