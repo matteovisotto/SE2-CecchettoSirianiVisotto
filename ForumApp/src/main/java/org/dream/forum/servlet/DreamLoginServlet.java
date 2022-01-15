@@ -45,7 +45,7 @@ public class DreamLoginServlet extends HttpServlet {
         } else {
             req.getSession().setAttribute("user", user);
         }
-        resp.sendRedirect(req.getContextPath());
+        resp.sendRedirect(req.getContextPath()+"/");
     }
 
     @Override

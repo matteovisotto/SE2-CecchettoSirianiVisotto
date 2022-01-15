@@ -46,8 +46,7 @@ public class LoginServlet extends HttpServlet {
             user.setDateOfBirth(new Date(Calendar.getInstance().getTime().getTime()));
             user.setCreatedAt(new Timestamp(System.currentTimeMillis()));
             req.getSession().setAttribute("user", user);
-            System.out.println(req.getContextPath());
-            resp.sendRedirect(req.getContextPath());
+            resp.sendRedirect(req.getContextPath()+"/");
             return;
         } else if(pathInfo!=null && pathInfo.equals("/policymaker")) {
             User user = new User();
@@ -60,7 +59,7 @@ public class LoginServlet extends HttpServlet {
             user.setCreatedAt(new Timestamp(System.currentTimeMillis()));
             user.setPolicyMakerID("thisisthepolicymakerid");
             req.getSession().setAttribute("user", user);
-            resp.sendRedirect(req.getContextPath());
+            resp.sendRedirect(req.getContextPath()+"/");
             return;
         }
         //Delete the part above
@@ -72,7 +71,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect(req.getContextPath());
+        resp.sendRedirect(req.getContextPath()+"/");
     }
 
 
