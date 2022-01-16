@@ -6,16 +6,16 @@ import java.util.Date;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name="Topic", schema="dream_forum")
-@NamedQuery(name="Topic.findAll", query = "SELECT t FROM Topic t")
+@Table(name = "Topic", schema = "dream_forum")
+@NamedQuery(name = "Topic.findAll", query = "SELECT t FROM Topic t")
 public class Topic implements Serializable {
     private Long topicId;
     private String title;
     private Date timestamp;
 
     @Id
-    @Column(columnDefinition="integer")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(columnDefinition = "integer")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getTopicId() {
         return topicId;
     }

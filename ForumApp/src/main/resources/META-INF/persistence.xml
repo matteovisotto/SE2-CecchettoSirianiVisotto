@@ -8,6 +8,7 @@
         <class>org.dream.forum.entities.User</class>
         <class>org.dream.forum.entities.Topic</class>
         <class>org.dream.forum.entities.Discussion</class>
+        <class>org.dream.forum.entities.Post</class>
         <properties>
             <property name="eclipselink.logging.level" value="FINE" />
         </properties>

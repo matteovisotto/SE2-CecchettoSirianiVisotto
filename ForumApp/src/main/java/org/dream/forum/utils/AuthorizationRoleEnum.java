@@ -17,4 +17,17 @@ public enum AuthorizationRoleEnum {
         return value;
     }
 
+    public AuthorizationRoleEnum getAuthorizationRole(String value) {
+        switch (value){
+            case "visitor":
+                return AuthorizationRoleEnum.VISITOR;
+            case "user":
+                return AuthorizationRoleEnum.USER;
+            case "policy_maker":
+                return AuthorizationRoleEnum.POLICY_MAKER;
+                default:
+                    return AuthorizationRoleEnum.ADMIN;
+        }
+    }
+
 }

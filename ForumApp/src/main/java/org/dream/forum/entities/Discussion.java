@@ -5,8 +5,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name="Discussion", schema="dream_forum")
-@NamedQuery(name="Discussion.findByTopic", query = "SELECT d FROM Discussion d where d.topic.topicId = :topicId")
+@Table(name = "Discussion", schema = "dream_forum")
+@NamedQuery(name = "Discussion.findByTopic", query = "SELECT d FROM Discussion d where d.topic.topicId = :topicId")
 public class Discussion implements Serializable {
     private Long discussionId;
     private String title;
@@ -16,8 +16,8 @@ public class Discussion implements Serializable {
     private Topic topic;
 
     @Id
-    @Column(columnDefinition="integer")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(columnDefinition = "integer")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getDiscussionId() {
         return discussionId;
     }

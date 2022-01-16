@@ -6,8 +6,8 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name="User", schema="dream_forum")
-@NamedQuery(name="User.findByMail", query = "SELECT u FROM User u WHERE u.mail = :mail")
+@Table(name = "User", schema = "dream_forum")
+@NamedQuery(name = "User.findByMail", query = "SELECT u FROM User u WHERE u.mail = :mail")
 public class User implements Serializable {
 
     private Long userId;
@@ -20,8 +20,8 @@ public class User implements Serializable {
     private Timestamp createdAt;
 
     @Id
-    @Column(columnDefinition="integer")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(columnDefinition = "integer")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getUserId() {
         return userId;
     }
