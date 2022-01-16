@@ -20,8 +20,7 @@ public class UserService {
     }
 
     public User findByMail(String mail){
-        TypedQuery<User> query = em.createQuery(
-                "SELECT u FROM User u WHERE u.mail = :mail" , User.class);
+        TypedQuery<User> query = em.createNamedQuery("User.findByMail" , User.class);
         List<User> result = query.setParameter("mail", mail).getResultList();
         if(result.isEmpty()){
             return null;

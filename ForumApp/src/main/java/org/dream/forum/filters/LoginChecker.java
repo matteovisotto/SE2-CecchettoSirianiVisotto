@@ -1,4 +1,4 @@
-package org.dream.forum.filtes;
+package org.dream.forum.filters;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

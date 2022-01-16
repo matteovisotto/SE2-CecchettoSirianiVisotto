@@ -11,7 +11,7 @@
     <!--Servlet filter -->
     <filter>
         <filter-name>LoginChecker</filter-name>
-        <filter-class>org.dream.forum.filtes.LoginChecker</filter-class>
+        <filter-class>org.dream.forum.filters.LoginChecker</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>LoginChecker</filter-name>
@@ -20,7 +20,7 @@
 
     <filter>
         <filter-name>PolicyMakerChecker</filter-name>
-        <filter-class>org.dream.forum.filtes.PolicyMakerChecker</filter-class>
+        <filter-class>org.dream.forum.filters.PolicyMakerChecker</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>PolicyMakerChecker</filter-name>
