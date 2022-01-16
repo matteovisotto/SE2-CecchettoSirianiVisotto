@@ -1,6 +1,7 @@
 package org.dream.forum.services;
 
 import org.dream.forum.entities.Discussion;
+import org.dream.forum.entities.Post;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

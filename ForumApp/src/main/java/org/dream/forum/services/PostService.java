@@ -16,7 +16,8 @@ public class PostService {
     public PostService(){}
 
     public List<Post> getByDiscussionId (Long discussionId){
-        TypedQuery<Post> query = em.createNamedQuery("Post.findByDiscussion" , Post.class);
+        TypedQuery<Post> query = em.createNamedQuery("Post.fin" +
+                "dByDiscussion" , Post.class);
         return query.setParameter("discussionId", discussionId).getResultList();
     }
 }
