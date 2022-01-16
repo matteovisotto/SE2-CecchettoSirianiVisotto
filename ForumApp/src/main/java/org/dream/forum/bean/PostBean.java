@@ -1,15 +1,11 @@
-package org.dream.forum.entities;
+package org.dream.forum.bean;
 
-import org.dream.forum.utils.StatusEnum;
+import org.dream.forum.entities.Discussion;
+import org.dream.forum.entities.User;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
-@Entity
-@Table(name = "Post", schema = "dream_forum")
-@NamedQuery(name = "Post.findByDiscussion", query = "SELECT p FROM Post p where p.discussion.discussionId = :discussionId")
-public class Post implements Serializable {
+public class PostBean {
     private Long postId;
     private String text;
     private Date timestamp;
@@ -17,9 +13,6 @@ public class Post implements Serializable {
     private User creator;
     private Discussion discussion;
 
-    @Id
-    @Column(columnDefinition = "integer")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getPostId() {
         return postId;
     }
@@ -36,7 +29,6 @@ public class Post implements Serializable {
         this.text = text;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getTimestamp() {
         return timestamp;
     }
@@ -45,7 +37,6 @@ public class Post implements Serializable {
         this.timestamp = timestamp;
     }
 
-    @Column(name = "status")
     public int getStatusId() {
         return statusId;
     }
@@ -54,17 +45,6 @@ public class Post implements Serializable {
         this.statusId = statusId;
     }
 
-    @Transient
-    public StatusEnum getStatus() {
-        return StatusEnum.getStatus(this.statusId);
-    }
-
-    public void setStatus(StatusEnum status) {
-        this.statusId = status.ordinal();
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "creatorId")
     public User getCreator() {
         return creator;
     }
@@ -73,8 +53,6 @@ public class Post implements Serializable {
         this.creator = creator;
     }
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "discussionId")
     public Discussion getDiscussion() {
         return discussion;
     }
