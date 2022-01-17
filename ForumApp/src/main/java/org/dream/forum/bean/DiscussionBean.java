@@ -1,23 +1,14 @@
-package org.dream.forum.entities;
+package org.dream.forum.bean;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
-@Entity
-@Table(name = "Discussion", schema = "dream_forum")
-@NamedQuery(name = "Discussion.findByTopic", query = "SELECT d FROM Discussion d where d.topic.topicId = :topicId")
-public class Discussion implements Serializable {
+public class DiscussionBean {
     private Long discussionId;
     private String title;
     private String text;
     private Date timestamp;
-
     private Long topicId;
 
-    @Id
-    @Column(columnDefinition = "integer")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getDiscussionId() {
         return discussionId;
     }
@@ -42,7 +33,6 @@ public class Discussion implements Serializable {
         this.text = text;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getTimestamp() {
         return timestamp;
     }
@@ -51,8 +41,6 @@ public class Discussion implements Serializable {
         this.timestamp = timestamp;
     }
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "topicId")
     public Long getTopicId() {
         return topicId;
     }

@@ -3,7 +3,7 @@ package org.dream.forum.mapper;
 import org.dream.forum.bean.TopicBean;
 import org.dream.forum.entities.Topic;
 
-public class TopicTopicBeanMapper {
+public class TopicMapper {
     public TopicBean mapEntityToBean(Topic entity){
         return mapEntityToBean(entity, new TopicBean());
     }

@@ -1,7 +1,6 @@
 package org.dream.forum.entities;
 
 import org.dream.forum.services.PostService;
-import org.dream.forum.services.TopicService;
 
 import javax.ejb.EJB;
 import java.io.Serializable;
@@ -13,7 +12,7 @@ public class DiscussionViewModel implements Serializable {
 
     private Long discussionId;
     private String title;
-    private Topic topic;
+    private Long topicId;
     private Date createdAt;
     private User creator;
     private String content;
@@ -22,7 +21,7 @@ public class DiscussionViewModel implements Serializable {
     public DiscussionViewModel(Discussion discussion){
         this.discussionId = discussion.getDiscussionId();
         this.title = discussion.getTitle();
-        this.topic = discussion.getTopic();
+        this.topicId = discussion.getTopicId();
         this.createdAt = discussion.getTimestamp();
         Post post = postService.getByDiscussionId(discussionId).get(0); // Da sostituire
         this.creator = post.getCreator();
@@ -46,12 +45,12 @@ public class DiscussionViewModel implements Serializable {
         this.title = title;
     }
 
-    public Topic getTopic() {
-        return topic;
+    public Long getTopicId() {
+        return topicId;
     }
 
-    public void setTopic(Topic topic) {
-        this.topic = topic;
+    public void setTopicId(Long topicId) {
+        this.topicId = topicId;
     }
 
     public Date getCreatedAt() {

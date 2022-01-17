@@ -3,7 +3,7 @@ package org.dream.forum.mapper;
 import org.dream.forum.bean.PostBean;
 import org.dream.forum.entities.Post;
 
-public class PostPostBeanMapper {
+public class PostMapper {
     public PostBean mapEntityToBean(Post entity){
         return mapEntityToBean(entity, new PostBean());
     }
