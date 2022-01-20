@@ -39,7 +39,7 @@
     <div class="row">
         <?php
         if (isset($_GET['error'])){
-            echo '<div class="col-12"><div class="alert alert-danger">One or more fields are not correct</div></div>';
+            echo '<div class="col-12"><div class="alert alert-danger">One or more fields are not correct or your account already exists</div></div>';
         }
         ?>
         <?php
