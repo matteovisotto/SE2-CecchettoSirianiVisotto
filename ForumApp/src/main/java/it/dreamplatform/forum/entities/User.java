@@ -20,6 +20,7 @@ public class User implements Serializable {
     private String mail;
     private Date dateOfBirth;
     private String areaOfResidence;
+    @Column(nullable = true)
     private String policyMakerID;
     private Timestamp createdAt;
 
@@ -72,7 +73,6 @@ public class User implements Serializable {
         this.areaOfResidence = areaOfResidence;
     }
 
-    @Column(nullable = true)
     public String getPolicyMakerID() {
         return policyMakerID;
     }

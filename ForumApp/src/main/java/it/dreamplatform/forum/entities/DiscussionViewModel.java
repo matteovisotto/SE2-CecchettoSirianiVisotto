@@ -23,7 +23,7 @@ public class DiscussionViewModel implements Serializable {
         this.title = discussion.getTitle();
         this.topicId = discussion.getTopic().getTopicId();
         this.createdAt = discussion.getTimestamp();
-        Post post = postService.getByDiscussionId(discussionId).get(0); // Da sostituire
+        Post post = postService.getPostsByDiscussionId(discussionId).get(0); // Da sostituire
         this.creator = post.getCreator();
         this.content = post.getText();
 

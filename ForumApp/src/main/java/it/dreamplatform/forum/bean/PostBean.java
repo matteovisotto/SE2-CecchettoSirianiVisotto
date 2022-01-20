@@ -9,7 +9,7 @@ public class PostBean {
     private Long postId;
     private String text;
     private Date timestamp;
-    private int statusId;
+    private int status;
     private User creator;
     private Discussion discussion;
 
@@ -37,12 +37,12 @@ public class PostBean {
         this.timestamp = timestamp;
     }
 
-    public int getStatusId() {
-        return statusId;
+    public int getStatus() {
+        return status;
     }
 
-    public void setStatusId(int statusId) {
-        this.statusId = statusId;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public User getCreator() {

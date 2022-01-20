@@ -49,7 +49,7 @@ public class TopicServlet extends HttpServlet {
             resp.sendRedirect(req.getContextPath()+"/");
             return;
         }
-        Topic topic = topicService.findById(topicId);
+        Topic topic = topicService.findTopicById(topicId);
 
         String path = "templates/topic";
         ServletContext servletContext = getServletContext();

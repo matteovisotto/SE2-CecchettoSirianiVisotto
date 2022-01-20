@@ -33,4 +33,20 @@ public class UserService {
         em.flush();
         return user.getUserId();
     }
+
+    public void saveUser(User user) {
+        if(user.getUserId() == null){
+            em.persist(user);
+        } else {
+            user = em.merge(user);
+        }
+    }
+
+    public void deleteUser(User user){
+        if(em.contains(user)){
+            em.remove(user);
+        } else{
+            em.merge(user);
+        }
+    }
 }

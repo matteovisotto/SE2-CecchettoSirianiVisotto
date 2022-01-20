@@ -20,8 +20,7 @@ public class Post implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date timestamp;
 
-    @Column(name = "status")
-    private int statusId;
+    private int status;
 
     @ManyToOne
     @JoinColumn(name = "creatorId")
@@ -56,21 +55,12 @@ public class Post implements Serializable {
         this.timestamp = timestamp;
     }
 
-    public int getStatusId() {
-        return statusId;
+    public int getStatus() {
+        return status;
     }
 
-    public void setStatusId(int statusId) {
-        this.statusId = statusId;
-    }
-
-    @Transient
-    public StatusEnum getStatus() {
-        return StatusEnum.getStatus(this.statusId);
-    }
-
-    public void setStatus(StatusEnum status) {
-        this.statusId = status.ordinal();
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public User getCreator() {

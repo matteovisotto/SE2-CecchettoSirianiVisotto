@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Discussion", schema = "dream_forum")
-@NamedQuery(name = "Discussion.findByTopic", query = "SELECT d FROM Discussion d where d.topic.topicId = :topicId")
+
 public class Discussion implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -24,7 +24,7 @@ public class Discussion implements Serializable {
     @JoinColumn(name = "topicId")
     private Topic topic;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "Discussion", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "discussion", cascade = CascadeType.ALL)
     private Set<Post> posts;
 
 
@@ -72,7 +72,5 @@ public class Discussion implements Serializable {
         return posts;
     }
 
-    public void setPosts(Set<Post> posts) {
-        this.posts = posts;
-    }
+    //public void setPosts(Set<Post> posts) {        this.posts = posts;    }
 }

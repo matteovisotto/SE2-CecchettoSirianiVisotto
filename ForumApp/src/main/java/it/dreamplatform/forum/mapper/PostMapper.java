@@ -12,7 +12,7 @@ public class PostMapper {
         bean.setPostId(entity.getPostId());
         bean.setText(entity.getText());
         bean.setTimestamp(entity.getTimestamp());
-        bean.setStatusId(entity.getStatusId());
+        bean.setStatus(entity.getStatus());
         bean.setCreator(entity.getCreator());
         bean.setDiscussion(entity.getDiscussion());
         return bean;
@@ -26,7 +26,7 @@ public class PostMapper {
         entity.setPostId(bean.getPostId());
         entity.setText(bean.getText());
         entity.setTimestamp(bean.getTimestamp());
-        entity.setStatusId(bean.getStatusId());
+        entity.setStatus(bean.getStatus());
         entity.setCreator(bean.getCreator());
         entity.setDiscussion(bean.getDiscussion());
         return entity;

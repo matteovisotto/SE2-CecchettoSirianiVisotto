@@ -15,9 +15,40 @@ public class PostService {
 
     public PostService(){}
 
-    public List<Post> getByDiscussionId (Long discussionId){
-        TypedQuery<Post> query = em.createNamedQuery("Post.fin" +
-                "dByDiscussion" , Post.class);
-        return query.setParameter("discussionId", discussionId).getResultList();
+    public List<Post> getPostsByDiscussionId (Long discussionId){
+        TypedQuery<Post> query = em.createNamedQuery("Post.findByDiscussion" , Post.class);
+        query.setParameter("discussionId", discussionId);
+        return query.getResultList();
+    }
+
+    public Post getPostByPostId(Long postId){
+        return em.find(Post.class, postId);
+    }
+
+    public List<Post> getPendingPosts(){
+        TypedQuery<Post> query = em.createQuery("SELECT p FROM Post p WHERE p.status = 0", Post.class);
+        return query.getResultList();
+    }
+
+    public List<Post> getPostsByCreator(Long creatorId) {
+        TypedQuery<Post> query = em.createQuery("SELECT p FROM Post p WHERE p.creator.userId =:creatorId", Post.class);
+        query.setParameter("creatorId", creatorId);
+        return query.getResultList();
+    }
+
+    public void savePost(Post post) {
+        if(post.getPostId() == null){
+            em.persist(post);
+        } else {
+            post = em.merge(post);
+        }
+    }
+
+    public void deletePost(Post post){
+        if(em.contains(post)){
+            em.remove(post);
+        } else{
+            em.merge(post);
+        }
     }
 }

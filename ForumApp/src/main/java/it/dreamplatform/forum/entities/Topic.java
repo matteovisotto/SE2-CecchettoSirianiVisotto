@@ -16,6 +16,7 @@ public class Topic implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long topicId;
     private String title;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date timestamp;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "Topic", cascade = CascadeType.ALL)
@@ -38,7 +39,6 @@ public class Topic implements Serializable {
         this.title = title;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getTimestamp() {
         return timestamp;
     }

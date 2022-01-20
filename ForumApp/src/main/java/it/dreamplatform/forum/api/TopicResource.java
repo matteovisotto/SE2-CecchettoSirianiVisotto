@@ -30,7 +30,7 @@ public class TopicResource {
     @Produces("application/json")
     @Path("/{topicId: [0-9]+}")
     public Response getTopicById(@PathParam("topicId") Long topicId){
-        Topic topic = topicService.findById(topicId);
+        Topic topic = topicService.findTopicById(topicId);
         return Response.ok().entity(gson.toJson(topic)).build();
     }
 
