@@ -8,14 +8,14 @@
 
     <title>Dream IdP</title>
 
-    <link href="css/styles.css" rel="stylesheet" />
-    <link href="css/login.css" rel="stylesheet" />
+    <link href="/css/styles.css" rel="stylesheet" />
+    <link href="/css/login.css" rel="stylesheet" />
 
 </head>
 
 <body class="text-center">
 <form class="form-signin" style="margin-top: -15px" >
-    <img src="assets/auth_logo.png" class="col-12 mb-3" alt="Logo"/>
+    <img src="/assets/auth_logo.png" class="col-12 mb-3" alt="Logo"/>
     <?php
     if (isset($_GET['evn_success'])){
         echo '<div class="alert alert-success">Password successfully changed</div>';

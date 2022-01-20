@@ -8,8 +8,8 @@
 
     <title>Dream IdP</title>
 
-    <link href="css/styles.css" rel="stylesheet" />
-    <link href="css/login.css" rel="stylesheet" />
+    <link href="/css/styles.css" rel="stylesheet" />
+    <link href="/css/login.css" rel="stylesheet" />
 
 </head>
 
