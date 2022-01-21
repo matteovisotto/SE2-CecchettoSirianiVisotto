@@ -1,5 +1,6 @@
 package it.dreamplatform.forum.filters;
 
+import it.dreamplatform.forum.bean.UserBean;
 import it.dreamplatform.forum.entities.User;
 
 import javax.servlet.*;
@@ -35,7 +36,7 @@ public class PolicyMakerChecker implements Filter {
         if (s.isNew() || s.getAttribute("user") == null) {
             res.sendError(HttpServletResponse.SC_UNAUTHORIZED); //No authenticated user
             return;
-        } else if (((User) s.getAttribute("user")).getPolicyMakerID() == null) {
+        } else if (((UserBean) s.getAttribute("user")).getPolicyMakerID() == null) {
             res.sendError(HttpServletResponse.SC_FORBIDDEN); //Not authorized
             return;
         }

@@ -1,5 +1,6 @@
 package it.dreamplatform.forum.servlet;
 
+import it.dreamplatform.forum.bean.UserBean;
 import it.dreamplatform.forum.entities.User;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -36,7 +37,7 @@ public class HomeServlet extends HttpServlet {
         final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
         if(req.getSession().getAttribute("user")!=null){
             ctx.setVariable("user", req.getSession().getAttribute("user"));
-            ctx.setVariable("isPolicyMaker", !(((User) req.getSession().getAttribute("user")).getPolicyMakerID()==null));
+            ctx.setVariable("isPolicyMaker", !(((UserBean) req.getSession().getAttribute("user")).getPolicyMakerID()==null));
         }
         templateEngine.process(path, ctx, resp.getWriter());
     }

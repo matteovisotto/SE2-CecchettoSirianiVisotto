@@ -1,5 +1,6 @@
 package it.dreamplatform.forum.servlet;
 
+import it.dreamplatform.forum.bean.UserBean;
 import it.dreamplatform.forum.entities.Topic;
 import it.dreamplatform.forum.entities.User;
 import it.dreamplatform.forum.services.TopicService;
@@ -57,7 +58,7 @@ public class TopicServlet extends HttpServlet {
         ctx.setVariable("topic", topic);
         if(req.getSession().getAttribute("user")!=null){
             ctx.setVariable("user", req.getSession().getAttribute("user"));
-            ctx.setVariable("isPolicyMaker", !(((User) req.getSession().getAttribute("user")).getPolicyMakerID()==null));
+            ctx.setVariable("isPolicyMaker", !(((UserBean) req.getSession().getAttribute("user")).getPolicyMakerID()==null));
         }
         templateEngine.process(path, ctx, resp.getWriter());
     }

@@ -9,6 +9,8 @@ public class UserMapper {
     }
 
     public UserBean mapEntityToBean(User entity, UserBean bean){
+        if(entity == null) {return null;}
+
         bean.setUserId(entity.getUserId());
         bean.setName(entity.getName());
         bean.setSurname(entity.getSurname());

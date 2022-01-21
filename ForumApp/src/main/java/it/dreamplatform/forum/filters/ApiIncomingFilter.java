@@ -1,5 +1,6 @@
 package it.dreamplatform.forum.filters;
 
+import it.dreamplatform.forum.bean.UserBean;
 import it.dreamplatform.forum.entities.User;
 import it.dreamplatform.forum.utils.AuthorizationRoleEnum;
 
@@ -25,7 +26,7 @@ public class ApiIncomingFilter implements ContainerRequestFilter {
     @Override
     public void filter(ContainerRequestContext containerRequestContext) throws IOException {
         AuthorizationRoleEnum requestingRole = AuthorizationRoleEnum.VISITOR;
-        User user = null;
+        UserBean user = null;
         if (request.getParameter("wstoken") != null){
             String token = request.getParameter("wstoken");
             //In this case the API are RESTFul -> No session required, but we need to add a token for each user created
@@ -33,7 +34,7 @@ public class ApiIncomingFilter implements ContainerRequestFilter {
             //User authenticate with the session -> Primary authentication mechanism
             HttpSession session = request.getSession();
             if (!session.isNew() && session.getAttribute("user") != null) { //A logged user exists
-                 user = (User) session.getAttribute("user");
+                 user = (UserBean) session.getAttribute("user");
             }
         }
 

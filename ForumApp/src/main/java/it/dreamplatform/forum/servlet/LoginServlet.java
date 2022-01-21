@@ -1,5 +1,6 @@
 package it.dreamplatform.forum.servlet;
 
+import it.dreamplatform.forum.bean.UserBean;
 import it.dreamplatform.forum.entities.User;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -37,7 +38,7 @@ public class LoginServlet extends HttpServlet {
         String pathInfo = req.getPathInfo();
         if(pathInfo!=null && pathInfo.equals("/user")){
             System.out.println("In user");
-            User user = new User();
+            UserBean user = new UserBean();
             user.setUserId(1L);
             user.setName("Test");
             user.setSurname("User");
@@ -49,7 +50,7 @@ public class LoginServlet extends HttpServlet {
             resp.sendRedirect(req.getContextPath()+"/");
             return;
         } else if(pathInfo!=null && pathInfo.equals("/policymaker")) {
-            User user = new User();
+            UserBean user = new UserBean();
             user.setUserId(1L);
             user.setName("Test");
             user.setSurname("PolicyMaker");
