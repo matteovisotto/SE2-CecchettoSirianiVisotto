@@ -68,7 +68,7 @@ public class DreamLoginServlet extends HttpServlet {
             user.setDateOfBirth(new Timestamp(Calendar.getInstance().getTime().getTime()));
         }
 
-        if(availableParams.size() == 6) {
+        if((req.getAttribute("policyMakerID") == null && availableParams.size() == 5) || availableParams.size() == 6) {
             Long id = userController.createUser(user);
             user.setUserId(id);
             req.getSession().setAttribute("user", user);
