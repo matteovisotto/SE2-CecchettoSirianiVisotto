@@ -22,7 +22,7 @@ public class PostResource {
     @Produces("application/json")
     @Path("/{discussionId: [0-9]+}")
     public Response getByDiscussionId(@PathParam("discussionId") Long discussionId){
-        List<Post> posts = postService.getByDiscussionId(discussionId);
+        List<Post> posts = postService.getPostsByDiscussionId(discussionId);
         return Response.ok().entity(gson.toJson(posts)).build();
     }
 }
