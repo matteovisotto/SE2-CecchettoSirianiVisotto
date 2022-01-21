@@ -15,6 +15,9 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+/**
+ * This class implements registration and login for user authenticated by Shibboleth SP
+ */
 @WebServlet("/dream/login")
 public class DreamLoginServlet extends HttpServlet {
     @EJB(name = "it.dreamplatform.forum.services/UserService")
@@ -50,7 +53,7 @@ public class DreamLoginServlet extends HttpServlet {
             user.setAreaOfResidence(areaOfResidence);
             user.setPolicyMakerID(policyMakerID);
             try{
-                user.setDateOfBirth(new java.sql.Date(new SimpleDateFormat("yyyy-MM-dd").parse(dateOfBirth).getTime()));
+                user.setDateOfBirth(new SimpleDateFormat("yyyy-MM-dd").parse(dateOfBirth));
             } catch (Exception e){
                 user.setCreatedAt(new Timestamp(Calendar.getInstance().getTime().getTime()));
             }
