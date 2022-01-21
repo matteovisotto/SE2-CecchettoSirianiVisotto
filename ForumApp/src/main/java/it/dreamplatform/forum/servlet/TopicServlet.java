@@ -1,6 +1,8 @@
 package it.dreamplatform.forum.servlet;
 
+import it.dreamplatform.forum.bean.TopicBean;
 import it.dreamplatform.forum.bean.UserBean;
+import it.dreamplatform.forum.controller.TopicController;
 import it.dreamplatform.forum.entities.Topic;
 import it.dreamplatform.forum.entities.User;
 import it.dreamplatform.forum.services.TopicService;
@@ -10,6 +12,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,8 +23,9 @@ import java.io.IOException;
 
 @WebServlet("/topic/*")
 public class TopicServlet extends HttpServlet {
-    @EJB(name="it.dreamplatform.forum.services/TopicService")
-    private TopicService topicService;
+    @Inject
+    private TopicController topicController;
+    //private TopicService topicService;
 
     private static final long serialVersionUID = 1L;
     private TemplateEngine templateEngine;
@@ -50,7 +54,7 @@ public class TopicServlet extends HttpServlet {
             resp.sendRedirect(req.getContextPath()+"/");
             return;
         }
-        Topic topic = topicService.findTopicById(topicId);
+        TopicBean topic = topicController.getTopicById(topicId);
 
         String path = "templates/topic";
         ServletContext servletContext = getServletContext();

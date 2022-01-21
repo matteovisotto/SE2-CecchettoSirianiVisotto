@@ -1,10 +1,13 @@
 package it.dreamplatform.forum.api;
 
 import com.google.gson.Gson;
+import it.dreamplatform.forum.bean.TopicBean;
+import it.dreamplatform.forum.controller.TopicController;
 import it.dreamplatform.forum.entities.Topic;
 import it.dreamplatform.forum.services.TopicService;
 
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -14,14 +17,14 @@ import java.util.List;
 
 @Path("/topic")
 public class TopicResource {
-   @EJB(name = "it.dreamplatform.forum.services/TopicService")
-    private TopicService topicService;
+   @Inject
+    private TopicController topicController;
     private final Gson gson = new Gson();
 
     @GET
     @Produces("application/json")
     public Response getAllTopics() {
-        List<Topic> topics = topicService.findAllTopics();
+        List<TopicBean> topics = topicController.findAllTopics();
         String resp = gson.toJson(topics);
         return Response.ok().entity(resp).build();
     }
@@ -30,7 +33,7 @@ public class TopicResource {
     @Produces("application/json")
     @Path("/{topicId: [0-9]+}")
     public Response getTopicById(@PathParam("topicId") Long topicId){
-        Topic topic = topicService.findTopicById(topicId);
+        TopicBean topic = topicController.getTopicById(topicId);
         return Response.ok().entity(gson.toJson(topic)).build();
     }
 
