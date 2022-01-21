@@ -2,6 +2,7 @@ package it.dreamplatform.forum.controller;
 
 import it.dreamplatform.forum.bean.DiscussionBean;
 import it.dreamplatform.forum.bean.TopicBean;
+import it.dreamplatform.forum.bean.TopicContentBean;
 import it.dreamplatform.forum.mapper.TopicMapper;
 import it.dreamplatform.forum.services.TopicService;
 
@@ -19,6 +20,10 @@ public class TopicController {
 
     public TopicBean getTopicById(Long topicId) {
         return topicMapper.mapEntityToBean(topicService.findTopicById(topicId));
+    }
+
+    public TopicContentBean getDiscussionByTopicId(Long topicId){
+        return topicMapper.mapEntityToContentBean(topicService.findTopicById(topicId));
     }
 
     public List<TopicBean> findAllTopics() {

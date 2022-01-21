@@ -2,6 +2,7 @@ package it.dreamplatform.forum.api;
 
 import com.google.gson.Gson;
 import it.dreamplatform.forum.bean.TopicBean;
+import it.dreamplatform.forum.bean.TopicContentBean;
 import it.dreamplatform.forum.controller.TopicController;
 import it.dreamplatform.forum.entities.Topic;
 import it.dreamplatform.forum.services.TopicService;
@@ -33,7 +34,7 @@ public class TopicResource {
     @Produces("application/json")
     @Path("/{topicId: [0-9]+}")
     public Response getTopicById(@PathParam("topicId") Long topicId){
-        TopicBean topic = topicController.getTopicById(topicId);
+        TopicContentBean topic = topicController.getDiscussionByTopicId(topicId);
         return Response.ok().entity(gson.toJson(topic)).build();
     }
 

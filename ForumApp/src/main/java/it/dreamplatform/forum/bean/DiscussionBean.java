@@ -1,13 +1,15 @@
 package it.dreamplatform.forum.bean;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class DiscussionBean {
+public class DiscussionBean implements Serializable {
     private Long discussionId;
     private String title;
     private String text;
     private Date timestamp;
     private Long topicId;
+    private PublicUserBean creator;
 
     public Long getDiscussionId() {
         return discussionId;
@@ -47,5 +49,13 @@ public class DiscussionBean {
 
     public void setTopicId(Long topicId) {
         this.topicId = topicId;
+    }
+
+    public PublicUserBean getCreator() {
+        return creator;
+    }
+
+    public void setCreator(PublicUserBean creator) {
+        this.creator = creator;
     }
 }

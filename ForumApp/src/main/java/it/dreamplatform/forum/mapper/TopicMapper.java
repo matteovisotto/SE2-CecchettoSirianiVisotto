@@ -1,12 +1,17 @@
 package it.dreamplatform.forum.mapper;
 
+import it.dreamplatform.forum.bean.TopicContentBean;
 import it.dreamplatform.forum.entities.Topic;
 import it.dreamplatform.forum.bean.TopicBean;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TopicMapper {
+    @Inject
+    DiscussionMapper discussionMapper;
+
     public TopicBean mapEntityToBean(Topic entity){
         return mapEntityToBean(entity, new TopicBean());
     }
@@ -39,6 +44,20 @@ public class TopicMapper {
         entity.setTimestamp(bean.getTimestamp());
         return entity;
     }
+
+    public TopicContentBean mapEntityToContentBean(Topic entity){
+        return mapEntityToContentBean(entity, new TopicContentBean());
+    }
+
+    public TopicContentBean mapEntityToContentBean(Topic entity, TopicContentBean bean){
+        bean.setTopicId(entity.getTopicId());
+        bean.setTitle(entity.getTitle());
+        bean.setTimestamp(entity.getTimestamp());
+        bean.setDiscussions(discussionMapper.mapEntityListToBeanList(entity.getDiscussions()));
+        return bean;
+    }
+
+
 }
 
 

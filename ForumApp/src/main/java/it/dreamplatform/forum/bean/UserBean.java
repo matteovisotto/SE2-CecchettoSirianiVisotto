@@ -1,9 +1,10 @@
 package it.dreamplatform.forum.bean;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.sql.Timestamp;
 
-public class UserBean {
+public class UserBean implements Serializable {
     private Long userId;
     private String name;
     private String surname;

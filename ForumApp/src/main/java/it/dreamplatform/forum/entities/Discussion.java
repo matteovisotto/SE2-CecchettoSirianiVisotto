@@ -3,6 +3,7 @@ package it.dreamplatform.forum.entities;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -25,7 +26,7 @@ public class Discussion implements Serializable {
     private Topic topic;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "discussion", cascade = CascadeType.ALL)
-    private Set<Post> posts;
+    private List<Post> posts;
 
 
     public Long getDiscussionId() {
@@ -68,9 +69,9 @@ public class Discussion implements Serializable {
         this.topic = topic;
     }
 
-    public Set<Post> getPosts() {
+    public List<Post> getPosts() {
         return posts;
     }
 
-    //public void setPosts(Set<Post> posts) {        this.posts = posts;    }
+    //public void setPosts(List<Post> posts) {        this.posts = posts;    }
 }

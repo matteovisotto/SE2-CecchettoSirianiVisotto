@@ -3,6 +3,7 @@ package it.dreamplatform.forum.entities;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,7 +21,7 @@ public class Topic implements Serializable {
     private Date timestamp;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "Topic", cascade = CascadeType.ALL)
-    private Set<Discussion> discussions;
+    private List<Discussion> discussions;
 
 
     public Long getTopicId() {
@@ -47,7 +48,7 @@ public class Topic implements Serializable {
         this.timestamp = timestamp;
     }
 
-    public Set<Discussion> getDiscussions() {
+    public List<Discussion> getDiscussions() {
         return discussions;
     }
 

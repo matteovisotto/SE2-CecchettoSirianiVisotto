@@ -3,14 +3,15 @@ package it.dreamplatform.forum.bean;
 import it.dreamplatform.forum.entities.Discussion;
 import it.dreamplatform.forum.entities.User;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class PostBean {
+public class PostBean implements Serializable {
     private Long postId;
     private String text;
     private Date timestamp;
     private int status;
-    private User creator;
+    private PublicUserBean creator;
     private Discussion discussion;
 
     public Long getPostId() {
@@ -45,11 +46,11 @@ public class PostBean {
         this.status = status;
     }
 
-    public User getCreator() {
+    public PublicUserBean getCreator() {
         return creator;
     }
 
-    public void setCreator(User creator) {
+    public void setCreator(PublicUserBean creator) {
         this.creator = creator;
     }
 

@@ -1,5 +1,6 @@
 package it.dreamplatform.forum.mapper;
 
+import it.dreamplatform.forum.bean.PublicUserBean;
 import it.dreamplatform.forum.entities.User;
 import it.dreamplatform.forum.bean.UserBean;
 
@@ -37,4 +38,30 @@ public class UserMapper {
         entity.setCreatedAt(bean.getCreatedAt());
         return entity;
     }
+
+    public PublicUserBean mapEntityToPublicBean(User user) {
+        return mapEntityToPublicBean(user, new PublicUserBean());
+    }
+
+    public PublicUserBean mapEntityToPublicBean(User entity, PublicUserBean bean) {
+        bean.setUserId(entity.getUserId());
+        bean.setName(entity.getName());
+        bean.setSurname(entity.getSurname());
+        bean.setPolicyMaker(entity.getPolicyMakerID() != null);
+        bean.setAreaOfResidence(entity.getAreaOfResidence());
+        return bean;
+    }
+
+    public User mapPublicBeanToEntity(PublicUserBean bean, User entity){
+        entity.setUserId(bean.getUserId());
+        entity.setName(bean.getName());
+        entity.setSurname(bean.getSurname());
+        entity.setAreaOfResidence(bean.getAreaOfResidence());
+        return entity;
+    }
+
+    public User mapPublicBeanToEntity(PublicUserBean bean){
+        return mapPublicBeanToEntity(bean , new User());
+    }
+
 }

@@ -1,8 +1,9 @@
 package it.dreamplatform.forum.bean;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class TopicBean {
+public class TopicBean implements Serializable {
     private Long topicId;
     private String title;
     private Date timestamp;
