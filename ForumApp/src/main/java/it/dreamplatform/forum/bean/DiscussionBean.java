@@ -10,6 +10,7 @@ public class DiscussionBean implements Serializable {
     private Date timestamp;
     private Long topicId;
     private PublicUserBean creator;
+    private Integer number_replies;
 
     public Long getDiscussionId() {
         return discussionId;
@@ -57,5 +58,13 @@ public class DiscussionBean implements Serializable {
 
     public void setCreator(PublicUserBean creator) {
         this.creator = creator;
+    }
+
+    public Integer getNumberReplies() {
+        return number_replies;
+    }
+
+    public void setNumberReplies(Integer number_replies) {
+        this.number_replies = number_replies;
     }
 }

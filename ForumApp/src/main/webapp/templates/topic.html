@@ -53,8 +53,7 @@
     </div>
     <!-- Content from here -->
     <div class="col-md-7">
-      <h5 class="title" data-th-if="${topic}" data-th-text="${topic.getTitle()}">Topic title</h5>
-      <div class="alert alert-danger" data-th-if="${!topic}">The selected topic is invalid</div>
+      <h5 class="title" id="topicTitle">Loading ...</h5>
       <div class="row" id="discussionContainer">
 
       </div>
@@ -123,8 +122,8 @@
 
 <script src="../static/js/jQuery.js" data-th-src="@{/static/js/jQuery.js}"></script>
 <script src="../static/js/bootstrap/bootstrap.bundle.min.js" data-th-src="@{/static/js/bootstrap/bootstrap.bundle.min.js}"></script>
-<script data-th-if="${topic}" data-th-inline="javascript">
-  const topicId = /*[[${topic.getTopicId()}]]*/ 0;
+<script data-th-if="${topicId}" data-th-inline="javascript">
+  const topicId = /*[[${topicId}]]*/ 0;
 </script>
 <script data-th-src="@{/static/js/DiscussionManager.js}"></script>
 </body>

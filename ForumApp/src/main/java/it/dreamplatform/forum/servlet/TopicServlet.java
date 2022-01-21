@@ -23,9 +23,6 @@ import java.io.IOException;
 
 @WebServlet("/topic/*")
 public class TopicServlet extends HttpServlet {
-    @Inject
-    private TopicController topicController;
-    //private TopicService topicService;
 
     private static final long serialVersionUID = 1L;
     private TemplateEngine templateEngine;
@@ -54,12 +51,11 @@ public class TopicServlet extends HttpServlet {
             resp.sendRedirect(req.getContextPath()+"/");
             return;
         }
-        TopicBean topic = topicController.getTopicById(topicId);
 
         String path = "templates/topic";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
-        ctx.setVariable("topic", topic);
+        ctx.setVariable("topicId", topicId);
         if(req.getSession().getAttribute("user")!=null){
             ctx.setVariable("user", req.getSession().getAttribute("user"));
             ctx.setVariable("isPolicyMaker", !(((UserBean) req.getSession().getAttribute("user")).getPolicyMakerID()==null));

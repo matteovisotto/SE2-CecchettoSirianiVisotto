@@ -30,6 +30,7 @@ public class DiscussionMapper {
         bean.setText(entity.getText());
         bean.setTimestamp(entity.getTimestamp());
         bean.setTopicId(entity.getTopic().getTopicId());
+        bean.setNumberReplies(entity.getPosts().size());
         bean.setCreator(userMapper.mapEntityToPublicBean(entity.getPosts().stream().min(Comparator.comparingLong(Post::getPostId)).get().getCreator()));
         return bean;
     }
