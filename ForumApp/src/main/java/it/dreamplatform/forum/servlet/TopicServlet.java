@@ -19,7 +19,7 @@ import java.io.IOException;
 
 @WebServlet("/topic/*")
 public class TopicServlet extends HttpServlet {
-    @EJB(name="org.dream.forum.services/TopicService")
+    @EJB(name="it.dreamplatform.forum.services/TopicService")
     private TopicService topicService;
 
     private static final long serialVersionUID = 1L;

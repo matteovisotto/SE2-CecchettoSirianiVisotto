@@ -14,7 +14,7 @@ import java.util.List;
 
 @Path("/post")
 public class PostResource {
-    @EJB(name = "org.dream.forum.services/PostService")
+    @EJB(name = "it.dreamplatform.forum.services/PostService")
     private PostService postService;
     private final Gson gson = new Gson();
 

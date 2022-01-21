@@ -14,7 +14,7 @@ import java.util.List;
 
 @Path("/discussion")
 public class DiscussionResource {
-    @EJB(name = "org.dream.forum.services/DiscussionService")
+    @EJB(name = "it.dreamplatform.forum.services/DiscussionService")
     private DiscussionService discussionService;
     private final Gson gson = new Gson();
 
@@ -23,7 +23,6 @@ public class DiscussionResource {
     @Path("/{topicId: [0-9]+}")
     public Response getByTopicId(@PathParam("topicId") Long topicId){
         List<Discussion> discussions = discussionService.getDiscussionsByTopicId(topicId);
-
-        return Response.ok().entity(gson.toJson(discussions)).build();
+        return Response.ok().entity("").build();
     }
 }
