@@ -1,9 +1,6 @@
 package it.dreamplatform.forum.bean;
 
-import it.dreamplatform.forum.bean.DiscussionBean;
-
 import java.util.List;
-import java.util.Set;
 
 public class TopicContentBean extends TopicBean {
 

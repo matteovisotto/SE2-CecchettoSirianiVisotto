@@ -1,7 +1,6 @@
 package it.dreamplatform.forum.bean;
 
 import it.dreamplatform.forum.entities.Discussion;
-import it.dreamplatform.forum.entities.User;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,7 +11,7 @@ public class PostBean implements Serializable {
     private Date timestamp;
     private int status;
     private PublicUserBean creator;
-    private Discussion discussion;
+    //private Discussion discussion;
 
     public Long getPostId() {
         return postId;
@@ -54,11 +53,11 @@ public class PostBean implements Serializable {
         this.creator = creator;
     }
 
-    public Discussion getDiscussion() {
+    /*public Discussion getDiscussion() {
         return discussion;
     }
 
     public void setDiscussion(Discussion discussion) {
         this.discussion = discussion;
-    }
+    }*/
 }

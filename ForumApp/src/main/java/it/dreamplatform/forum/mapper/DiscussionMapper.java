@@ -1,15 +1,21 @@
 package it.dreamplatform.forum.mapper;
 
+import it.dreamplatform.forum.bean.DiscussionContentBean;
 import it.dreamplatform.forum.bean.PublicUserBean;
+import it.dreamplatform.forum.bean.TopicContentBean;
 import it.dreamplatform.forum.entities.Discussion;
 import it.dreamplatform.forum.bean.DiscussionBean;
 import it.dreamplatform.forum.entities.Post;
+import it.dreamplatform.forum.entities.Topic;
 import it.dreamplatform.forum.entities.User;
 
 import javax.inject.Inject;
 import java.util.*;
 
 public class DiscussionMapper {
+
+    @Inject
+    PostMapper postMapper;
 
     @Inject
     UserMapper userMapper;
@@ -49,6 +55,21 @@ public class DiscussionMapper {
             beans.add(mapEntityToBean(e));
         });
         return beans;
+    }
+
+    public DiscussionContentBean mapEntityToContentBean(Discussion entity){
+        return mapEntityToContentBean(entity, new DiscussionContentBean());
+    }
+
+    public DiscussionContentBean mapEntityToContentBean(Discussion entity, DiscussionContentBean bean){
+        bean.setTopicId(entity.getDiscussionId());
+        bean.setDiscussionId(entity.getDiscussionId());
+        bean.setTitle(entity.getTitle());
+        bean.setTimestamp(entity.getTimestamp());
+        bean.setCreator(userMapper.mapEntityToPublicBean(entity.getPosts().stream().min(Comparator.comparingLong(Post::getPostId)).get().getCreator()));
+        bean.setText(entity.getText());
+        bean.setPosts(postMapper.mapEntityListToBeanList(entity.getPosts()));
+        return bean;
     }
 
 }
