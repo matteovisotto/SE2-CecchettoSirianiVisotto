@@ -7,6 +7,6 @@ import java.util.List;
 public class TopicController {
 
     public List<DiscussionBean> getDiscussions(){
-
+        return null;
     }
 }

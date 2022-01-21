@@ -14,7 +14,7 @@ import java.util.List;
 
 @Path("/post")
 public class PostResource {
-    @EJB(name = "org.dream.forum.services/PostService")
+    @EJB(name = "it.dreamplatform.forum.services/PostService")
     private PostService postService;
     private final Gson gson = new Gson();
 
@@ -22,7 +22,7 @@ public class PostResource {
     @Produces("application/json")
     @Path("/{discussionId: [0-9]+}")
     public Response getByDiscussionId(@PathParam("discussionId") Long discussionId){
-        List<Post> posts = postService.getByDiscussionId(discussionId);
-        return Response.ok().entity(gson.toJson(posts)).build();
+        //List<Post> posts = postService.getByDiscussionId(discussionId);
+        return Response.ok().entity("").build();
     }
 }

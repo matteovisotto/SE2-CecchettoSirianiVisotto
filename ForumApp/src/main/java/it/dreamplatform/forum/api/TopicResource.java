@@ -14,7 +14,7 @@ import java.util.List;
 
 @Path("/topic")
 public class TopicResource {
-   @EJB(name = "org.dream.forum.services/TopicService")
+   @EJB(name = "it.dreamplatform.forum.services/TopicService")
     private TopicService topicService;
     private final Gson gson = new Gson();
 

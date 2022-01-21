@@ -16,7 +16,7 @@ import java.util.Calendar;
 
 @WebServlet("/dream/login")
 public class DreamLoginServlet extends HttpServlet {
-    @EJB(name = "org.dream.forum.services/UserService")
+    @EJB(name = "it.dreamplatform.forum.services/UserService")
     private UserService userService;
 
     @Override

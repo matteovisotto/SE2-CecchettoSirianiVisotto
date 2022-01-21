@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class DiscussionViewModel implements Serializable {
-    @EJB(name = "org.dream.forum.services/PostService")
+    @EJB(name = "it.dreamplatform.forum.services/PostService")
     PostService postService;
 
     private Long discussionId;

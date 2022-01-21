@@ -16,7 +16,7 @@ import javax.ws.rs.core.Response;
 
 @Path("/user")
 public class UserResource {
-    @EJB(name = "org.dream.forum.services/UserService")
+    @EJB(name = "it.dreamplatform.forum.services/UserService")
     private UserService userService;
     private final Gson gson = new Gson();
 

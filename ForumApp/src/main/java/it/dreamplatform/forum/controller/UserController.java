@@ -15,7 +15,7 @@ public class UserController {
 
 
     public UserBean searchUser(String email) {
-        UserBean userBean = userMapper.mapEntityToBean(userService.findByMail(mail));
+        UserBean userBean = userMapper.mapEntityToBean(userService.findByMail(email));
 
         return userBean;
     }
@@ -25,6 +25,7 @@ public class UserController {
         User user = userMapper.mapBeanToEntity(userBean);
         userService.saveUser(user);
 
-        UserBean userBeanToReturn = userMapper.mapEntityToBean(userService.findByMail(mail));
+        UserBean userBeanToReturn = userMapper.mapEntityToBean(userService.findByMail(userBean.getMail()));
         return userBeanToReturn;
     }
+}
