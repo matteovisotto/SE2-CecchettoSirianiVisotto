@@ -55,7 +55,7 @@ public class PostController {
     }
 
     public void publishPost(PostBean post, UserBean user) throws Exception {
-        User utente = userService.findById(user.getUserId());
+        User utente = userService.getUserById(user.getUserId());
         if(utente == null){
             throw new Exception("Utente non trovato.");
         }
@@ -94,7 +94,7 @@ public class PostController {
     }
 
     public List<PostBean> getPostsByUser(Long creatorId) throws Exception {
-        if(userService.findById(creatorId) != null){
+        if(userService.getUserById(creatorId) != null){
             return postMapper.mapEntityListToBeanList(postService.getPostsByCreator(creatorId));
         } else {
             throw new Exception("L'ID dell'utente indicato non esiste.");

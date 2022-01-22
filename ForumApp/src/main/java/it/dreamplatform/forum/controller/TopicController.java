@@ -26,7 +26,7 @@ public class TopicController {
         return topicMapper.mapEntityToContentBean(topicService.getTopicById(topicId));
     }
 
-    public List<TopicBean> findAllTopics() {
+    public List<TopicBean> getAllTopics() {
         return topicMapper.mapEntityListToBeanList(topicService.getAllTopics());
     }
 }

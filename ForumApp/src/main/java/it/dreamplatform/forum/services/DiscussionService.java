@@ -6,6 +6,7 @@ import it.dreamplatform.forum.entities.Discussion;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -30,6 +31,12 @@ public class DiscussionService {
         TypedQuery<Discussion> query = em.createQuery("SELECT d FROM Discussion d WHERE d.title =:title", Discussion.class);
         query.setParameter("title", title);
         return query.getResultList();
+    }
+
+    public List<Discussion> getDiscussionByPolicyMaker(String policyMakerId){
+        Query query = em.createNativeQuery("SELECT d.* FROM Discussion d JOIN Post p1 ON p1.discussionId = d.discussionId where p1.postId in (select min(postId) from Post p2 group by p2.discussionId) and p1.creatorId =?", Discussion.class);
+        query.setParameter(1, policyMakerId);
+        return ((List<Discussion>) query.getResultList());
     }
 
     public void saveDiscussion(Discussion discussion) {
