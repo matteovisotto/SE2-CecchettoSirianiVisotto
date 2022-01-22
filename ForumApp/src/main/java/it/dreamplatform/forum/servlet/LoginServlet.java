@@ -39,7 +39,7 @@ public class LoginServlet extends HttpServlet {
         if(pathInfo!=null && pathInfo.equals("/user")){
             System.out.println("In user");
             UserBean user = new UserBean();
-            user.setUserId(1L);
+            user.setUserId(4L);
             user.setName("Test");
             user.setSurname("User");
             user.setAreaOfResidence("Milano");

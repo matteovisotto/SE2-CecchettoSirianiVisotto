@@ -1,4 +1,15 @@
 $(function () {
+
+    if(isPolicyMaker){
+        CKEDITOR.replace('discussionContent');
+
+        $('#modalCreateDiscussionButton').on('click', function (e){
+            var form = $('#newDiscussionForm');
+
+        });
+
+    }
+
     var discussionContainer = $('#discussionContainer');
     var topicTitle = $('#topicTitle');
     $.ajax(
