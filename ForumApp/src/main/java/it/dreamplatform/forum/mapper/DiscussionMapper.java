@@ -25,6 +25,7 @@ public class DiscussionMapper {
     }
 
     public DiscussionBean mapEntityToBean (Discussion entity, DiscussionBean bean){
+        if(entity == null) {return null;}
         bean.setDiscussionId(entity.getDiscussionId());
         bean.setTitle(entity.getTitle());
         bean.setText(entity.getText());
@@ -63,6 +64,7 @@ public class DiscussionMapper {
     }
 
     public DiscussionContentBean mapEntityToContentBean(Discussion entity, DiscussionContentBean bean){
+        if(entity == null) {return null;}
         bean.setTopicId(entity.getDiscussionId());
         bean.setDiscussionId(entity.getDiscussionId());
         bean.setTitle(entity.getTitle());

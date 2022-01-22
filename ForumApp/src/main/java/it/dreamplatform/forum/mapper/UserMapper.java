@@ -44,6 +44,7 @@ public class UserMapper {
     }
 
     public PublicUserBean mapEntityToPublicBean(User entity, PublicUserBean bean) {
+        if(entity == null) {return null;}
         bean.setUserId(entity.getUserId());
         bean.setName(entity.getName());
         bean.setSurname(entity.getSurname());

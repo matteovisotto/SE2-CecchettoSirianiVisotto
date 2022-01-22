@@ -19,6 +19,7 @@ public class PostMapper {
     }
 
     public PostBean mapEntityToBean(Post entity, PostBean bean){
+        if(entity == null) {return null;}
         bean.setPostId(entity.getPostId());
         bean.setText(entity.getText());
         bean.setTimestamp(entity.getTimestamp());

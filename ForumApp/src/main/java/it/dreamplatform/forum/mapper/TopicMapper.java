@@ -50,6 +50,7 @@ public class TopicMapper {
     }
 
     public TopicContentBean mapEntityToContentBean(Topic entity, TopicContentBean bean){
+        if(entity == null) {return null;}
         bean.setTopicId(entity.getTopicId());
         bean.setTitle(entity.getTitle());
         bean.setTimestamp(entity.getTimestamp());
