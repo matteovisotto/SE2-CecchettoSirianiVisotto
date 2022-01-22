@@ -13,7 +13,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.sql.Timestamp;
+import java.util.Calendar;
 
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
@@ -45,6 +49,50 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //TODO:- Get data from POST and save the user
+        String name = (String) req.getParameter("name");
+        if (name == null || name.isEmpty()){
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing name value");
+            return;
+        }
+        String surname = (String) req.getParameter("surname");
+        if (surname == null || surname.isEmpty()){
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing surname value");
+            return;
+        }
+        Date birthdate = null;
+        try {
+            birthdate = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(req.getParameter("dateOfBirth"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (birthdate == null) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing birthdate value");
+            return;
+        }
+        String areaOfResidence = (String) req.getParameter("areaOfResidence");
+        if (areaOfResidence == null || areaOfResidence.isEmpty()){
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing areaOfResidence value");
+            return;
+        }
+        String mail = (String) req.getParameter("mail");
+        if (mail == null || mail.isEmpty()) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing mail value");
+            return;
+        }
+        String policyMakerID = (String) req.getParameter("policyMakerID");
+        if (policyMakerID == null || policyMakerID.isEmpty()){
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing policyMakerID value");
+            return;
+        }
+        UserBean user = new UserBean();
+        user.setUserId(1L);
+        user.setName(name);
+        user.setSurname(surname);
+        user.setAreaOfResidence(areaOfResidence);
+        user.setMail(mail);
+        user.setDateOfBirth(new Date(Calendar.getInstance().getTime().getTime()));
+        user.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+        user.setPolicyMakerID(policyMakerID);
+        
     }
 }
