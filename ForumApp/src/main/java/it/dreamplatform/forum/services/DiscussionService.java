@@ -17,7 +17,7 @@ public class DiscussionService {
     public DiscussionService(){}
 
     public List<Discussion> getDiscussionsByTopicId (Long topicId){
-        TypedQuery<Discussion> query = em.createQuery("SELECT d FROM Discussion d where d.topic.topicId = :topicId" , Discussion.class);
+        TypedQuery<Discussion> query = em.createQuery("SELECT d FROM Discussion d WHERE d.topic.topicId = :topicId" , Discussion.class);
         query.setParameter("topicId", topicId);
         return query.getResultList();
     }

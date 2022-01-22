@@ -19,14 +19,14 @@ public class TopicController {
     //public List<DiscussionBean> getDiscussions(){}
 
     public TopicBean getTopicById(Long topicId) {
-        return topicMapper.mapEntityToBean(topicService.findTopicById(topicId));
+        return topicMapper.mapEntityToBean(topicService.getTopicById(topicId));
     }
 
     public TopicContentBean getDiscussionByTopicId(Long topicId){
-        return topicMapper.mapEntityToContentBean(topicService.findTopicById(topicId));
+        return topicMapper.mapEntityToContentBean(topicService.getTopicById(topicId));
     }
 
     public List<TopicBean> findAllTopics() {
-        return topicMapper.mapEntityListToBeanList(topicService.findAllTopics());
+        return topicMapper.mapEntityListToBeanList(topicService.getAllTopics());
     }
 }

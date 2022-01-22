@@ -16,16 +16,16 @@ public class TopicService {
 
     public TopicService(){}
 
-    public List<Topic> findAllTopics() {
+    public List<Topic> getAllTopics() {
         TypedQuery<Topic> query = em.createQuery("SELECT t FROM Topic t", Topic.class);
         return query.getResultList();
     }
 
-    public Topic findTopicById(Long topicId){
+    public Topic getTopicById(Long topicId){
         return em.find(Topic.class, topicId);
     }
 
-    public List<Topic> findTopicByTitle(String title){
+    public List<Topic> getTopicByTitle(String title){
         TypedQuery<Topic> query = em.createQuery("SELECT t FROM Topic t WHERE t.title =:title", Topic.class);
         query.setParameter("title", title);
         return query.getResultList();
