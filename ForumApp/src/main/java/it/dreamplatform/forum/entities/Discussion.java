@@ -2,6 +2,8 @@ package it.dreamplatform.forum.entities;
 
 import it.dreamplatform.forum.JPAConfigurator.ConfigurePostFilter;
 import org.eclipse.persistence.annotations.Customizer;
+import org.eclipse.persistence.config.HintValues;
+import org.eclipse.persistence.config.QueryHints;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -28,7 +30,7 @@ public class Discussion implements Serializable {
     @JoinColumn(name = "topicId")
     private Topic topic;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "discussion", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "discussion", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     private List<Post> posts;
 
 
