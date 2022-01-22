@@ -13,10 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
 
-@WebServlet("/register")
-public class RegisterServlet extends HttpServlet {
+@WebServlet("/discussion/*")
+public class DiscussionServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private TemplateEngine templateEngine;
 
@@ -31,20 +30,33 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(req.getSession().getAttribute("registerUser") == null) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "You cannot access this page before accessing SSO page");
+        String pathInfo = req.getPathInfo();
+        if(pathInfo == null || pathInfo.equals("/")){
+            resp.sendRedirect(req.getContextPath()+"/");
             return;
         }
-        UserBean user = (UserBean) req.getSession().getAttribute("registerUser") ;
-        String path = "templates/register";
+        Long discussionId;
+        try{
+            discussionId = Long.parseLong(pathInfo.replace("/",""));
+        } catch (Exception e){
+            System.out.println("Error parsing discussion id");
+            resp.sendRedirect(req.getContextPath()+"/");
+            return;
+        }
+
+        String path = "templates/discussion";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
-        ctx.setVariable("user", user);
+        ctx.setVariable("discussionId", discussionId);
+        if(req.getSession().getAttribute("user")!=null){
+            ctx.setVariable("user", req.getSession().getAttribute("user"));
+            ctx.setVariable("isPolicyMaker", !(((UserBean) req.getSession().getAttribute("user")).getPolicyMakerID()==null));
+        }
         templateEngine.process(path, ctx, resp.getWriter());
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //TODO:- Get data from POST and save the user
+        resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
     }
 }

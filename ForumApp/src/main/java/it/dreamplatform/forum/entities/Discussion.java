@@ -1,5 +1,8 @@
 package it.dreamplatform.forum.entities;
 
+import it.dreamplatform.forum.JPAConfigurator.ConfigurePostFilter;
+import org.eclipse.persistence.annotations.Customizer;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -8,7 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Discussion", schema = "dream_forum")
-
+@Customizer(ConfigurePostFilter.class)
 public class Discussion implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -73,5 +76,5 @@ public class Discussion implements Serializable {
         return posts;
     }
 
-    //public void setPosts(List<Post> posts) {        this.posts = posts;    }
+    public void setPosts(List<Post> posts) {        this.posts = posts;    }
 }
