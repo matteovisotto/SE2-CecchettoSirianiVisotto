@@ -44,16 +44,20 @@ public class UserService {
     public void saveUser(User user) {
         if(user.getUserId() == null){
             em.persist(user);
+            em.flush();
         } else {
             user = em.merge(user);
+            em.flush();
         }
     }
 
     public void deleteUser(User user){
         if(em.contains(user)){
             em.remove(user);
+            em.flush();
         } else{
             em.merge(user);
+            em.flush();
         }
     }
 

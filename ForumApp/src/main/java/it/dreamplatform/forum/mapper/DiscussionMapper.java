@@ -1,13 +1,10 @@
 package it.dreamplatform.forum.mapper;
 
 import it.dreamplatform.forum.bean.DiscussionContentBean;
-import it.dreamplatform.forum.bean.PublicUserBean;
-import it.dreamplatform.forum.bean.TopicContentBean;
 import it.dreamplatform.forum.entities.Discussion;
 import it.dreamplatform.forum.bean.DiscussionBean;
 import it.dreamplatform.forum.entities.Post;
 import it.dreamplatform.forum.entities.Topic;
-import it.dreamplatform.forum.entities.User;
 
 import javax.inject.Inject;
 import java.util.*;
@@ -87,7 +84,6 @@ public class DiscussionMapper {
         Topic topic = new Topic();
         topic.setTopicId(bean.getTopicId());
         entity.setTopic(topic);
-        entity.setPosts(postMapper.mapBeanListToEntityList(bean.getPosts()));
         return entity;
     }
 

@@ -1,7 +1,6 @@
 package it.dreamplatform.forum.services;
 
 import it.dreamplatform.forum.entities.Discussion;
-import it.dreamplatform.forum.entities.Discussion;
 import it.dreamplatform.forum.entities.User;
 
 import javax.ejb.Stateless;
@@ -40,19 +39,25 @@ public class DiscussionService {
         return ((List<Discussion>) query.getResultList());
     }
 
-    public void saveDiscussion(Discussion discussion) {
+    public Long saveDiscussion(Discussion discussion) {
         if(discussion.getDiscussionId() == null){
             em.persist(discussion);
+            em.flush();
+            return discussion.getDiscussionId();
         } else {
             discussion = em.merge(discussion);
+            em.flush();
+            return discussion.getDiscussionId();
         }
     }
 
     public void deleteDiscussion(Discussion discussion){
         if(em.contains(discussion)){
             em.remove(discussion);
+            em.flush();
         } else{
             em.merge(discussion);
+            em.flush();
         }
     }
 

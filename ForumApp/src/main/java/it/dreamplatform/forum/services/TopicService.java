@@ -1,7 +1,6 @@
 package it.dreamplatform.forum.services;
 
 import it.dreamplatform.forum.entities.Topic;
-import it.dreamplatform.forum.entities.Topic;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -42,16 +41,20 @@ public class TopicService {
     public void saveTopic(Topic topic) {
         if(topic.getTopicId() == null){
             em.persist(topic);
+            em.flush();
         } else {
             topic = em.merge(topic);
+            em.flush();
         }
     }
 
     public void deleteTopic(Topic topic){
         if(em.contains(topic)){
             em.remove(topic);
+            em.flush();
         } else{
             em.merge(topic);
+            em.flush();
         }
     }
 }

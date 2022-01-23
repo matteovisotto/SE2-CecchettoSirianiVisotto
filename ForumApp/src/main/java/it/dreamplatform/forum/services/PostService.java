@@ -39,16 +39,20 @@ public class PostService {
     public void savePost(Post post) {
         if(post.getPostId() == null){
             em.persist(post);
+            em.flush();
         } else {
             post = em.merge(post);
+            em.flush();
         }
     }
 
     public void deletePost(Post post){
         if(em.contains(post)){
             em.remove(post);
+            em.flush();
         } else{
             em.merge(post);
+            em.flush();
         }
     }
 }

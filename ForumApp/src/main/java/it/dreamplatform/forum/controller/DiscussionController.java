@@ -3,6 +3,7 @@ package it.dreamplatform.forum.controller;
 import it.dreamplatform.forum.bean.DiscussionBean;
 import it.dreamplatform.forum.bean.DiscussionContentBean;
 import it.dreamplatform.forum.bean.PostBean;
+import it.dreamplatform.forum.entities.Post;
 import it.dreamplatform.forum.mapper.DiscussionMapper;
 import it.dreamplatform.forum.mapper.PostMapper;
 import it.dreamplatform.forum.services.DiscussionService;
@@ -48,7 +49,9 @@ public class DiscussionController {
         if(discussion.getDiscussionId() != null){
             throw new Exception("Indicated discussion is already present!");
         }
-        discussionService.saveDiscussion(discussionMapper.mapContentBeanToEntity(discussion));
-        //postService.savePost(postMapper.mapBeanToEntity(discussion.getPosts().get(0)));
+        Long newDiscussionId = discussionService.saveDiscussion(discussionMapper.mapContentBeanToEntity(discussion));
+        Post post = postMapper.mapBeanToEntity(discussion.getPosts().get(0));
+        post.setDiscussion(discussionService.getDiscussionById(newDiscussionId));
+        postService.savePost(post);
     }
 }
