@@ -36,7 +36,7 @@ public class UserResource {
     @Produces("application/json")
     @RolesAllowed("policy_maker")
     public Response getUserById(@PathParam("uid") Long uid){
-        User user = userService.findById(uid);
+        User user = userService.getUserById(uid);
         if(user == null){
             return Response.status(204).entity("{}").build();
         }
@@ -48,7 +48,7 @@ public class UserResource {
     @Produces("application/json")
     @RolesAllowed("policy_maker")
     public Response getUserByEmail(@PathParam("mail") String mail){
-        User user = userService.findByMail(mail);
+        User user = userService.getUserByMail(mail);
         if(user == null){
             return Response.status(204).entity("{}").build();
         }

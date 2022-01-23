@@ -2,6 +2,7 @@ package it.dreamplatform.forum.services;
 
 import it.dreamplatform.forum.entities.Discussion;
 import it.dreamplatform.forum.entities.Discussion;
+import it.dreamplatform.forum.entities.User;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -53,6 +54,18 @@ public class DiscussionService {
         } else{
             em.merge(discussion);
         }
+    }
+
+    public List<User> getDiscussionFollowers(Long discussionId){
+        Query query = em.createNativeQuery("SELECT u.* FROM User AS u JOIN Post p ON p.creatorId = u.userId WHERE p.discussionId = ? GROUP BY p.creatorId", User.class);
+        query.setParameter(1, discussionId);
+        return ((List<User>) query.getResultList());
+    }
+
+    public List<Discussion> getMostActiveDiscussions(Integer numberOfDiscussions){
+        Query query = em.createNativeQuery("SELECT d.*, COUNT(*) AS n_posts FROM Post as p JOIN Discussion as d ON p.discussionId = d.discussionId WHERE p.status=1 GROUP BY p.discussionId ORDER BY n_posts DESC LIMIT ?", Discussion.class);
+        query.setParameter(1,numberOfDiscussions);
+        return (List<Discussion>) query.getResultList();
     }
 
 }

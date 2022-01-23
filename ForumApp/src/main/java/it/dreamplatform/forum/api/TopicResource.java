@@ -25,7 +25,7 @@ public class TopicResource {
     @GET
     @Produces("application/json")
     public Response getAllTopics() {
-        List<TopicBean> topics = topicController.findAllTopics();
+        List<TopicBean> topics = topicController.getAllTopics();
         String resp = gson.toJson(topics);
         return Response.ok().entity(resp).build();
     }

@@ -5,6 +5,7 @@ import it.dreamplatform.forum.entities.User;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -54,5 +55,11 @@ public class UserService {
         } else{
             em.merge(user);
         }
+    }
+
+    public List<User> getMostActiveUsers(Integer numberOfUser){
+        Query query = em.createNativeQuery("SELECT u.*, COUNT(*) AS n_posts FROM Post as p JOIN User as u ON p.creatorId = u.userId WHERE p.status=1 AND u.policyMakerID IS NULL GROUP BY p.creatorId ORDER BY n_posts DESC LIMIT ?", User.class);
+        query.setParameter(1,numberOfUser);
+        return ((List<User>) query.getResultList());
     }
 }

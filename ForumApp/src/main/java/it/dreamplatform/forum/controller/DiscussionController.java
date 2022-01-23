@@ -32,13 +32,13 @@ public class DiscussionController {
         if (userService.getUserByPolicyMakerId(policyMakerId) != null) {
             return discussionMapper.mapEntityListToBeanList(discussionService.getDiscussionByPolicyMaker(policyMakerId));
         } else {
-            throw new Exception("Policy Maker indicato non presente");
+            throw new Exception("Policy Maker was not found");
         }
     }
 
-    public void deleteDiscussion(DiscussionContentBean discussion) throws Exception {
-        if(discussionService.getDiscussionById(discussion.getDiscussionId()) != null){
-            discussionService.deleteDiscussion(discussionMapper.mapBeanToEntity(discussion));
+    public void deleteDiscussion(Long discussionId) throws Exception {
+        if(discussionService.getDiscussionById(discussionId) != null){
+            discussionService.deleteDiscussion(discussionService.getDiscussionById(discussionId));
         } else {
             throw new Exception("Indicated discussion was not found.");
         }
