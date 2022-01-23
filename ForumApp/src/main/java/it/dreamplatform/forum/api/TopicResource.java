@@ -13,6 +13,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class TopicResource {
     private final Gson gson = new Gson();
 
     @GET
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
     public Response getAllTopics() {
         List<TopicBean> topics = topicController.getAllTopics();
         String resp = gson.toJson(topics);
@@ -31,7 +32,7 @@ public class TopicResource {
     }
 
     @GET
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
     @Path("/{topicId: [0-9]+}")
     public Response getTopicById(@PathParam("topicId") Long topicId){
         TopicContentBean topic = topicController.getDiscussionByTopicId(topicId);

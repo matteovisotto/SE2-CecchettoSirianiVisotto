@@ -12,6 +12,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("/user")
@@ -24,7 +25,7 @@ public class UserResource {
     HttpServletRequest request;
 
     @GET
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
     @RolesAllowed({"user", "policy_maker"})
     public Response getUser() {
         User user = (User) request.getSession().getAttribute("user");
@@ -33,7 +34,7 @@ public class UserResource {
 
     @GET
     @Path("/{uid: [0-9]+}")
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
     @RolesAllowed("policy_maker")
     public Response getUserById(@PathParam("uid") Long uid){
         User user = userService.getUserById(uid);

@@ -41,17 +41,18 @@ public class DiscussionController {
         if(discussionService.getDiscussionById(discussionId) != null){
             discussionService.deleteDiscussion(discussionService.getDiscussionById(discussionId));
         } else {
-            throw new Exception("Indicated discussion was not found.");
+            throw new Exception("The discussion was not found.");
         }
     }
 
     public void createDiscussion(DiscussionContentBean discussion) throws Exception {
         if(discussion.getDiscussionId() != null){
-            throw new Exception("Indicated discussion is already present!");
+            throw new Exception("The discussion is already present!");
         }
         Long newDiscussionId = discussionService.saveDiscussion(discussionMapper.mapContentBeanToEntity(discussion));
         Post post = postMapper.mapBeanToEntity(discussion.getPosts().get(0));
         post.setDiscussion(discussionService.getDiscussionById(newDiscussionId));
+        post.setStatus(1);
         postService.savePost(post);
     }
 }

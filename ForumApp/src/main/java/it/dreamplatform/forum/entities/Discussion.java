@@ -78,5 +78,5 @@ public class Discussion implements Serializable {
         return posts;
     }
 
-    public void setPosts(List<Post> posts) {        this.posts = posts;    }
+    public void setPosts(List<Post> posts) {this.posts = posts;}
 }

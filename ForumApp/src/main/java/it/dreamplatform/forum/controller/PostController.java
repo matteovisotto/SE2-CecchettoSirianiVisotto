@@ -25,45 +25,45 @@ public class PostController {
     UserMapper userMapper;
 
     public void approvePendingPost(PostBean post) throws Exception {
-        if(post.getPostId()==null){
-            throw new Exception("Il post indicato non presenta un Id valido.");
+        if(post.getPostId() == null){
+            throw new Exception("The selected post has an invalid Id.");
         }
-        if(post.getStatus()== 1){
-            throw new Exception("Il post è già stato accettato.");
+        if(post.getStatus() == 1){
+            throw new Exception("The post has already been accepted.");
         }
         post.setStatus(1);
         postService.savePost(postMapper.mapBeanToEntity(post));
     }
 
     public void declinePendingPost(PostBean post) throws Exception {
-        if(post.getPostId()==null){
-            throw new Exception("Il post indicato non presenta un Id valido.");
+        if(post.getPostId() == null){
+            throw new Exception("The selected post has an invalid Id.");
         }
-        if(post.getStatus()==1){
-            throw new Exception("Il post non può essere declinato.");
+        if(post.getStatus() == 1){
+            throw new Exception("The post can't be declined.");
         }
         postService.deletePost(postMapper.mapBeanToEntity(post));
     }
 
     public void deletePost(PostBean post) throws Exception{
-        if(post.getPostId()==null){
-            throw new Exception("Post non valido.");
+        if(post.getPostId() == null){
+            throw new Exception("Post not valid.");
         }
         if(postService.getPostByPostId(post.getPostId()) != null){
             postService.deletePost(postMapper.mapBeanToEntity(post));
         }
     }
 
-    public void publishPost(PostBean post, UserBean user) throws Exception {
-        User utente = userService.getUserById(user.getUserId());
-        if(utente == null){
-            throw new Exception("Utente non trovato.");
+    public void publishPost(PostBean post, UserBean userBean) throws Exception {
+        User user = userService.getUserById(userBean.getUserId());
+        if(user == null){
+            throw new Exception("User not found.");
         }
         if(post.getText() == null){
-            throw new Exception("Il post deve contenere del testo.");
+            throw new Exception("The post must contains text.");
         }
-        post.setCreator(userMapper.mapEntityToPublicBean(utente));
-        if(utente.getPolicyMakerID() == null){
+        post.setCreator(userMapper.mapEntityToPublicBean(user));
+        if(user.getPolicyMakerID() == null){
             post.setStatus(0);
         }
         else{
@@ -75,11 +75,11 @@ public class PostController {
     public void modifyPost(PostBean post, UserBean user) throws Exception {
         Post postToModify = postService.getPostByPostId(post.getPostId());
         if(postToModify == null){
-            throw new Exception("Il post da modificare non è presente.");
+            throw new Exception("The post to modify is not present");
         }
         if(user.getPolicyMakerID() == null){
             if(postToModify.getCreator() != userMapper.mapBeanToEntity(user)){
-                throw new Exception("Non hai i permessi per modificare il post.");
+                throw new Exception("You don't have the permission to modify the post.");
             }
         }
         postService.savePost(postMapper.mapBeanToEntity(post));
@@ -89,7 +89,7 @@ public class PostController {
         if(postService.getPostByPostId(postId) != null){
             return postMapper.mapEntityToBean(postService.getPostByPostId(postId));
         } else {
-            throw new Exception("Post non trovato!");
+            throw new Exception("Post not found!");
         }
     }
 
@@ -97,7 +97,7 @@ public class PostController {
         if(userService.getUserById(creatorId) != null){
             return postMapper.mapEntityListToBeanList(postService.getPostsByCreator(creatorId));
         } else {
-            throw new Exception("L'ID dell'utente indicato non esiste.");
+            throw new Exception("The user Id inserted not exist.");
         }
     }
 
