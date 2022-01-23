@@ -36,13 +36,15 @@ public class PostService {
         return query.getResultList();
     }
 
-    public void savePost(Post post) {
+    public Long savePost(Post post) {
         if(post.getPostId() == null){
             em.persist(post);
             em.flush();
+            return post.getPostId();
         } else {
             post = em.merge(post);
             em.flush();
+            return post.getPostId();
         }
     }
 

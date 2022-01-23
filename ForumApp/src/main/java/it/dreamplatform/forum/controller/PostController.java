@@ -24,25 +24,27 @@ public class PostController {
     @Inject
     UserMapper userMapper;
 
-    public void approvePendingPost(PostBean post) throws Exception {
-        if(post.getPostId() == null){
+    public void approvePendingPost(Long postId) throws Exception {
+        Post post = postService.getPostByPostId(postId);
+        if(post == null){
             throw new Exception("The selected post has an invalid Id.");
         }
         if(post.getStatus() == 1){
             throw new Exception("The post has already been accepted.");
         }
         post.setStatus(1);
-        postService.savePost(postMapper.mapBeanToEntity(post));
+        postService.savePost(post);
     }
 
-    public void declinePendingPost(PostBean post) throws Exception {
-        if(post.getPostId() == null){
+    public void declinePendingPost(Long postId) throws Exception {
+        Post post = postService.getPostByPostId(postId);
+        if(post == null){
             throw new Exception("The selected post has an invalid Id.");
         }
         if(post.getStatus() == 1){
             throw new Exception("The post can't be declined.");
         }
-        postService.deletePost(postMapper.mapBeanToEntity(post));
+        postService.deletePost(post);
     }
 
     public void deletePost(PostBean post) throws Exception{
