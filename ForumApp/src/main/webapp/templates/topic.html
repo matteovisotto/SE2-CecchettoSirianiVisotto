@@ -134,6 +134,9 @@
 <script src="../static/ckeditor/ckeditor.js" data-th-src="@{/static/ckeditor/ckeditor.js}"></script>
 <script data-th-if="${topicId}" data-th-inline="javascript">
   const topicId = /*[[${topicId}]]*/ 0;
+</script>
+<script data-th-if="${user}" data-th-inline="javascript">
+  const userId = /*[[${user.getUserId()}]]*/ 0;
   const isPolicyMaker = /*[[${isPolicyMaker}]]*/ false;
 </script>
 <script data-th-src="@{/static/js/DiscussionManager.js}"></script>

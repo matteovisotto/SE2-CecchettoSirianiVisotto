@@ -53,4 +53,15 @@ public class PostMapper {
         });
         return beans;
     }
+
+    public List<Post> mapBeanListToEntityList(List<PostBean> beans){
+        return mapBeanListToEntityList(beans, new ArrayList<>());
+    }
+
+    public List<Post> mapBeanListToEntityList(List<PostBean> beans, List<Post> entities){
+        beans.forEach(b -> {
+            entities.add(mapBeanToEntity(b));
+        });
+        return entities;
+    }
 }

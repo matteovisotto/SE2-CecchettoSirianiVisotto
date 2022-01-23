@@ -75,4 +75,20 @@ public class DiscussionMapper {
         return bean;
     }
 
+    public Discussion mapContentBeanToEntity(DiscussionContentBean bean){
+        return mapContentBeanToEntity(bean, new Discussion());
+    }
+
+    public Discussion mapContentBeanToEntity(DiscussionContentBean bean, Discussion entity){
+        if(bean == null) {return null;}
+        entity.setText(bean.getText());
+        entity.setTimestamp(bean.getTimestamp());
+        entity.setTitle(bean.getTitle());
+        Topic topic = new Topic();
+        topic.setTopicId(bean.getTopicId());
+        entity.setTopic(topic);
+        entity.setPosts(postMapper.mapBeanListToEntityList(bean.getPosts()));
+        return entity;
+    }
+
 }

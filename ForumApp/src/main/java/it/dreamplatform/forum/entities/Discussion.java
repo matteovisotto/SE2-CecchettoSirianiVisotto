@@ -30,7 +30,7 @@ public class Discussion implements Serializable {
     @JoinColumn(name = "topicId")
     private Topic topic;
 
-    @OneToMany(mappedBy = "discussion", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @OneToMany(mappedBy = "discussion", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Post> posts;
 
 

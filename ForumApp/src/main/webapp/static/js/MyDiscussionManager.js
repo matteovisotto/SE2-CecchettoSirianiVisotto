@@ -1,47 +1,10 @@
 $(function () {
 
-    if(typeof isPolicyMaker !== 'undefined' && isPolicyMaker){
-        CKEDITOR.replace('discussionContent');
-
-        $('#modalCreateDiscussionButton').on('click', function (e){
-            var form = $('#newDiscussionForm');
-            var postObj = {};
-
-            var discussionObj = {};
-            discussionObj.title = form.find('input[name="discussionTitle"]').val();
-            var text = CKEDITOR.instances.discussionContent.getData();
-            discussionObj.text = text;
-            discussionObj.timestamp = new Date();
-            discussionObj.topicId = topicId;
-            postObj.text = text;
-            postObj.timestamp = new Date();
-            postObj.creator = {"userId": userId};
-            discussionObj.posts = [postObj];
-            $.ajax({
-                type: "POST",
-                url: "../api/discussion/create",
-                // The key needs to match your method's input parameter (case-sensitive).
-                data: JSON.stringify(discussionObj),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function(data){
-                    console.log(data);
-                    window.location.reload();
-                },
-                error: function(e) {
-                    console.log(e);
-                    alert("Error!");
-                }
-            });
-        });
-
-    }
-
     var discussionContainer = $('#discussionContainer');
     var topicTitle = $('#topicTitle');
     $.ajax(
         {
-            'url': '../api/topic/'+topicId,
+            'url': '../api/discussion/explore',
             'method': 'GET',
             'success': function(json){
                 topicTitle.text(json.title);

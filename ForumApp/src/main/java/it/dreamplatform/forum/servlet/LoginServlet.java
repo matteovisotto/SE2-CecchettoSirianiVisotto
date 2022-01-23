@@ -51,7 +51,7 @@ public class LoginServlet extends HttpServlet {
             return;
         } else if(pathInfo!=null && pathInfo.equals("/policymaker")) {
             UserBean user = new UserBean();
-            user.setUserId(1L);
+            user.setUserId(3L);
             user.setName("Test");
             user.setSurname("PolicyMaker");
             user.setAreaOfResidence("Milano");

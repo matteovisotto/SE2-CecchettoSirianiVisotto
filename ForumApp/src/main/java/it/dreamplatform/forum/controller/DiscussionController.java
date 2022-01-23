@@ -48,7 +48,7 @@ public class DiscussionController {
         if(discussion.getDiscussionId() != null){
             throw new Exception("Indicated discussion is already present!");
         }
-        discussionService.saveDiscussion(discussionMapper.mapBeanToEntity(discussion));
-        postService.savePost(postMapper.mapBeanToEntity(discussion.getPosts().get(0)));
+        discussionService.saveDiscussion(discussionMapper.mapContentBeanToEntity(discussion));
+        //postService.savePost(postMapper.mapBeanToEntity(discussion.getPosts().get(0)));
     }
 }
