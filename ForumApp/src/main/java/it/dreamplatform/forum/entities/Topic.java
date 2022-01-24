@@ -20,7 +20,7 @@ public class Topic implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date timestamp;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "Topic", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "topic", cascade = CascadeType.ALL)
     private List<Discussion> discussions;
 
 

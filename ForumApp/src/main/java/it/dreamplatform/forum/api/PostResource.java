@@ -1,6 +1,7 @@
 package it.dreamplatform.forum.api;
 
 import com.google.gson.Gson;
+import it.dreamplatform.forum.bean.PostBean;
 import it.dreamplatform.forum.controller.PostController;
 import it.dreamplatform.forum.entities.Post;
 import it.dreamplatform.forum.services.PostService;
@@ -26,8 +27,28 @@ public class PostResource {
     @Path("/{discussionId: [0-9]+}")
     public Response getByDiscussionId(@PathParam("discussionId") Long discussionId){
 
-        List<Post> posts = postService.getPostsByDiscussionId(discussionId);
-        return Response.ok().entity(gson.toJson(posts)).build();
+        List<PostBean> posts = null;
+        try {
+            posts = postController.getPostsByDiscussionId(discussionId);
+            return Response.ok().entity(gson.toJson(posts)).build();
+        } catch (Exception e) {
+            return Response.status(204).entity("[]").build();
+        }
+
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
+    @Path("creator/{creatorId: [0-9]+}")
+    public Response getPostsByUser(@PathParam("creatorId") Long creatorId){
+
+        List<PostBean> posts = null;
+        try {
+            posts = postController.getPostsByUser(creatorId);
+            return Response.ok().entity(gson.toJson(posts)).build();
+        } catch (Exception e) {
+            return Response.status(204).entity("[]").build();
+        }
     }
 
     @GET
@@ -59,6 +80,7 @@ public class PostResource {
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
     @Consumes(MediaType.APPLICATION_JSON + ";charset=UTF-8")
     @RolesAllowed("policy_maker")
+
     public Response publishPost(){
         try {
             //TODO  postController.publishPost(post, user);

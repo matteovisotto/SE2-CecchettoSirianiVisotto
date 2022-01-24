@@ -62,13 +62,14 @@ public class DiscussionMapper {
 
     public DiscussionContentBean mapEntityToContentBean(Discussion entity, DiscussionContentBean bean){
         if(entity == null) {return null;}
-        bean.setTopicId(entity.getDiscussionId());
+        bean.setTopicId(entity.getTopic().getTopicId());
         bean.setDiscussionId(entity.getDiscussionId());
         bean.setTitle(entity.getTitle());
         bean.setTimestamp(entity.getTimestamp());
         bean.setCreator(userMapper.mapEntityToPublicBean(entity.getPosts().stream().min(Comparator.comparingLong(Post::getPostId)).get().getCreator()));
         bean.setText(entity.getText());
         bean.setPosts(postMapper.mapEntityListToBeanList(entity.getPosts()));
+        bean.setNumberReplies(entity.getPosts().size());
         return bean;
     }
 

@@ -95,6 +95,14 @@ public class PostController {
         }
     }
 
+    public List<PostBean> getPostsByDiscussionId(Long discussionId) throws Exception {
+        if(postService.getPostsByDiscussionId(discussionId) != null){
+            return postMapper.mapEntityListToBeanList(postService.getPostsByDiscussionId(discussionId));
+        } else {
+            throw new Exception("Post not found!");
+        }
+    }
+
     public List<PostBean> getPostsByUser(Long creatorId) throws Exception {
         if(userService.getUserById(creatorId) != null){
             return postMapper.mapEntityListToBeanList(postService.getPostsByCreator(creatorId));
