@@ -1,4 +1,37 @@
 $(function () {
+
+    if(typeof userId !== 'undefined'){
+        CKEDITOR.replace('replyContent');
+
+        $('#modalCreateReplyButton').on('click', function (e){
+            var form = $('#newReplyForm');
+            var postObj = {};
+
+            var text = CKEDITOR.instances.replyContent.getData();
+            postObj.text = text;
+            postObj.timestamp = new Date();
+            postObj.creator = {"userId": userId};
+            postObj.discussionId = discussionId;
+            $.ajax({
+                type: "POST",
+                url: "../api/post/publish",
+                // The key needs to match your method's input parameter (case-sensitive).
+                data: JSON.stringify(postObj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(data){
+                    console.log(data);
+                    //window.location.reload();
+                },
+                error: function(e) {
+                    console.log(e);
+                    alert("Error!");
+                }
+            });
+        });
+
+    }
+
     var repliesContainer = $('#repliesContainer');
     var discussionTitle = $('#discussionTitle');
 

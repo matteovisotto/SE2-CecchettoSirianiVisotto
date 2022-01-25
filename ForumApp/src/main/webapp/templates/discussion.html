@@ -81,7 +81,7 @@
                     </div>
                 </div>
             </div><br/>
-            <button data-th-if="${user}" class="btn btn-primary float-end"><i class="fas fa-reply-all"></i> Reply</button>
+            <button data-th-if="${user}" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#newReplyModal"><i class="fas fa-reply-all"></i> Reply</button>
             <h5 class="title">All replies</h5><br/>
             <div class="row" id="repliesContainer">
 
@@ -126,19 +126,25 @@
     </div>
 </div>
 
-<div class="modal fade" id="newReplyModal" tabindex="-1" aria-labelledby="newReplyModal" aria-hidden="true">
+<div data-th-if="${user}" class="modal fade" id="newReplyModal" tabindex="-1" aria-labelledby="newReplyModal" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="newReplyModalTitle">Add a new reply</h5>
+                <h5 class="modal-title" id="newDiscussionModalTitle">Create new reply</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-
+                <form id="newReplyForm">
+                    <div class="row">
+                        <div class="col-12">
+                            <textarea name="replyContent" id="replyContent"></textarea>
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Publish</button>
+                <button type="button" class="btn btn-primary" id="modalCreateReplyButton">Create</button>
             </div>
         </div>
     </div>
@@ -146,6 +152,7 @@
 
 <script src="../static/js/jQuery.js" data-th-src="@{/static/js/jQuery.js}"></script>
 <script src="../static/js/bootstrap/bootstrap.bundle.min.js" data-th-src="@{/static/js/bootstrap/bootstrap.bundle.min.js}"></script>
+<script src="../static/ckeditor/ckeditor.js" data-th-src="@{/static/ckeditor/ckeditor.js}"></script>
 <script data-th-if="${discussionId}" data-th-inline="javascript">
     const discussionId = /*[[${discussionId}]]*/ 0;
 </script>
