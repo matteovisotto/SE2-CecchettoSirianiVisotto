@@ -1,5 +1,6 @@
 package it.dreamplatform.forum.services;
 
+import it.dreamplatform.forum.entities.Discussion;
 import it.dreamplatform.forum.entities.Post;
 
 import javax.ejb.Stateless;
@@ -77,11 +78,8 @@ public class PostService {
      * @param post is the Post entity.
      */
     public void deletePost(Post post){
-        if(em.contains(post)){
+        if(em.find(Post.class, post.getPostId()) != null){
             em.remove(post);
-            em.flush();
-        } else{
-            em.merge(post);
             em.flush();
         }
     }

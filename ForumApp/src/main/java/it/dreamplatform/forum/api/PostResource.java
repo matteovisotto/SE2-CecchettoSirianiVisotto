@@ -47,25 +47,6 @@ public class PostResource {
         }
     }
 
-
-    /**
-     * This function is the api used to retrieve a List of Post of a given Discussion, by going at "/post/discussionId".
-     * @param discussionId is the id of the Discussion.
-     * @return a response with a JSON format of the List of Post of a given Discussion.
-     */
- /*   @GET
-    @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
-    @Path("/{discussionId: [0-9]+}")
-    public Response getPostsByDiscussionId(@PathParam("discussionId") Long discussionId){
-        List<PostBean> posts;
-        try {
-            posts = postController.getPostsByDiscussionId(discussionId);
-            return Response.ok().entity(gson.toJson(posts)).build();
-        } catch (Exception e) {
-            return Response.status(204).entity("[]").build();
-        }
-    }
-*/
     /**
      * This function is the api used to retrieve a List of Post of a given User, by going at "/post/creator/creatorId".
      * @param creatorId is the id of the User that has created the Post.
@@ -138,6 +119,11 @@ public class PostResource {
         }
     }
 
+    /**
+     * This function is the api used to modify the data of a Post, by going at "/post/modify".
+     * @param post is the PostBean.
+     * @return a response with a JSON format about the success of the operation.
+     */
     @POST
     @Path("/modify")
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
@@ -147,6 +133,25 @@ public class PostResource {
         UserBean user = (UserBean) request.getSession().getAttribute("user");
         try {
             postController.modifyPost(post, user);
+            return Response.ok().entity("{\"success\":1}").build();
+        } catch (Exception e) {
+            return Response.status(400).entity("{\"success\":0}").build();
+        }
+    }
+
+    /**
+     * This function is the api used to start the procedure of deleting a Post, by going at "/post/delete".
+     * @param postId is the Post.
+     * @return a response with a JSON format about the success of the operation.
+     */
+    @POST
+    @Path("/delete/{postId:[0-9]+}")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
+    @Consumes(MediaType.APPLICATION_JSON + ";charset=UTF-8")
+    @RolesAllowed({"user", "policy_maker"})
+    public Response deleteDiscussion(@PathParam("postId") Long postId){
+        try {
+            postController.deletePost(postId);
             return Response.ok().entity("{\"success\":1}").build();
         } catch (Exception e) {
             return Response.status(400).entity("{\"success\":0}").build();

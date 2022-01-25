@@ -78,6 +78,12 @@ public class PostController {
         }
     }*/
 
+    /**
+     * This function will create a post, then it will store it, calling the savePost.
+     * @param post is the PostBean that will be mapped to an entity and stored on the DB.
+     * @param userBean is the bean of the user in the session.
+     * @throws Exception when the user is null or the text of the post is null.
+     */
     public void publishPost(PostBean post, UserBean userBean) throws Exception {
         User user = userService.getUserById(userBean.getUserId());
         if(user == null){
@@ -96,6 +102,12 @@ public class PostController {
         postService.savePost(postMapper.mapBeanToEntity(post));
     }
 
+    /**
+     * This function will modify a post, then it will store it, calling the savePost.
+     * @param post is the PostBean that will be mapped to an entity and mod.
+     * @param user is the bean of the user in the session.
+     * @throws Exception when the post doesn't exist or the creator of the post is not a Policy maker and try to modify a post that he hasn't created.
+     */
     public void modifyPost(PostBean post, UserBean user) throws Exception {
         Post postToModify = postService.getPostById(post.getPostId());
         if(postToModify == null){

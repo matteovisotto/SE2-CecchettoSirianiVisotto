@@ -53,7 +53,7 @@ $(function () {
 
         var rankNode = $('<div/>').addClass('col-1 d-flex').append(rank);
 
-        var topicNode = $('<span/>').addClass('text-secondary float-end small').text("Topic: " + getTopicNameByID(d.topicId));
+        var topicNode = $('<span/>').addClass('text-secondary float-end small').text("Topic: " + d.topicId);
         var h4Node = $('<h4/>').addClass('card-title').text(d.title);
         var descriptionNode = $('<div/>').addClass('card-text').html(d.text);
         var authorNode = '<table class="table table-borderless text-secondary"><tbody><tr class="small">' +
@@ -73,16 +73,6 @@ $(function () {
         discussionContainer.append(container);
 
 
-    }
-
-
-    function getTopicNameByID(tId) {
-        topics.forEach(t => {
-            if(t.topicId === tId){
-                return t.title;
-            }
-        });
-        return "";
     }
 
 });

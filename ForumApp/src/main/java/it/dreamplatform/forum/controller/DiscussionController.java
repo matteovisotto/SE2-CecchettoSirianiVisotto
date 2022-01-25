@@ -29,8 +29,8 @@ public class DiscussionController {
 
     /**
      * This function is used to retrieve a DiscussionContentBean.
-     * @param discussionId is the id of the selected discussion.
-     * @return a Bean containing all the elements of a discussion.
+     * @param discussionId is the id of the selected Discussion.
+     * @return a Bean containing all the elements of a Discussion.
      */
     public DiscussionContentBean getPostsByDiscussionId(Long discussionId){
         DiscussionContentBean discussionContentBean = discussionMapper.mapEntityToContentBean(discussionService.getDiscussionById(discussionId));
