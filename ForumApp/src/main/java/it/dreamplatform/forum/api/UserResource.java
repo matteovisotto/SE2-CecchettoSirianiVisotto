@@ -77,8 +77,9 @@ public class UserResource {
     @Produces("application/json")
     @RolesAllowed("policy_maker")
     public Response getUserByEmail(@PathParam("mail") String mail){
+        UserBean user = userController.searchUser(mail);
         //Ho modificato facendolo passare dal controller
-        User user = userService.getUserByMail(mail);
+        //User user = userService.getUserByMail(mail);
         if(user == null){
             return Response.status(204).entity("{}").build();
         }
