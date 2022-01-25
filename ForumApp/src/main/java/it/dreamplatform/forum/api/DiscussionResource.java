@@ -23,7 +23,7 @@ public class DiscussionResource {
     private final Gson gson = new Gson();
 
     /**
-     * This function is the api used to retrieve a specific Discussion by going at "/discussion/discussionId".
+     * This function is the api used to retrieve a specific Discussion by going at "/discussion/{discussionId}".
      * @param discussionId is the id of the Discussion.
      * @return a response with a JSON format of the searched Discussion.
      */
@@ -36,7 +36,7 @@ public class DiscussionResource {
     }
 
     /**
-     * This function is the api used to retrieve all the Discussions published by a Policy maker, by going at "/discussion/policyMaker/policyMakerId".
+     * This function is the api used to retrieve all the Discussions published by a Policy maker, by going at "/discussion/policyMaker/{policyMakerId}".
      * @param policyMakerId is the id of the Policy maker.
      * @return a response with a JSON format of the searched List of Discussion.
      */
@@ -73,7 +73,7 @@ public class DiscussionResource {
     }
 
     /**
-     * This function is the api used to start the procedure of deleting a Discussion, by going at "/discussion/delete".
+     * This function is the api used to start the procedure of deleting a Discussion, by going at "/discussion/delete/{discussionId}".
      * @param discussionId is the Discussion.
      * @return a response with a JSON format about the success of the operation.
      */
@@ -105,7 +105,7 @@ public class DiscussionResource {
     }
 
     /**
-     * This function is the api used to retrieve the List of User that has replied to a given discussion, by going at "/discussion/discussionId".
+     * This function is the api used to retrieve the List of User that has replied to a given discussion, by going at "/discussion/{discussionId}".
      * @param discussionId is the id of the Discussion we are interested in.
      * @return a response with a JSON format of a List of User.
      */

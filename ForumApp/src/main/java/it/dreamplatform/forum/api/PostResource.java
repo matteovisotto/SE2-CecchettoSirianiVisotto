@@ -31,11 +31,10 @@ public class PostResource {
     HttpServletRequest request;
 
     /**
-     * This function is the api used to retrieve a Post by going at "/post/postId".
+     * This function is the api used to retrieve a Post by going at "/post/{postId}".
      * @param postId is the id of the Post.
      * @return a response with a JSON format Post.
      */
-
     @GET
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
     @Path("/{postId: [0-9]+}")
@@ -49,7 +48,7 @@ public class PostResource {
     }
 
     /**
-     * This function is the api used to retrieve a List of Post of a given User, by going at "/post/creator/creatorId".
+     * This function is the api used to retrieve a List of Post of a given User, by going at "/post/creator/{creatorId}".
      * @param creatorId is the id of the User that has created the Post.
      * @return a response with a JSON format of the List of Post created by a given User.
      */
@@ -67,7 +66,7 @@ public class PostResource {
     }
 
     /**
-     * This function is the api used to approve a post in the pending list (the posts with status 0). It can be used by going at "/post/approve/postId".
+     * This function is the api used to approve a post in the pending list (the posts with status 0). It can be used by going at "/post/approve/{postId}".
      * @param postId is the id of the Post to approve.
      * @return a response with a JSON format about the success of the operation.
      */
@@ -84,7 +83,7 @@ public class PostResource {
     }
 
     /**
-     * This function is the api used to decline a post in the pending list (the posts with status 0). It can be used by going at "/post/decline/postId".
+     * This function is the api used to decline a post in the pending list (the posts with status 0). It can be used by going at "/post/decline/{postId}".
      * @param postId is the id of the Post to decline.
      * @return a response with a JSON format about the success of the operation.
      */
@@ -141,7 +140,7 @@ public class PostResource {
     }
 
     /**
-     * This function is the api used to start the procedure of deleting a Post, by going at "/post/delete".
+     * This function is the api used to start the procedure of deleting a Post, by going at "/post/delete/{postId}".
      * @param postId is the Post.
      * @return a response with a JSON format about the success of the operation.
      */

@@ -1,5 +1,6 @@
 package it.dreamplatform.forum.controller;
 
+import it.dreamplatform.forum.bean.PostBean;
 import it.dreamplatform.forum.bean.PublicUserBean;
 import it.dreamplatform.forum.bean.UserBean;
 import it.dreamplatform.forum.mapper.UserMapper;
@@ -16,6 +17,15 @@ public class UserController {
     UserMapper userMapper;
     @Inject
     UserService userService;
+
+    /**
+     * This function retrieve a given User, given its id.
+     * @param userId is the id of the selected user.
+     * @return the Bean of the needed user.
+     */
+    public UserBean getUserById(Long userId) {
+        return userMapper.mapEntityToBean(userService.getUserById(userId));
+    }
 
     /**
      * This function retrieve a User, given its email (since the emails are unique this function will always return 1 user).

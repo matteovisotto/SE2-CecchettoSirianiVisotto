@@ -48,7 +48,7 @@ public class UserResource {
     }
 
     /**
-     * This function is the api used to retrieve a specific User, by going at "/user/uid".
+     * This function is the api used to retrieve a specific User, by going at "/user/{uid}".
      * @param uid is the id of the User.
      * @return a response with a JSON format of the searched User.
      */
@@ -57,15 +57,18 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
     @RolesAllowed("policy_maker")
     public Response getUserById(@PathParam("uid") Long uid){
-        User user = userService.getUserById(uid);
-        if(user == null){
+        UserBean user = userController.getUserById(uid);
+        //Non ritorna bene in caso non esiste lo user
+        //Ho modificato facendolo passare dal controller
+        //User user = userService.getUserById(uid);
+        if (user == null){
             return Response.status(204).entity("{}").build();
         }
         return Response.ok().entity(gson.toJson(user)).build();
     }
 
     /**
-     * This function is the api used to retrieve a specific User by its email, by going at "/user/mail".
+     * This function is the api used to retrieve a specific User by its email, by going at "/user/{mail}".
      * @param mail is the mail of the User.
      * @return a response with a JSON format of the searched User.
      */
@@ -74,6 +77,7 @@ public class UserResource {
     @Produces("application/json")
     @RolesAllowed("policy_maker")
     public Response getUserByEmail(@PathParam("mail") String mail){
+        //Ho modificato facendolo passare dal controller
         User user = userService.getUserByMail(mail);
         if(user == null){
             return Response.status(204).entity("{}").build();

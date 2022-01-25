@@ -36,7 +36,7 @@ public class TopicResource {
     }
 
     /**
-     * This function is the api used to retrieve a specific Topic by going at "/topic/topicId".
+     * This function is the api used to retrieve a specific Topic by going at "/topic/{topicId}".
      * @param topicId is the id of the Topic.
      * @return a response with a JSON format of the searched Topic.
      */
