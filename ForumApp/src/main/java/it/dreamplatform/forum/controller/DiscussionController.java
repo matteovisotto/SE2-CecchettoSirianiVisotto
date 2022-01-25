@@ -3,10 +3,12 @@ package it.dreamplatform.forum.controller;
 import it.dreamplatform.forum.bean.DiscussionBean;
 import it.dreamplatform.forum.bean.DiscussionContentBean;
 import it.dreamplatform.forum.bean.PostBean;
+import it.dreamplatform.forum.bean.PublicUserBean;
 import it.dreamplatform.forum.entities.Discussion;
 import it.dreamplatform.forum.entities.Post;
 import it.dreamplatform.forum.mapper.DiscussionMapper;
 import it.dreamplatform.forum.mapper.PostMapper;
+import it.dreamplatform.forum.mapper.UserMapper;
 import it.dreamplatform.forum.services.DiscussionService;
 import it.dreamplatform.forum.services.PostService;
 import it.dreamplatform.forum.services.UserService;
@@ -29,6 +31,8 @@ public class DiscussionController {
     PostService postService;
     @Inject
     PostMapper postMapper;
+    @Inject
+    UserMapper userMapper;
 
     /**
      * This function is used to retrieve a DiscussionContentBean.
@@ -48,10 +52,19 @@ public class DiscussionController {
 
     /**
      * This function is used to retrieve a List of DiscussionBean of the most active Discussion.
-     * @return a Bean containing all the elements of a discussion.
+     * @return a List of Bean of the retrieved discussions.
      */
     public List<DiscussionBean> getDiscussionExplore(){
         return discussionMapper.mapEntityListToBeanList(discussionService.getMostActiveDiscussions(10));
+    }
+
+    /**
+     * This function is used to retrieve the List of User that has replied to a given discussion.
+     * @param discussionId is the id of the Discussion we are interested in.
+     * @return a List of Bean of the retrieved users.
+     */
+    public List<PublicUserBean> getDiscussionFollowers(Long discussionId){
+        return userMapper.mapEntityListToPublicUserBeanList(discussionService.getDiscussionFollowers(discussionId));
     }
 
     /**

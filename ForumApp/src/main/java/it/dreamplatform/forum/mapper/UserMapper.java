@@ -4,6 +4,10 @@ import it.dreamplatform.forum.bean.PublicUserBean;
 import it.dreamplatform.forum.entities.User;
 import it.dreamplatform.forum.bean.UserBean;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * This class do different mappings between a User entity to its corresponding bean and vice versa.
  */
@@ -35,6 +39,29 @@ public class UserMapper {
         bean.setPolicyMakerID(entity.getPolicyMakerID());
         bean.setCreatedAt(entity.getCreatedAt());
         return bean;
+    }
+
+    /**
+     * This function creates a new List and call another function to map the values from the entities inside it.
+     * @param entities are the User entities from which the values will be retrieved.
+     * @return the corresponding List of PublicUserBean just created.
+     */
+    public List<PublicUserBean> mapEntityListToPublicUserBeanList(List<User> entities){
+        return mapEntityListToPublicUserBeanList(entities, new ArrayList<>());
+    }
+
+    /**
+     * This function maps every User entity into a PublicUserBean and then return the complete List.
+     * @param entities is the List of User entities of the DB.
+     * @param beans is the List of object into which the entities will be mapped.
+     * @return the corresponding List of PublicUserBean or null if the List of entities is null.
+     */
+    public List<PublicUserBean> mapEntityListToPublicUserBeanList(List<User> entities, List<PublicUserBean> beans){
+        if (entities.isEmpty()) {return Collections.emptyList();}
+        entities.forEach(e -> {
+            beans.add(mapEntityToPublicBean(e));
+        });
+        return beans;
     }
 
     /**

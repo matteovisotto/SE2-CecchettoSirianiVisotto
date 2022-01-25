@@ -3,6 +3,7 @@ package it.dreamplatform.forum.api;
 import com.google.gson.Gson;
 import it.dreamplatform.forum.bean.DiscussionBean;
 import it.dreamplatform.forum.bean.DiscussionContentBean;
+import it.dreamplatform.forum.bean.PublicUserBean;
 import it.dreamplatform.forum.controller.DiscussionController;
 
 import javax.annotation.security.RolesAllowed;
@@ -91,7 +92,7 @@ public class DiscussionResource {
     }
 
     /**
-     * This function is the api used to retrieve a List of the most commented Discussions, by going at "/discussion/discussionId".
+     * This function is the api used to retrieve a List of the most commented Discussions, by going at "/discussion/explore".
      * @return a response with a JSON format of a List of the most commented Discussions.
      */
     @GET
@@ -99,6 +100,19 @@ public class DiscussionResource {
     @Path("/explore")
     public Response getDiscussionExplore(){
         List<DiscussionBean> posts = discussionController.getDiscussionExplore();
+        return Response.ok().entity(gson.toJson(posts)).build();
+    }
+
+    /**
+     * This function is the api used to retrieve the List of User that has replied to a given discussion, by going at "/discussion/discussionId".
+     * @param discussionId is the id of the Discussion we are interested in.
+     * @return a response with a JSON format of a List of User.
+     */
+    @GET
+    @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
+    @Path("/followers/{discussionId:[0-9]+}")
+    public Response getDiscussionFollowers(@PathParam("discussionId") Long discussionId){
+        List<PublicUserBean> posts = discussionController.getDiscussionFollowers(discussionId);
         return Response.ok().entity(gson.toJson(posts)).build();
     }
 }
