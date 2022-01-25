@@ -81,11 +81,8 @@ public class DiscussionService {
      * @param discussion is the Discussion entity.
      */
     public void deleteDiscussion(Discussion discussion){
-        if(em.contains(discussion)){
+        if(em.find(Discussion.class, discussion.getDiscussionId()) != null){
             em.remove(discussion);
-            em.flush();
-        } else{
-            em.merge(discussion);
             em.flush();
         }
     }

@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "Post", schema = "dream_forum")
-@NamedQuery(name = "Post.findByDiscussion", query = "SELECT p FROM Post p where p.discussion.discussionId = :discussionId")
+
 public class Post implements Serializable {
     @Id
     @Column(columnDefinition = "integer")
