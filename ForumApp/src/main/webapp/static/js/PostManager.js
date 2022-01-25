@@ -15,16 +15,27 @@ $(function () {
             $.ajax({
                 type: "POST",
                 url: "../api/post/publish",
-                // The key needs to match your method's input parameter (case-sensitive).
                 data: JSON.stringify(postObj),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function(data){
                     $('#newReplyModal').modal('hide');
-                    loadData();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Post successfully added',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then((r) => {
+                        loadData();
+                    });
                 },
                 error: function(e) {
-                    alert("Error!");
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'An error occurred. Please try again',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                 }
             });
         });
@@ -112,7 +123,7 @@ $(function () {
                             'Your file has been deleted.',
                             'success'
                         )
-                        window.location.href('../');
+                        window.location.href = '../home';
                     }).fail(function (error){
                         Swal.fire(
                             'Error!',
