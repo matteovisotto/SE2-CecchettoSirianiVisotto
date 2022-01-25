@@ -2,6 +2,7 @@ package it.dreamplatform.forum.controller;
 
 import it.dreamplatform.forum.bean.DiscussionBean;
 import it.dreamplatform.forum.bean.DiscussionContentBean;
+import it.dreamplatform.forum.bean.PostBean;
 import it.dreamplatform.forum.entities.Discussion;
 import it.dreamplatform.forum.entities.Post;
 import it.dreamplatform.forum.mapper.DiscussionMapper;
@@ -11,6 +12,7 @@ import it.dreamplatform.forum.services.PostService;
 import it.dreamplatform.forum.services.UserService;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DiscussionController {
@@ -81,12 +83,12 @@ public class DiscussionController {
      * @param discussion is the complete Bean that is going to be the new discussion.
      */
     public void createDiscussion(DiscussionContentBean discussion)/* throws Exception */{
-        /*if(discussion.getDiscussionId() != null){
-            throw new Exception("The discussion is already present!");
-        }*/
-        Long newDiscussionId = discussionService.saveDiscussion(discussionMapper.mapContentBeanToEntity(discussion));
-        Post post = postMapper.mapBeanToEntity(discussion.getPosts().get(0));
-        post.setDiscussion(discussionService.getDiscussionById(newDiscussionId));
+        PostBean pb = discussion.getPosts().get(0);
+        Discussion d = discussionMapper.mapContentBeanToEntity(discussion);
+        d.setPosts(new ArrayList<>());
+        Long newDiscussionId = discussionService.saveDiscussion(d);
+        pb.setDiscussionId(newDiscussionId);
+        Post post = postMapper.mapBeanToEntity(pb);
         post.setStatus(1);
         postService.savePost(post);
     }
