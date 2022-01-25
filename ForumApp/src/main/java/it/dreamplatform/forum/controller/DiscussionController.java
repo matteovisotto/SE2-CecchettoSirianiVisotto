@@ -2,6 +2,7 @@ package it.dreamplatform.forum.controller;
 
 import it.dreamplatform.forum.bean.DiscussionBean;
 import it.dreamplatform.forum.bean.DiscussionContentBean;
+import it.dreamplatform.forum.entities.Discussion;
 import it.dreamplatform.forum.entities.Post;
 import it.dreamplatform.forum.mapper.DiscussionMapper;
 import it.dreamplatform.forum.mapper.PostMapper;
@@ -30,7 +31,14 @@ public class DiscussionController {
      * @return a Bean containing all the elements of a discussion.
      */
     public DiscussionContentBean getPostsByDiscussionId(Long discussionId){
-        return discussionMapper.mapEntityToContentBean(discussionService.getDiscussionById(discussionId));
+        DiscussionContentBean discussionContentBean = discussionMapper.mapEntityToContentBean(discussionService.getDiscussionById(discussionId));
+        for (int i = 0; i < discussionContentBean.getPosts().size(); i++){
+            if (discussionContentBean.getPosts().get(i).getStatus() == 0) {
+                discussionContentBean.getPosts().remove(i);
+                discussionContentBean.setNumberReplies(discussionContentBean.getNumberReplies() - 1);
+            }
+        }
+        return discussionContentBean;
     }
 
     /**
