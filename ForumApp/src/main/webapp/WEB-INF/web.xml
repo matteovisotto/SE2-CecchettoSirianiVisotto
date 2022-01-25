@@ -11,11 +11,20 @@
     <!--Servlet filter -->
     <filter>
         <filter-name>LoginChecker</filter-name>
-        <filter-class>it.dreamplatform.forum.filters.LoginChecker</filter-class>
+        <filter-class>it.dreamplatform.forum.filters.HideLoginPage</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>LoginChecker</filter-name>
         <url-pattern>/login</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>SessionChecker</filter-name>
+        <filter-class>it.dreamplatform.forum.filters.LoginChecker</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>SessionChecker</filter-name>
+        <url-pattern>/my/*</url-pattern>
     </filter-mapping>
 
     <filter>
@@ -25,5 +34,6 @@
     <filter-mapping>
         <filter-name>PolicyMakerChecker</filter-name>
         <url-pattern>/moderator/*</url-pattern>
+        <url-pattern>/my/discussions</url-pattern>
     </filter-mapping>
 </web-app>

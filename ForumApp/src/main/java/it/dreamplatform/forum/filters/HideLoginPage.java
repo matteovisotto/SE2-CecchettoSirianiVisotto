@@ -6,11 +6,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class LoginChecker implements Filter {
+public class HideLoginPage implements Filter {
     /**
      * Default constructor.
      */
-    public LoginChecker() {
+    public HideLoginPage() {
         // TODO Auto-generated constructor stub
     }
 
@@ -30,8 +30,8 @@ public class LoginChecker implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession s = req.getSession();
-        if (s.getAttribute("user") == null) {
-            res.sendRedirect(req.getContextPath()+"/login");
+        if (s.getAttribute("user") != null) {
+            res.sendRedirect(req.getContextPath()+"/");
             return;
         }
         // pass the request along the filter chain
