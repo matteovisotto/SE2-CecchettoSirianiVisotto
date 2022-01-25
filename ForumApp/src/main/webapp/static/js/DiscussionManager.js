@@ -74,7 +74,7 @@ $(function () {
 
         var topicNode = $('<span/>').addClass('text-secondary float-end small').text("Topic: " + t.title);
         var h4Node = $('<h4/>').addClass('card-title').text(d.title);
-        var descriptionNode = $('<p/>').addClass('card-text').text(d.text);
+        var descriptionNode = $('<div/>').addClass('card-text').html(d.text);
         var authorNode = '<table class="table table-borderless text-secondary"><tbody><tr class="small">' +
             '<td><img src="../static/assets/placeholder_user.png" class="top-user-img"> Posted' +
             'by: <strong>'+d.creator.name + ' ' + d.creator.surname+'</strong></td>' +

@@ -15,6 +15,8 @@ public class ConfigurePostFilter implements DescriptorCustomizer {
 
         ExpressionBuilder eb = new ExpressionBuilder(mapping
                 .getReferenceClass());
+
+        Expression origExp = mapping.getSelectionCriteria();
         Expression activeExp = eb.getField("status").equal(1);
         mapping.setSelectionCriteria(activeExp);
     }
