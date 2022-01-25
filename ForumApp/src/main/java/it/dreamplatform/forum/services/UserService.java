@@ -61,17 +61,6 @@ public class UserService {
         return user.getUserId();
     }
 
-    //Non so in che contesto si usi
-    public void saveUser(User user) {
-        if(user.getUserId() == null){
-            em.persist(user);
-            em.flush();
-        } else {
-            user = em.merge(user);
-            em.flush();
-        }
-    }
-
     /**
      * This function query the DB, in order to delete a User.
      * @param user is the User entity.

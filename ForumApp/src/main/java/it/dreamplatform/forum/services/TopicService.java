@@ -57,6 +57,10 @@ public class TopicService {
         return c.getTopicId();
     }
 
+    /**
+     * This function query the DB, in order to store the modifies applied to a Topic.
+     * @param topic is the Topic entity.
+     */
     public void saveTopic(Topic topic) {
         if(topic.getTopicId() == null){
             em.persist(topic);

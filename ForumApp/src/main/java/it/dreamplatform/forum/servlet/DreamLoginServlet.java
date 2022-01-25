@@ -2,10 +2,7 @@ package it.dreamplatform.forum.servlet;
 
 import it.dreamplatform.forum.bean.UserBean;
 import it.dreamplatform.forum.controller.UserController;
-import it.dreamplatform.forum.entities.User;
-import it.dreamplatform.forum.services.UserService;
 
-import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,8 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Array;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

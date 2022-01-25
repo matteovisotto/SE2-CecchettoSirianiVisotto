@@ -1,14 +1,9 @@
 package it.dreamplatform.forum.entities;
 
-import org.eclipse.persistence.annotations.Customizer;
-import org.eclipse.persistence.config.HintValues;
-import org.eclipse.persistence.config.QueryHints;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "Discussion", schema = "dream_forum")

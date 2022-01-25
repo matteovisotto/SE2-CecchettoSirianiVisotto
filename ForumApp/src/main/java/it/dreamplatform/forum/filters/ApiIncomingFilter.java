@@ -1,7 +1,6 @@
 package it.dreamplatform.forum.filters;
 
 import it.dreamplatform.forum.bean.UserBean;
-import it.dreamplatform.forum.entities.User;
 import it.dreamplatform.forum.utils.AuthorizationRoleEnum;
 
 import javax.annotation.security.RolesAllowed;
