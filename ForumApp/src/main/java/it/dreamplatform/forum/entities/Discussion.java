@@ -1,6 +1,5 @@
 package it.dreamplatform.forum.entities;
 
-import it.dreamplatform.forum.JPAConfigurator.ConfigurePostFilter;
 import org.eclipse.persistence.annotations.Customizer;
 import org.eclipse.persistence.config.HintValues;
 import org.eclipse.persistence.config.QueryHints;
@@ -13,7 +12,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Discussion", schema = "dream_forum")
-/*@Customizer(ConfigurePostFilter.class)*/
+
 public class Discussion implements Serializable {
     private static final long serialVersionUID = 1L;
 
