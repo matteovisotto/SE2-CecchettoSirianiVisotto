@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Contacts</title>
+    <title>About</title>
 
     <link href="../static/assets/fontawesome/css/all.css" data-th-href="@{/static/assets/fontawesome/css/all.css}" rel="stylesheet" />
     <script defer src="../static/assets/fontawesome/js/all.js" data-th-src="@{/static/assets/fontawesome/js/all.js}"></script>
@@ -53,16 +53,24 @@
         </div>
         <!-- Content from here -->
         <div class="col-md-7">
-            <h2 class="title">Contact</h2>
-            <div class="row mt-2" id="contactsTitle">
-                <h3 class="text-secondary">To contact us check our list of contacts present below:</h3>
+            <h2 class="title">About</h2>
+            <div class="row mt-2" id="aboutTitle">
+                <h3 class="text-secondary">Some information about us and our project:</h3>
             </div>
-            <div class="row mt-3" id="contacts">
-                <ul class="side-menu">
-                    <li class=""><a href="mailto:mail1@mail.polimi.it"><i class="fas fa-mail-bulk"></i> Admin1: mail1@mail.polimi.it</a></li>
-                    <li class=""><a href="mailto:mail2@mail.polimi.it"><i class="fas fa-mail-bulk"></i> Admin2: mail2@mail.polimi.it</a></li>
-                    <li class=""><a href="mailto:mail3@mail.polimi.it"><i class="fas fa-mail-bulk"></i> Admin3: mail3@mail.polimi.it</a></li>
-                </ul>
+            <div class="row mt-2">
+                <!--<div class="row mt-3" id="moreInformation">-->
+                <h4 class="text-secondary">Our goal</h4>
+                <h6 class="text-secondary">To reach the goals required, Dream platform shall allow to aggregate and elaborate
+                    public data coming from different sources, alongside building the forum in order to create a network
+                    of knowledge.</h6>
+                <!--</div>-->
+            </div>
+            <div class="row mt-2">
+                <!--<div class="row mt-3" id="moreInformation">-->
+                <h4 class="text-secondary">Find Us</h4>
+                <h6 class="text-secondary">We are a group of a students of Politecnico of Milano and this is a project for the Software Engineering 2 course.</h6>
+                <div class="mt-5" id="googleMap" style="width:100%;height:400px;"></div>
+                <!--</div>-->
             </div>
         </div>
         <!-- Content end here -->
@@ -73,7 +81,7 @@
                     <div class="card border-0 shadow dream-card">
                         <div class="card-body">
                             <div class="row sidebar-link">
-                                <div class="col-6"><a href="">About</a></div>
+                                <div class="col-6"><a href="about.html" data-th-href="@{/about}">About</a></div>
                                 <div class="col-6"><a href="contact.html" data-th-href="@{/contact}">Contact</a></div>
                                 <div class="col-6"><a href="">Information</a></div>
                                 <div class="col-6"><a href="" data-th-href="@{/}">Topics</a></div>
