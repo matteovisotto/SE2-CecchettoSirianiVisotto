@@ -11,7 +11,7 @@ public class PostBean implements Serializable {
     private Date timestamp;
     private int status;
     private PublicUserBean creator;
-    //private Discussion discussion;
+    private Long discussionId;
 
     public Long getPostId() {
         return postId;
@@ -53,11 +53,11 @@ public class PostBean implements Serializable {
         this.creator = creator;
     }
 
-    /*public Discussion getDiscussion() {
-        return discussion;
+    public Long getDiscussionId() {
+        return discussionId;
     }
 
-    public void setDiscussion(Discussion discussion) {
-        this.discussion = discussion;
-    }*/
+    public void setDiscussion(Long discussionId) {
+        this.discussionId = discussionId;
+    }
 }

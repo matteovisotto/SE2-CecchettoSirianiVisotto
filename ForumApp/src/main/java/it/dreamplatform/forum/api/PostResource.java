@@ -1,6 +1,7 @@
 package it.dreamplatform.forum.api;
 
 import com.google.gson.Gson;
+import it.dreamplatform.forum.bean.DiscussionBean;
 import it.dreamplatform.forum.bean.DiscussionContentBean;
 import it.dreamplatform.forum.bean.PostBean;
 import it.dreamplatform.forum.bean.UserBean;

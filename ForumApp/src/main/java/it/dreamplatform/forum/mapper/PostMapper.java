@@ -1,7 +1,9 @@
 package it.dreamplatform.forum.mapper;
 
+import it.dreamplatform.forum.entities.Discussion;
 import it.dreamplatform.forum.entities.Post;
 import it.dreamplatform.forum.bean.PostBean;
+import it.dreamplatform.forum.services.DiscussionService;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -11,6 +13,8 @@ import java.util.List;
 public class PostMapper {
     @Inject
     UserMapper userMapper;
+    @Inject
+    DiscussionService discussionService;
 
     /**
      * This function creates a PostBean and call another function to maps the values.
@@ -34,7 +38,7 @@ public class PostMapper {
         bean.setTimestamp(entity.getTimestamp());
         bean.setStatus(entity.getStatus());
         bean.setCreator(userMapper.mapEntityToPublicBean(entity.getCreator()));
-        //bean.setDiscussion(entity.getDiscussion());
+        bean.setDiscussion(entity.getDiscussion().getDiscussionId());
         return bean;
     }
 
@@ -60,7 +64,8 @@ public class PostMapper {
         entity.setTimestamp(bean.getTimestamp());
         entity.setStatus(bean.getStatus());
         entity.setCreator(userMapper.mapPublicBeanToEntity(bean.getCreator()));
-        //entity.setDiscussion(bean.getDiscussion());
+        Discussion discussion = discussionService.getDiscussionById(bean.getDiscussionId());
+        entity.setDiscussion(discussion);
         return entity;
     }
 
