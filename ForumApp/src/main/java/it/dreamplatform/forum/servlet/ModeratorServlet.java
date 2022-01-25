@@ -1,6 +1,5 @@
 package it.dreamplatform.forum.servlet;
 
-import it.dreamplatform.forum.bean.UserBean;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;

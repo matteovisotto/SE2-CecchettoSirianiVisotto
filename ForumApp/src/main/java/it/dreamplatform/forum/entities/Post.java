@@ -1,7 +1,5 @@
 package it.dreamplatform.forum.entities;
 
-import it.dreamplatform.forum.utils.StatusEnum;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;

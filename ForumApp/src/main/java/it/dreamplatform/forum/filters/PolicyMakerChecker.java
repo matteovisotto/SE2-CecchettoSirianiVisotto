@@ -1,7 +1,6 @@
 package it.dreamplatform.forum.filters;
 
 import it.dreamplatform.forum.bean.UserBean;
-import it.dreamplatform.forum.entities.User;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

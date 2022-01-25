@@ -22,21 +22,12 @@ public class UserController {
         return userMapper.mapEntityToBean(userService.getUserByMail(email));
     }
 
-    //Penso sia una saveUser ma non so, quindi per ora non scrivo Javadoc.
-    public UserBean searchUser(UserBean userBean) {
-        User user = userMapper.mapBeanToEntity(userBean);
-        userService.saveUser(user);
-
-        return userMapper.mapEntityToBean(userService.getUserByMail(userBean.getMail()));
-    }
-
     /**
      * This function is used to create a new User.
      * @param userBean is the Bean containing all the information of the User that the function is going to create.
      * @return the id of the User just created.
      */
     public Long createUser(UserBean userBean){
-        //Perché ritorna Long?
         return userService.createUser(userMapper.mapBeanToEntity(userBean));
     }
 }
