@@ -61,7 +61,7 @@ public class PostService {
      * @return the id of the Post just created.
      */
     public Long savePost(Post post) {
-        if(post.getPostId() == null){
+        if(post.getPostId() == 0){
             em.persist(post);
             em.flush();
             return post.getPostId();

@@ -12,6 +12,7 @@ $(function () {
             postObj.timestamp = new Date();
             postObj.creator = {"userId": userId};
             postObj.discussionId = discussionId;
+            postObj.postId = 0;
             $.ajax({
                 type: "POST",
                 url: "../api/post/publish",
