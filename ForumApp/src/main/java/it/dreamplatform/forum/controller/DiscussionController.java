@@ -42,6 +42,14 @@ public class DiscussionController {
     }
 
     /**
+     * This function is used to retrieve a List of DiscussionBean of the most active Discussion.
+     * @return a Bean containing all the elements of a discussion.
+     */
+    public List<DiscussionBean> getDiscussionExplore(){
+        return discussionMapper.mapEntityListToBeanList(discussionService.getMostActiveDiscussions(10));
+    }
+
+    /**
      * This function is used to retrieve all the discussion of the selected Policy maker (checking if it exists or not).
      * @param policyMakerId is the id of the selected Policy maker.
      * @return the List of Discussion created by that Policy maker.

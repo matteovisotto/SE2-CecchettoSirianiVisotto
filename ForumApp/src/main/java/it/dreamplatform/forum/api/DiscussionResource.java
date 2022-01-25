@@ -86,4 +86,16 @@ public class DiscussionResource {
             return Response.status(400).entity("{\"success\":0}").build();
         }
     }
+
+    /**
+     * This function is the api used to retrieve a List of the most commented Discussions, by going at "/discussion/discussionId".
+     * @return a response with a JSON format of a List of the most commented Discussions.
+     */
+    @GET
+    @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
+    @Path("/explore")
+    public Response getDiscussionExplore(){
+        List<DiscussionBean> posts = discussionController.getDiscussionExplore();
+        return Response.ok().entity(gson.toJson(posts)).build();
+    }
 }

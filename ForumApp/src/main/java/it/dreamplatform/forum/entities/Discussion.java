@@ -1,6 +1,5 @@
 package it.dreamplatform.forum.entities;
 
-import it.dreamplatform.forum.JPAConfigurator.ConfigurePostFilter;
 import org.eclipse.persistence.annotations.Customizer;
 import org.eclipse.persistence.config.HintValues;
 import org.eclipse.persistence.config.QueryHints;
