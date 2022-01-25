@@ -1,6 +1,5 @@
 package it.dreamplatform.forum.controller;
 
-import it.dreamplatform.forum.bean.DiscussionBean;
 import it.dreamplatform.forum.bean.TopicBean;
 import it.dreamplatform.forum.bean.TopicContentBean;
 import it.dreamplatform.forum.mapper.TopicMapper;
@@ -16,7 +15,6 @@ public class TopicController {
     @Inject
     TopicService topicService;
 
-    //public List<DiscussionBean> getDiscussions(){}
 
     public TopicBean getTopicById(Long topicId) {
         return topicMapper.mapEntityToBean(topicService.getTopicById(topicId));

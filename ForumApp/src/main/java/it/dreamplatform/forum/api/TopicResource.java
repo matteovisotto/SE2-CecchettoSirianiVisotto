@@ -23,6 +23,10 @@ public class TopicResource {
     private TopicController topicController;
     private final Gson gson = new Gson();
 
+    /**
+     * This function is the api used to retrieve all the Topic by going at "/topic".
+     * @return a response with a JSON format of all the topics.
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
     public Response getAllTopics() {
@@ -31,6 +35,11 @@ public class TopicResource {
         return Response.ok().entity(resp).build();
     }
 
+    /**
+     * This function is the api used to retrieve a specific Topic by going at "/topic/topicId".
+     * @param topicId is the id of the Topic.
+     * @return a response with a JSON format of the searched Topic.
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
     @Path("/{topicId: [0-9]+}")

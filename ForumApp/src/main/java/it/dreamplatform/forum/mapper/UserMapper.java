@@ -5,13 +5,24 @@ import it.dreamplatform.forum.entities.User;
 import it.dreamplatform.forum.bean.UserBean;
 
 public class UserMapper {
+
+    /**
+     * This function creates a UserBean and call another function to maps the values.
+     * @param entity is the entity of the DB.
+     * @return the corresponding UserBean just created.
+     */
     public UserBean mapEntityToBean(User entity){
         return mapEntityToBean(entity, new UserBean());
     }
 
+    /**
+     * This function sets the values of a UserBean using the values retrieve from a User entity.
+     * @param entity is the entity of the DB.
+     * @param bean is the object into which the function will set all the values.
+     * @return the corresponding UserBean or null if the entity is null.
+     */
     public UserBean mapEntityToBean(User entity, UserBean bean){
-        if(entity == null) {return null;}
-
+        if (entity == null) {return null;}
         bean.setUserId(entity.getUserId());
         bean.setName(entity.getName());
         bean.setSurname(entity.getSurname());
@@ -23,11 +34,23 @@ public class UserMapper {
         return bean;
     }
 
+    /**
+     * This function creates a User entity and call another function to maps the values.
+     * @param bean is the UserBean from which the value will be retrieved.
+     * @return the corresponding User entity just created.
+     */
     public User mapBeanToEntity(UserBean bean){
         return mapBeanToEntity(new User(), bean);
     }
 
+    /**
+     * This function sets the values of a User entity using the values retrieve from a UserBean.
+     * @param entity is the entity of the DB.
+     * @param bean is the object from which the values will be retrieved.
+     * @return the corresponding User entity or null if the Bean is null.
+     */
     public User mapBeanToEntity(User entity, UserBean bean){
+        if (bean == null) {return null;}
         entity.setUserId(bean.getUserId());
         entity.setName(bean.getName());
         entity.setSurname(bean.getSurname());
@@ -39,12 +62,23 @@ public class UserMapper {
         return entity;
     }
 
+    /**
+     * This function creates a PublicUserBean and call another function to maps the values.
+     * @param user is the entity of the DB.
+     * @return the corresponding PublicUserBean just created.
+     */
     public PublicUserBean mapEntityToPublicBean(User user) {
         return mapEntityToPublicBean(user, new PublicUserBean());
     }
 
+    /**
+     * This function sets the values of a PublicUserBean using the values retrieve from a User entity.
+     * @param entity is the entity of the DB.
+     * @param bean is the object into which the function will set all the values.
+     * @return the corresponding PublicUserBean or null if the entity is null.
+     */
     public PublicUserBean mapEntityToPublicBean(User entity, PublicUserBean bean) {
-        if(entity == null) {return null;}
+        if (entity == null) {return null;}
         bean.setUserId(entity.getUserId());
         bean.setName(entity.getName());
         bean.setSurname(entity.getSurname());
@@ -53,16 +87,27 @@ public class UserMapper {
         return bean;
     }
 
+    /**
+     * This function creates a User entity and call another function to maps the values.
+     * @param bean is the PublicUserBean from which the value will be retrieved.
+     * @return the corresponding User entity just created.
+     */
+    public User mapPublicBeanToEntity(PublicUserBean bean){
+        return mapPublicBeanToEntity(bean , new User());
+    }
+
+    /**
+     * This function sets the values of a User entity using the values retrieve from a PublicUserBean.
+     * @param entity is the entity of the DB.
+     * @param bean is the object from which the values will be retrieved.
+     * @return the corresponding User entity or null if the Bean is null.
+     */
     public User mapPublicBeanToEntity(PublicUserBean bean, User entity){
+        if (bean == null) {return null;}
         entity.setUserId(bean.getUserId());
         entity.setName(bean.getName());
         entity.setSurname(bean.getSurname());
         entity.setAreaOfResidence(bean.getAreaOfResidence());
         return entity;
     }
-
-    public User mapPublicBeanToEntity(PublicUserBean bean){
-        return mapPublicBeanToEntity(bean , new User());
-    }
-
 }

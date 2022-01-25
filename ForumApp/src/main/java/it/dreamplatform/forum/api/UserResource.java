@@ -24,6 +24,10 @@ public class UserResource {
     @Context
     HttpServletRequest request;
 
+    /**
+     * This function is the api used to retrieve the User in session, by going at "/user".
+     * @return a response with a JSON format of all the topics.
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
     @RolesAllowed({"user", "policy_maker"})
@@ -32,6 +36,11 @@ public class UserResource {
         return Response.ok().entity(gson.toJson(user)).build();
     }
 
+    /**
+     * This function is the api used to retrieve a specific User, by going at "/user/uid".
+     * @param uid is the id of the User.
+     * @return a response with a JSON format of the searched User.
+     */
     @GET
     @Path("/{uid: [0-9]+}")
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
@@ -44,6 +53,11 @@ public class UserResource {
         return Response.ok().entity(gson.toJson(user)).build();
     }
 
+    /**
+     * This function is the api used to retrieve a specific User by its email, by going at "/user/mail".
+     * @param mail is the mail of the User.
+     * @return a response with a JSON format of the searched User.
+     */
     @GET
     @Path("/{mail}")
     @Produces("application/json")

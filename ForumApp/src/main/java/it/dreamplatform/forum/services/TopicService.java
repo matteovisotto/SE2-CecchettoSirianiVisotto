@@ -15,21 +15,40 @@ public class TopicService {
 
     public TopicService(){}
 
+    /**
+     * This function query the DB to retrieve all the Topic entities stored.
+     * @return a List of Topic entities.
+     */
     public List<Topic> getAllTopics() {
         TypedQuery<Topic> query = em.createQuery("SELECT t FROM Topic t", Topic.class);
         return query.getResultList();
     }
 
+    /**
+     * This function query the DB to retrieve a given Topic.
+     * @param topicId is the id of the Topic.
+     * @return the Topic searched.
+     */
     public Topic getTopicById(Long topicId){
         return em.find(Topic.class, topicId);
     }
 
+    /**
+     * This function query the DB to retrieve a List of Topic given a title.
+     * @param title is the title used.
+     * @return the List of Discussion searched.
+     */
     public List<Topic> getTopicByTitle(String title){
         TypedQuery<Topic> query = em.createQuery("SELECT t FROM Topic t WHERE t.title =:title", Topic.class);
         query.setParameter("title", title);
         return query.getResultList();
     }
 
+    /**
+     * This function query the DB, in order to store in it a new Topic.
+     * @param title is the title used for the new Topic.
+     * @return the id of the Topic just created.
+     */
     public Long createTopic(String title){
         Topic c = new Topic();
         c.setTitle(title);
@@ -48,6 +67,10 @@ public class TopicService {
         }
     }
 
+    /**
+     * This function query the DB, in order to delete a Topic.
+     * @param topic is the Topic entity.
+     */
     public void deleteTopic(Topic topic){
         if(em.contains(topic)){
             em.remove(topic);

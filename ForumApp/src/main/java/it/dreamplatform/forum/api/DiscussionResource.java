@@ -4,11 +4,8 @@ import com.google.gson.Gson;
 import it.dreamplatform.forum.bean.DiscussionBean;
 import it.dreamplatform.forum.bean.DiscussionContentBean;
 import it.dreamplatform.forum.controller.DiscussionController;
-import it.dreamplatform.forum.entities.Discussion;
-import it.dreamplatform.forum.services.DiscussionService;
 
 import javax.annotation.security.RolesAllowed;
-import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -21,19 +18,29 @@ public class DiscussionResource {
     private DiscussionController discussionController;
     private final Gson gson = new Gson();
 
+    /**
+     * This function is the api used to retrieve a specific Discussion by going at "/discussion/discussionId".
+     * @param discussionId is the id of the Discussion.
+     * @return a response with a JSON format of the searched Discussion.
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
     @Path("/{discussionId: [0-9]+}")
-    public Response getByDiscussionId(@PathParam("discussionId") Long discussionId){
-        DiscussionContentBean posts = discussionController.getPostByDiscussionId(discussionId);
+    public Response getPostsByDiscussionId(@PathParam("discussionId") Long discussionId){
+        DiscussionContentBean posts = discussionController.getPostsByDiscussionId(discussionId);
         return Response.ok().entity(gson.toJson(posts)).build();
     }
 
+    /**
+     * This function is the api used to retrieve all the Discussions published by a Policy maker, by going at "/discussion/policyMaker/policyMakerId".
+     * @param policyMakerId is the id of the Policy maker.
+     * @return a response with a JSON format of the searched List of Discussion.
+     */
     @GET
     @Path("/policyMaker/{policyMakerId}")
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
     @RolesAllowed("policy_maker")
-    public Response getDiscussionByPolicyMaker(@PathParam("policyMakerId") String policyMakerId){
+    public Response getDiscussionsByPolicyMaker(@PathParam("policyMakerId") String policyMakerId){
         try {
             List<DiscussionBean> discussions = discussionController.getDiscussionByPolicyMaker(policyMakerId);
             return Response.ok().entity(gson.toJson(discussions)).build();
@@ -42,6 +49,11 @@ public class DiscussionResource {
         }
     }
 
+    /**
+     * This function is the api used to retrieve the data of a Discussion that is going to be created. It can be used by going at "/discussion/create".
+     * @param discussion is the DiscussionContentBean.
+     * @return a response with a JSON format about the success of the operation.
+     */
     @POST
     @Path("/create")
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
@@ -56,6 +68,11 @@ public class DiscussionResource {
         }
     }
 
+    /**
+     * This function is the api used to start the procedure of deleting a Discussion, by going at "/discussion/delete".
+     * @param discussionId is the Discussion.
+     * @return a response with a JSON format about the success of the operation.
+     */
     @POST
     @Path("/delete/{discussionId:[0-9]+}")
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")

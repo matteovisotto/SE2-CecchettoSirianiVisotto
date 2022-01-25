@@ -17,12 +17,23 @@ public class DiscussionMapper {
     @Inject
     UserMapper userMapper;
 
+    /**
+     * This function creates a DiscussionBean and call another function to maps the values.
+     * @param entity is the entity of the DB.
+     * @return the corresponding Bean just created.
+     */
     public DiscussionBean mapEntityToBean (Discussion entity){
         return mapEntityToBean(entity, new DiscussionBean());
     }
 
+    /**
+     * This function sets the values of a DiscussionBean using the values retrieve from a Discussion entity.
+     * @param entity is the entity of the DB.
+     * @param bean is the object into which the function will set all the values.
+     * @return the corresponding DiscussionBean or null if the entity is null.
+     */
     public DiscussionBean mapEntityToBean (Discussion entity, DiscussionBean bean){
-        if(entity == null) {return null;}
+        if (entity == null) {return null;}
         bean.setDiscussionId(entity.getDiscussionId());
         bean.setTitle(entity.getTitle());
         bean.setText(entity.getText());
@@ -33,11 +44,23 @@ public class DiscussionMapper {
         return bean;
     }
 
+    /**
+     * This function creates a Discussion entity and call another function to maps the values.
+     * @param bean is the DiscussionBean from which the value will be retrieved.
+     * @return the corresponding Discussion entity just created.
+     */
     public Discussion mapBeanToEntity (DiscussionBean bean){
         return mapBeanToEntity(new Discussion(), bean);
     }
 
+    /**
+     * This function sets the values of a Discussion entity using the values retrieve from a DiscussionBean.
+     * @param entity is the entity of the DB.
+     * @param bean is the object from which the values will be retrieved.
+     * @return the corresponding Discussion entity or null if the Bean is null.
+     */
     public Discussion mapBeanToEntity (Discussion entity, DiscussionBean bean){
+        if (bean == null) {return null;}
         entity.setDiscussionId(bean.getDiscussionId());
         entity.setTitle(bean.getTitle());
         entity.setText(bean.getText());
@@ -45,23 +68,46 @@ public class DiscussionMapper {
         return entity;
     }
 
+    /**
+     * This function creates a new List and call another function to map the values from the entities inside it.
+     * @param entities are the Discussion entities from which the values will be retrieved.
+     * @return the corresponding List of DiscussionBean just created.
+     */
     public List<DiscussionBean> mapEntityListToBeanList(List<Discussion> entities){
         return mapEntityListToBeanList(entities, new ArrayList<>());
     }
 
+    /**
+     * This function maps every Discussion entity into a List of DiscussionBean.
+     * @param entities is the List of Discussion entities of the DB.
+     * @param beans is the List of object into which the entities will be mapped.
+     * @return the corresponding List of DiscussionBean or null if the List of entities is null.
+     */
     public List<DiscussionBean> mapEntityListToBeanList(List<Discussion> entities, List<DiscussionBean> beans){
+        if (entities.isEmpty()) {return Collections.emptyList();}
         entities.forEach(e -> {
             beans.add(mapEntityToBean(e));
         });
         return beans;
     }
 
+    /**
+     * This function creates a DiscussionContentBean and call another function to maps the values.
+     * @param entity is the entity of the DB.
+     * @return the corresponding Bean just created.
+     */
     public DiscussionContentBean mapEntityToContentBean(Discussion entity){
         return mapEntityToContentBean(entity, new DiscussionContentBean());
     }
 
+    /**
+     * This function sets the values of a DiscussionContentBean using the values retrieve from a discussion entity.
+     * @param entity is the entity of the DB.
+     * @param bean is the object into which the function will set all the values.
+     * @return the corresponding DiscussionContentBean or null if the entity is null.
+     */
     public DiscussionContentBean mapEntityToContentBean(Discussion entity, DiscussionContentBean bean){
-        if(entity == null) {return null;}
+        if (entity == null) {return null;}
         bean.setTopicId(entity.getTopic().getTopicId());
         bean.setDiscussionId(entity.getDiscussionId());
         bean.setTitle(entity.getTitle());
@@ -73,12 +119,23 @@ public class DiscussionMapper {
         return bean;
     }
 
+    /**
+     * This function creates a Discussion entity and call another function to maps the values.
+     * @param bean is the Bean from which the value will be retrieved.
+     * @return the corresponding Discussion entity just created.
+     */
     public Discussion mapContentBeanToEntity(DiscussionContentBean bean){
         return mapContentBeanToEntity(bean, new Discussion());
     }
 
+    /**
+     * This function sets the values of a Discussion entity using the values retrieve from a DiscussionContentBean.
+     * @param entity is the entity of the DB.
+     * @param bean is the object from which the values will be retrieved.
+     * @return the corresponding Discussion entity or null if the Bean is null.
+     */
     public Discussion mapContentBeanToEntity(DiscussionContentBean bean, Discussion entity){
-        if(bean == null) {return null;}
+        if (bean == null) {return null;}
         entity.setText(bean.getText());
         entity.setTimestamp(bean.getTimestamp());
         entity.setTitle(bean.getTitle());

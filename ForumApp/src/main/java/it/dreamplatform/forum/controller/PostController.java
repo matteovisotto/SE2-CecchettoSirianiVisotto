@@ -6,10 +6,8 @@ import it.dreamplatform.forum.entities.Post;
 import it.dreamplatform.forum.entities.User;
 import it.dreamplatform.forum.mapper.PostMapper;
 import it.dreamplatform.forum.mapper.UserMapper;
-import it.dreamplatform.forum.services.DiscussionService;
 import it.dreamplatform.forum.services.PostService;
 import it.dreamplatform.forum.services.UserService;
-import it.dreamplatform.forum.utils.StatusEnum;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -24,8 +22,13 @@ public class PostController {
     @Inject
     UserMapper userMapper;
 
+    /**
+     * This function is used to approve a post, setting its status to 1, that is in pending list. So it's initial status is set 0.
+     * @param postId the id of the selected Post.
+     * @throws Exception when the post didn't exist or when the post has already been approved.
+     */
     public void approvePendingPost(Long postId) throws Exception {
-        Post post = postService.getPostByPostId(postId);
+        Post post = postService.getPostById(postId);
         if(post == null){
             throw new Exception("The selected post has an invalid Id.");
         }
@@ -36,8 +39,13 @@ public class PostController {
         postService.savePost(post);
     }
 
+    /**
+     * This function is used to decline a post, deleting it from the DB, that is in pending list. So it's initial status is set 0.
+     * @param postId the id of the selected Post.
+     * @throws Exception when the post didn't exist or when the post has already been approved.
+     */
     public void declinePendingPost(Long postId) throws Exception {
-        Post post = postService.getPostByPostId(postId);
+        Post post = postService.getPostById(postId);
         if(post == null){
             throw new Exception("The selected post has an invalid Id.");
         }
@@ -47,14 +55,28 @@ public class PostController {
         postService.deletePost(post);
     }
 
-    public void deletePost(PostBean post) throws Exception{
+    /**
+     * This function is used to delete a post from the DB.
+     * @param postId is the id of the selected Post.
+     * @throws Exception the id of the post is not valid.
+     */
+    public void deletePost(Long postId) throws Exception{
+        if(postId == null){
+            throw new Exception("Post not valid.");
+        }
+        Post post = postService.getPostById(postId);
+        if(post != null){
+            postService.deletePost(post);
+        }
+    }
+    /*public void deletePost(PostBean post) throws Exception{
         if(post.getPostId() == null){
             throw new Exception("Post not valid.");
         }
         if(postService.getPostByPostId(post.getPostId()) != null){
             postService.deletePost(postMapper.mapBeanToEntity(post));
         }
-    }
+    }*/
 
     public void publishPost(PostBean post, UserBean userBean) throws Exception {
         User user = userService.getUserById(userBean.getUserId());
@@ -75,7 +97,7 @@ public class PostController {
     }
 
     public void modifyPost(PostBean post, UserBean user) throws Exception {
-        Post postToModify = postService.getPostByPostId(post.getPostId());
+        Post postToModify = postService.getPostById(post.getPostId());
         if(postToModify == null){
             throw new Exception("The post to modify is not present");
         }
@@ -87,14 +109,26 @@ public class PostController {
         postService.savePost(postMapper.mapBeanToEntity(post));
     }
 
+    /**
+     * This function retrieve a given post, given its id.
+     * @param postId is the id of the selected post.
+     * @return the Bean of the needed post.
+     * @throws Exception when the post is not found.
+     */
     public PostBean getPostById(Long postId) throws Exception {
-        if(postService.getPostByPostId(postId) != null){
-            return postMapper.mapEntityToBean(postService.getPostByPostId(postId));
+        if(postService.getPostById(postId) != null){
+            return postMapper.mapEntityToBean(postService.getPostById(postId));
         } else {
             throw new Exception("Post not found!");
         }
     }
 
+    /**
+     * This function retrieve the posts in a given discussion.
+     * @param discussionId is the id of the selected discussion.
+     * @return a List of Bean with all the posts contained in the discussion.
+     * @throws Exception the post is not found.
+     */
     public List<PostBean> getPostsByDiscussionId(Long discussionId) throws Exception {
         if(postService.getPostsByDiscussionId(discussionId) != null){
             return postMapper.mapEntityListToBeanList(postService.getPostsByDiscussionId(discussionId));
@@ -103,6 +137,12 @@ public class PostController {
         }
     }
 
+    /**
+     * This function retrieve the posts written by a User.
+     * @param creatorId is the id of the User.
+     * @return a List of Bean with all the posts written by the selected User.
+     * @throws Exception when the User does not exist.
+     */
     public List<PostBean> getPostsByUser(Long creatorId) throws Exception {
         if(userService.getUserById(creatorId) != null){
             return postMapper.mapEntityListToBeanList(postService.getPostsByCreator(creatorId));
