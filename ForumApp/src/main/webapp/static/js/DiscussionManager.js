@@ -25,12 +25,25 @@ $(function () {
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function(data){
-                    //console.log(data);
-                    window.location.reload();
+                    $('#newDiscussionModal').modal('hide');
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Discussion successfully added',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then((r) => {
+                        loadData();
+                    });
                 },
                 error: function(e) {
-                    //console.log(e);
-                    alert("Error!");
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'An error occurred. Please try again',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then((r) => {
+                        loadData();
+                    });
                 }
             });
         });
@@ -39,26 +52,31 @@ $(function () {
 
     var discussionContainer = $('#discussionContainer');
     var topicTitle = $('#topicTitle');
-    $.ajax(
-        {
-            'url': '../api/topic/'+topicId,
-            'method': 'GET',
-            'success': function(json){
-                topicTitle.text(json.title);
-                if (json.discussions.length === 0) {
-                    createEmptyTopicAlert();
-                } else {
-                    json.discussions.forEach(d => {
-                        createDiscussionNode(d, json);
-                    });
-                }
-            },
-            'error':function(){
-                alert('Invalid topic');
-            }
-        }
-    );
 
+    loadData();
+
+    function loadData() {
+        discussionContainer.html("");
+        $.ajax(
+            {
+                'url': '../api/topic/' + topicId,
+                'method': 'GET',
+                'success': function (json) {
+                    topicTitle.text(json.title);
+                    if (json.discussions.length === 0) {
+                        createEmptyTopicAlert();
+                    } else {
+                        json.discussions.forEach(d => {
+                            createDiscussionNode(d, json);
+                        });
+                    }
+                },
+                'error': function () {
+                    alert('Invalid topic');
+                }
+            }
+        );
+    }
 
     function createEmptyTopicAlert(){
         var alert = $('<div/>');
