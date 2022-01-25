@@ -1,12 +1,15 @@
 package it.dreamplatform.forum.api;
 
 import com.google.gson.Gson;
+import it.dreamplatform.forum.bean.PublicUserBean;
 import it.dreamplatform.forum.bean.UserBean;
+import it.dreamplatform.forum.controller.UserController;
 import it.dreamplatform.forum.entities.User;
 import it.dreamplatform.forum.services.UserService;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -15,6 +18,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 /**
  * This class contains the api call from the "/user" path.
@@ -23,6 +27,9 @@ import javax.ws.rs.core.Response;
 public class UserResource {
     @EJB(name = "it.dreamplatform.forum.services/UserService")
     private UserService userService;
+
+    @Inject
+    private UserController userController;
     private final Gson gson = new Gson();
 
     @Context
@@ -71,6 +78,19 @@ public class UserResource {
         if(user == null){
             return Response.status(204).entity("{}").build();
         }
+        return Response.ok().entity(gson.toJson(user)).build();
+    }
+
+    /**
+     * This function is the api used to retrieve the List of the most active User in the forum, by going at "/user/active".
+     * @return a response with a JSON format of the List of searched Users.
+     */
+    //Si puó aggiungere quanti ne si vuole vedere direttamente da api, per ora nell'api inserisco brutalmente 10
+    @GET
+    @Path("/active")
+    @Produces("application/json")
+    public Response getMostActiveUsers(){
+        List<PublicUserBean> user = userController.getMostActiveUsers(10);
         return Response.ok().entity(gson.toJson(user)).build();
     }
 

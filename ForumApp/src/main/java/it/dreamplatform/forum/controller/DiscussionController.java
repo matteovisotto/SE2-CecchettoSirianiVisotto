@@ -52,10 +52,11 @@ public class DiscussionController {
 
     /**
      * This function is used to retrieve a List of DiscussionBean of the most active Discussion.
+     * @param numberOfDiscussion is the number of the top discussions to be retrieved.
      * @return a List of Bean of the retrieved discussions.
      */
-    public List<DiscussionBean> getDiscussionExplore(){
-        return discussionMapper.mapEntityListToBeanList(discussionService.getMostActiveDiscussions(10));
+    public List<DiscussionBean> getDiscussionExplore(int numberOfDiscussion){
+        return discussionMapper.mapEntityListToBeanList(discussionService.getMostActiveDiscussions(numberOfDiscussion));
     }
 
     /**

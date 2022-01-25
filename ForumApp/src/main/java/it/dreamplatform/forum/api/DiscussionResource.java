@@ -95,11 +95,12 @@ public class DiscussionResource {
      * This function is the api used to retrieve a List of the most commented Discussions, by going at "/discussion/explore".
      * @return a response with a JSON format of a List of the most commented Discussions.
      */
+    //Si puó aggiungere quanti ne si vuole vedere direttamente da api, per ora inserisco brutalmente 10
     @GET
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
     @Path("/explore")
     public Response getDiscussionExplore(){
-        List<DiscussionBean> posts = discussionController.getDiscussionExplore();
+        List<DiscussionBean> posts = discussionController.getDiscussionExplore(10);
         return Response.ok().entity(gson.toJson(posts)).build();
     }
 

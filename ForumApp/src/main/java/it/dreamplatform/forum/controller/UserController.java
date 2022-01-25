@@ -1,10 +1,12 @@
 package it.dreamplatform.forum.controller;
 
+import it.dreamplatform.forum.bean.PublicUserBean;
 import it.dreamplatform.forum.bean.UserBean;
 import it.dreamplatform.forum.mapper.UserMapper;
 import it.dreamplatform.forum.services.UserService;
 
 import javax.inject.Inject;
+import java.util.List;
 
 /**
  * This class contains all the controller used by a User entity or a User bean of every genre.
@@ -31,5 +33,14 @@ public class UserController {
      */
     public Long createUser(UserBean userBean){
         return userService.createUser(userMapper.mapBeanToEntity(userBean));
+    }
+
+    /**
+     * This function is used to retrieve the List of the most active User in the forum.
+     * @param numberOfUser is the number of the top users to be retrieved.
+     * @return a List of Bean of the retrieved users.
+     */
+    public List<PublicUserBean> getMostActiveUsers(int numberOfUser){
+        return userMapper.mapEntityListToPublicUserBeanList(userService.getMostActiveUsers(numberOfUser));
     }
 }
