@@ -82,6 +82,9 @@ public class DiscussionService {
      */
     public void deleteDiscussion(Discussion discussion){
         if(em.find(Discussion.class, discussion.getDiscussionId()) != null){
+            if (!em.contains(discussion)) {
+                discussion = em.merge(discussion);
+            }
             em.remove(discussion);
             em.flush();
         }

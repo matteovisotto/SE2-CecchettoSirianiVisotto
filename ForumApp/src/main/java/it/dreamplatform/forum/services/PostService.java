@@ -79,6 +79,9 @@ public class PostService {
      */
     public void deletePost(Post post){
         if(em.find(Post.class, post.getPostId()) != null){
+            if (!em.contains(post)) {
+                post = em.merge(post);
+            }
             em.remove(post);
             em.flush();
         }

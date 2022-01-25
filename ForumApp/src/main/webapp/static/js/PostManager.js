@@ -49,7 +49,7 @@ $(function () {
                     json.posts.forEach(d => {
                         createReplyNode(d, json);
                     });
-
+                    registerActions();
                 },
                 'error':function(){
                     alert('Invalid discussion');
@@ -58,7 +58,73 @@ $(function () {
         );
     }
 
+    function registerActions() {
+        $('.modifyDropdown').on('click', function (e){
+            var postId = $(e.target).data('post-id');
 
+        });
+
+        $('.deleteDropdown').on('click', function (e){
+            var postId = $(e.target).data('post-id');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.post( "../api/post/delete/"+postId, function( data ) {
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        )
+                        loadData();
+                    }).fail(function (error){
+                        Swal.fire(
+                            'Error!',
+                            'An error occured while deleting',
+                            'error'
+                        )
+                    });
+
+                }
+            });
+        });
+
+        $('#discussionDelete').on('click', function (e){
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.post( "../api/discussion/delete/"+discussionId, function( data ) {
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        )
+                        window.location.href('../');
+                    }).fail(function (error){
+                        Swal.fire(
+                            'Error!',
+                            'An error occured while deleting',
+                            'error'
+                        )
+                    });
+
+                }
+            });
+        });
+    }
 
     function createPrimaryDiscussion(p, d){
         discussionTitle.text(d.title);
@@ -89,8 +155,8 @@ $(function () {
         if((typeof isPolicyMaker !== 'undefined' && typeof userId !== 'undefined') && (isPolicyMaker || p.creator.userId===userId)){
             postContent.append('<a class="float-end text-secondary" id="cardDropdown'+p.postId+'" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>\n' +
                 '                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardDropdown'+p.postId+'" >\n' +
-                '                                        <li><a class="dropdown-item" href="#"><i class="fas fa-pen"></i> Modify</a></li>\n' +
-                '                                        <li><a class="dropdown-item" href="#"><i class="fa fa-trash"></i> Delete</a></li>\n' +
+                '                                        <li><a class="dropdown-item modifyDropdown" href="#" data-post-id="'+p.postId+'"><i class="fas fa-pen"></i> Modify</a></li>\n' +
+                '                                        <li><a class="dropdown-item deleteDropdown" href="#" data-post-id="'+p.postId+'"><i class="fa fa-trash"></i> Delete</a></li>\n' +
                 '                                    </ul>');
         }
         postContent.append($('<div/>').addClass('card-text').html(p.text));
