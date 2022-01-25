@@ -13,7 +13,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Discussion", schema = "dream_forum")
-@Customizer(ConfigurePostFilter.class)
+/*@Customizer(ConfigurePostFilter.class)*/
 public class Discussion implements Serializable {
     private static final long serialVersionUID = 1L;
 

@@ -26,7 +26,7 @@ public class Post implements Serializable {
     @JoinColumn(name = "creatorId")
     private User creator;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "discussionId")
     private Discussion discussion;
 
