@@ -21,11 +21,10 @@ $(function () {
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function(data){
-                    console.log(data);
-                    //window.location.reload();
+                    $('#newReplyModal').modal('hide');
+                    loadData();
                 },
                 error: function(e) {
-                    console.log(e);
                     alert("Error!");
                 }
             });
@@ -36,11 +35,15 @@ $(function () {
     var repliesContainer = $('#repliesContainer');
     var discussionTitle = $('#discussionTitle');
 
-    $.ajax(
-        {
-            'url': '../api/discussion/'+discussionId,
-            'method': 'GET',
-            'success': function(json){
+    loadData();
+
+    function loadData() {
+        repliesContainer.html("");
+        $.ajax(
+            {
+                'url': '../api/discussion/'+discussionId,
+                'method': 'GET',
+                'success': function(json){
                     var first = json.posts[0];
                     createPrimaryDiscussion(first, json);
                     json.posts.shift();
@@ -48,12 +51,15 @@ $(function () {
                         createReplyNode(d, json);
                     });
 
-            },
-            'error':function(){
-                alert('Invalid discussion');
+                },
+                'error':function(){
+                    alert('Invalid discussion');
+                }
             }
-        }
-    );
+        );
+    }
+
+
 
     function createPrimaryDiscussion(p, d){
         discussionTitle.text(d.title);

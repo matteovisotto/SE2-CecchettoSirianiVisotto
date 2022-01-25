@@ -38,7 +38,7 @@ public class PostMapper {
         bean.setTimestamp(entity.getTimestamp());
         bean.setStatus(entity.getStatus());
         bean.setCreator(userMapper.mapEntityToPublicBean(entity.getCreator()));
-        bean.setDiscussion(entity.getDiscussion().getDiscussionId());
+        bean.setDiscussionId(entity.getDiscussion().getDiscussionId());
         return bean;
     }
 

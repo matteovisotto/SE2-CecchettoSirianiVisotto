@@ -57,7 +57,7 @@ public class PostBean implements Serializable {
         return discussionId;
     }
 
-    public void setDiscussion(Long discussionId) {
+    public void setDiscussionId(Long discussionId) {
         this.discussionId = discussionId;
     }
 }
