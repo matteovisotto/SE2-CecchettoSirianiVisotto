@@ -120,3 +120,23 @@ p {
     color: var(--bs-primary);
     text-decoration: none;
 }
+
+.right-sidebar {
+    margin-top: 30px;
+}
+
+.nav-item > .btn {
+
+}
+
+@media only screen and (max-width: 900px) {
+
+    .nav-item > .btn {
+        margin-top: 10px;
+        width: 100%;
+        color: var(--bs-primary);
+        font-weight: bold;
+        background: transparent;
+    }
+
+}
