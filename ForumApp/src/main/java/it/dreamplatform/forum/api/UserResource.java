@@ -1,6 +1,7 @@
 package it.dreamplatform.forum.api;
 
 import com.google.gson.Gson;
+import it.dreamplatform.forum.bean.UserBean;
 import it.dreamplatform.forum.entities.User;
 import it.dreamplatform.forum.services.UserService;
 
@@ -32,7 +33,7 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
     @RolesAllowed({"user", "policy_maker"})
     public Response getUser() {
-        User user = (User) request.getSession().getAttribute("user");
+        UserBean user = (UserBean) request.getSession().getAttribute("user");
         return Response.ok().entity(gson.toJson(user)).build();
     }
 
