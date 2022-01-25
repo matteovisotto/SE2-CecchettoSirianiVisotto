@@ -4,10 +4,7 @@ import com.google.gson.Gson;
 import it.dreamplatform.forum.bean.TopicBean;
 import it.dreamplatform.forum.bean.TopicContentBean;
 import it.dreamplatform.forum.controller.TopicController;
-import it.dreamplatform.forum.entities.Topic;
-import it.dreamplatform.forum.services.TopicService;
 
-import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -17,6 +14,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
+/**
+ * This class contains the api call from the "/topic" path.
+ */
 @Path("/topic")
 public class TopicResource {
    @Inject

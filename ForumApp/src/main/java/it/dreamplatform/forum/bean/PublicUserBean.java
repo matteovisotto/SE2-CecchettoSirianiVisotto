@@ -2,6 +2,10 @@ package it.dreamplatform.forum.bean;
 
 import java.io.Serializable;
 
+/**
+ * This class represents the public data available for a User. Those values are retrieved by mapping the User entity of
+ * the DB.
+ */
 public class PublicUserBean implements Serializable {
     private Long userId;
     private String name;

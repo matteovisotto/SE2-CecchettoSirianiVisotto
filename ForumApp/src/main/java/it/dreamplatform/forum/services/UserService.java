@@ -9,6 +9,9 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+/**
+ * This class creates and call the queries to retrieve User entities from the DB.
+ */
 @Stateless
 public class UserService {
     @PersistenceContext(unitName = "forum-persistence-provider")

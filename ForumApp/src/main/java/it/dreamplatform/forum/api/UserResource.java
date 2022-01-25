@@ -16,6 +16,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+/**
+ * This class contains the api call from the "/user" path.
+ */
 @Path("/user")
 public class UserResource {
     @EJB(name = "it.dreamplatform.forum.services/UserService")
@@ -78,7 +81,4 @@ public class UserResource {
     public String getWebServerToken() {
         return "NO WS TOKEN AVAILABLE";
     }
-
-
-
 }

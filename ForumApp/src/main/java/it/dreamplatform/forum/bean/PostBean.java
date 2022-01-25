@@ -1,10 +1,13 @@
 package it.dreamplatform.forum.bean;
 
-import it.dreamplatform.forum.entities.Discussion;
-
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * This class represents a Post. The text is the content of the post, the discussionId is the id of the Discussion
+ * in which this post is contained, it is also present the creator of the Post and the status value that check if
+ * the post is APPROVED (Status = 1) or is PENDING (Status = 0).
+ */
 public class PostBean implements Serializable {
     private Long postId;
     private String text;

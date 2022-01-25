@@ -4,6 +4,9 @@ import it.dreamplatform.forum.bean.PublicUserBean;
 import it.dreamplatform.forum.entities.User;
 import it.dreamplatform.forum.bean.UserBean;
 
+/**
+ * This class do different mappings between a User entity to its corresponding bean and vice versa.
+ */
 public class UserMapper {
 
     /**

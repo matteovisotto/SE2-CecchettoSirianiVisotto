@@ -1,5 +1,9 @@
 package it.dreamplatform.forum.utils;
 
+/**
+ * This enum defines the different level of authorization present in the system. (VISITOR -> 0), (USER -> 1),
+ * (POLICY_MAKER -> 2) and (ADMIN -> 3).
+ */
 public enum AuthorizationRoleEnum {
     VISITOR("visitor"),
     USER("user"),

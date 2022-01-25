@@ -1,6 +1,5 @@
 package it.dreamplatform.forum.services;
 
-import it.dreamplatform.forum.entities.Discussion;
 import it.dreamplatform.forum.entities.Post;
 
 import javax.ejb.Stateless;
@@ -9,6 +8,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+/**
+ * This class creates and call the queries to retrieve Post entities from the DB.
+ */
 @Stateless
 public class PostService {
     @PersistenceContext(unitName = "forum-persistence-provider")

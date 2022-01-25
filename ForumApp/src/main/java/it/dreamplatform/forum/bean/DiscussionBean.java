@@ -3,6 +3,12 @@ package it.dreamplatform.forum.bean;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * This class represents a Discussion. It is mapped from the Discussion entity and instead of having the List of Post
+ * contained in the Discussion entity, it contains only the number of posts. The text is the content of the first post,
+ * the topicId is the id of the Topic in which it is contained, it is also present the creator of the Discussion and its
+ * first post (a Policy maker).
+ */
 public class DiscussionBean implements Serializable {
     private Long discussionId;
     private String title;

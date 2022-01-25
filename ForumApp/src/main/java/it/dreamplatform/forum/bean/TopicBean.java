@@ -3,6 +3,10 @@ package it.dreamplatform.forum.bean;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * This class represents a Topic. It is mapped from the Topic entity, it doesn't have the List of Discussion
+ * contained in the Topic entity. The only relevant value is the title that represents the title of the Topic.
+ */
 public class TopicBean implements Serializable {
     private Long topicId;
     private String title;

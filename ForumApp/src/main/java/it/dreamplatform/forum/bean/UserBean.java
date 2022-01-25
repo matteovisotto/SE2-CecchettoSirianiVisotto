@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.util.Date;
 import java.sql.Timestamp;
 
+/**
+ * This class represents a User. Those values have been assigned to the User at the first registration on the service.
+ * The policyMakerId defines if the User is a Policy maker or a normal User.
+ */
 public class UserBean implements Serializable {
     private Long userId;
     private String name;

@@ -12,6 +12,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
+/**
+ * This class contains the api call from the "/discussion" path.
+ */
 @Path("/discussion")
 public class DiscussionResource {
     @Inject

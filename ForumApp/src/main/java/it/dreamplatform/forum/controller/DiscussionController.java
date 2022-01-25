@@ -15,6 +15,9 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class contains all the controller used by a Discussion entity or a Discussion bean of every genre.
+ */
 public class DiscussionController {
     @Inject
     DiscussionMapper discussionMapper;

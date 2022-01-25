@@ -9,6 +9,9 @@ import it.dreamplatform.forum.services.TopicService;
 import javax.inject.Inject;
 import java.util.List;
 
+/**
+ * This class contains all the controller used by a Topic entity or a Topic bean of every genre.
+ */
 public class TopicController {
     @Inject
     TopicMapper topicMapper;

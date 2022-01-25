@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * This class do different mappings between a Topic entity to its corresponding bean and vice versa.
+ */
 public class TopicMapper {
     @Inject
     DiscussionMapper discussionMapper;
@@ -104,8 +107,6 @@ public class TopicMapper {
         bean.setDiscussions(discussionMapper.mapEntityListToBeanList(entity.getDiscussions()));
         return bean;
     }
-
-
 }
 
 

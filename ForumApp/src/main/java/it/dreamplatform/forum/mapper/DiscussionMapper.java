@@ -9,11 +9,12 @@ import it.dreamplatform.forum.entities.Topic;
 import javax.inject.Inject;
 import java.util.*;
 
+/**
+ * This class do different mappings between a Discussion entity to its corresponding bean and vice versa.
+ */
 public class DiscussionMapper {
-
     @Inject
     PostMapper postMapper;
-
     @Inject
     UserMapper userMapper;
 
@@ -144,5 +145,4 @@ public class DiscussionMapper {
         entity.setTopic(topic);
         return entity;
     }
-
 }

@@ -1,8 +1,6 @@
 package it.dreamplatform.forum.api;
 
 import com.google.gson.Gson;
-import it.dreamplatform.forum.bean.DiscussionBean;
-import it.dreamplatform.forum.bean.DiscussionContentBean;
 import it.dreamplatform.forum.bean.PostBean;
 import it.dreamplatform.forum.bean.UserBean;
 import it.dreamplatform.forum.controller.PostController;
@@ -18,6 +16,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
+/**
+ * This class contains the api call from the "/post" path.
+ */
 @Path("/post")
 public class PostResource {
     @EJB(name = "it.dreamplatform.forum.services/PostService")

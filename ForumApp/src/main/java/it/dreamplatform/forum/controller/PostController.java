@@ -12,6 +12,9 @@ import it.dreamplatform.forum.services.UserService;
 import javax.inject.Inject;
 import java.util.List;
 
+/**
+ * This class contains all the controller used by a Post entity or a Post bean.
+ */
 public class PostController {
     @Inject
     PostService postService;
@@ -69,14 +72,6 @@ public class PostController {
             postService.deletePost(post);
         }
     }
-    /*public void deletePost(PostBean post) throws Exception{
-        if(post.getPostId() == null){
-            throw new Exception("Post not valid.");
-        }
-        if(postService.getPostByPostId(post.getPostId()) != null){
-            postService.deletePost(postMapper.mapBeanToEntity(post));
-        }
-    }*/
 
     /**
      * This function will create a post, then it will store it, calling the savePost.

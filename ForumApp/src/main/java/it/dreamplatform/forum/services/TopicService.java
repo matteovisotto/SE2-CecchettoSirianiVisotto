@@ -8,6 +8,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+/**
+ * This class creates and call the queries to retrieve Topic entities from the DB.
+ */
 @Stateless
 public class TopicService {
     @PersistenceContext(unitName = "forum-persistence-provider")

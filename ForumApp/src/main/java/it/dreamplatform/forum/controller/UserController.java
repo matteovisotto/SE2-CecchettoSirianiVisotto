@@ -1,12 +1,14 @@
 package it.dreamplatform.forum.controller;
 
 import it.dreamplatform.forum.bean.UserBean;
-import it.dreamplatform.forum.entities.User;
 import it.dreamplatform.forum.mapper.UserMapper;
 import it.dreamplatform.forum.services.UserService;
 
 import javax.inject.Inject;
 
+/**
+ * This class contains all the controller used by a User entity or a User bean of every genre.
+ */
 public class UserController {
     @Inject
     UserMapper userMapper;

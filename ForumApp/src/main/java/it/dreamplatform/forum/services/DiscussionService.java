@@ -10,6 +10,9 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+/**
+ * This class creates and call the queries to retrieve Discussion entities from the DB.
+ */
 @Stateless
 public class DiscussionService {
     @PersistenceContext(unitName = "forum-persistence-provider")
@@ -111,5 +114,4 @@ public class DiscussionService {
         query.setParameter(1,numberOfDiscussions);
         return (List<Discussion>) query.getResultList();
     }
-
 }

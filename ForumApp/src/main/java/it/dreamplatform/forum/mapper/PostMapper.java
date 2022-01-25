@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * This class do different mappings between a Post entity to its corresponding bean and vice versa.
+ */
 public class PostMapper {
     @Inject
     UserMapper userMapper;
