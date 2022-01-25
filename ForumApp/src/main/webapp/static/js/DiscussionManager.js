@@ -25,11 +25,11 @@ $(function () {
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function(data){
-                    console.log(data);
+                    //console.log(data);
                     window.location.reload();
                 },
                 error: function(e) {
-                    console.log(e);
+                    //console.log(e);
                     alert("Error!");
                 }
             });
