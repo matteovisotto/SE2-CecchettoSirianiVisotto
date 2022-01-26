@@ -48,7 +48,7 @@ public class UserService {
      * @return the User searched.
      */
     public User getUserByPolicyMakerId(String policyMakerId){
-        TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.policyMakerID =: policyMakerId", User.class);
+        TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.policyMakerID = :policyMakerId", User.class);
         query.setParameter("policyMakerId", policyMakerId);
         return query.getSingleResult();
     }

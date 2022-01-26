@@ -57,7 +57,7 @@ public class LoginServlet extends HttpServlet {
             user.setMail("matev1998@gmail.com");
             user.setDateOfBirth(new Date(Calendar.getInstance().getTime().getTime()));
             user.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-            user.setPolicyMakerID("thisisthepolicymakerid");
+            user.setPolicyMakerID("this_is_my_policyMakerID_code");
             req.getSession().setAttribute("user", user);
             resp.sendRedirect(req.getContextPath()+"/");
             return;
