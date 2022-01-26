@@ -57,7 +57,7 @@ public class DiscussionService {
      * @return a List of Discussion.
      */
     public List<Discussion> getDiscussionByPolicyMaker(String policyMakerId){
-        Query query = em.createNativeQuery("SELECT d.* FROM Discussion d JOIN Post p1 ON p1.discussionId = d.discussionId where p1.postId in (select min(postId) from Post p2 group by p2.discussionId) and p1.creatorId =?", Discussion.class);
+        Query query = em.createNativeQuery("SELECT d.* FROM Discussion d JOIN Post p1 ON p1.discussionId = d.discussionId JOIN User u ON p1.creatorId = u.userId WHERE p1.postId IN (SELECT MIN(postId) FROM Post p2 GROUP BY p2.discussionId) AND u.policyMakerID = ?", Discussion.class);
         query.setParameter(1, policyMakerId);
         return ((List<Discussion>) query.getResultList());
     }
