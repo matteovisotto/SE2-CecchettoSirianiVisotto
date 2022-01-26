@@ -24,6 +24,8 @@ public class PostController {
     UserService userService;
     @Inject
     UserMapper userMapper;
+    @Inject
+    NotificationController notificationController;
 
     /**
      * This function is used to approve a post, setting its status to 1, that is in pending list. So it's initial status is set 0.
@@ -40,6 +42,7 @@ public class PostController {
         }
         post.setStatus(1);
         postService.savePost(post);
+        notificationController.notifyFollowers(post.getDiscussion().getDiscussionId());
     }
 
     /**
@@ -93,6 +96,7 @@ public class PostController {
         }
         else{
             post.setStatus(1);
+            notificationController.notifyFollowers(post.getDiscussionId());
         }
         postService.savePost(postMapper.mapBeanToEntity(post));
     }

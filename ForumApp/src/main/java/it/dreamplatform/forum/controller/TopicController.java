@@ -32,7 +32,7 @@ public class TopicController {
      * @param topicId is the id of the selected Topic.
      * @return a Bean containing all the elements of a Topic, including all the discussions inside it.
      */
-    public TopicContentBean getDiscussionByTopicId(Long topicId){
+    public TopicContentBean getDiscussionsByTopicId(Long topicId){
         return topicMapper.mapEntityToContentBean(topicService.getTopicById(topicId));
     }
 

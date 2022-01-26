@@ -44,7 +44,7 @@ public class TopicResource {
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
     @Path("/{topicId: [0-9]+}")
     public Response getTopicById(@PathParam("topicId") Long topicId){
-        TopicContentBean topic = topicController.getDiscussionByTopicId(topicId);
+        TopicContentBean topic = topicController.getDiscussionsByTopicId(topicId);
         return Response.ok().entity(gson.toJson(topic)).build();
     }
 

@@ -58,9 +58,6 @@ public class UserResource {
     @RolesAllowed("policy_maker")
     public Response getUserById(@PathParam("uid") Long uid){
         UserBean user = userController.getUserById(uid);
-        //Non ritorna bene in caso non esiste lo user
-        //Ho modificato facendolo passare dal controller
-        //User user = userService.getUserById(uid);
         if (user == null){
             return Response.status(204).entity("{}").build();
         }
@@ -78,8 +75,6 @@ public class UserResource {
     @RolesAllowed("policy_maker")
     public Response getUserByEmail(@PathParam("mail") String mail){
         UserBean user = userController.searchUser(mail);
-        //Ho modificato facendolo passare dal controller
-        //User user = userService.getUserByMail(mail);
         if(user == null){
             return Response.status(204).entity("{}").build();
         }

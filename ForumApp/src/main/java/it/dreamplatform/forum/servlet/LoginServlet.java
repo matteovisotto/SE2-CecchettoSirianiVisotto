@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
             user.setName("Test");
             user.setSurname("User");
             user.setAreaOfResidence("Milano");
-            user.setMail("test@dream.org");
+            user.setMail("tototia98@gmail.com");
             user.setDateOfBirth(new Date(Calendar.getInstance().getTime().getTime()));
             user.setCreatedAt(new Timestamp(System.currentTimeMillis()));
             req.getSession().setAttribute("user", user);
@@ -54,7 +54,7 @@ public class LoginServlet extends HttpServlet {
             user.setName("Test");
             user.setSurname("PolicyMaker");
             user.setAreaOfResidence("Milano");
-            user.setMail("test@dream.org");
+            user.setMail("matev1998@gmail.com");
             user.setDateOfBirth(new Date(Calendar.getInstance().getTime().getTime()));
             user.setCreatedAt(new Timestamp(System.currentTimeMillis()));
             user.setPolicyMakerID("thisisthepolicymakerid");
