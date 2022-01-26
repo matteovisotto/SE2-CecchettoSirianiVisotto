@@ -47,15 +47,48 @@
                 <li class=""><a href="home.html" data-th-href="@{/}"><i class="fas fa-home"></i> Home</a></li>
                 <li class=""><a href="explore.html" data-th-href="@{/explore}"><i class="fas fa-comment-alt"></i> Explore Topics</a></li>
                 <li class="" data-th-if="${isPolicyMaker}"><a href="#" data-th-href="@{/my/discussions}"><i class="fas fa-comments"></i> My Discussions</a></li>
-                <li class="active" data-th-if="${user}"><a href="#" data-th-href="@{/my/replies}"><i class="fas fa-reply-all"></i> My Replies</a></li>
-                <li class="" data-th-if="${user}"><a href="#" data-th-href="@{/my/profile}"><i class="fas fa-user"></i> Profile</a></li>
+                <li class="" data-th-if="${user}"><a href="#" data-th-href="@{/my/replies}"><i class="fas fa-reply-all"></i> My Replies</a></li>
+                <li class="active" data-th-if="${user}"><a href="#" data-th-href="@{/my/profile}"><i class="fas fa-user"></i> Profile</a></li>
             </ul>
         </div>
         <!-- Content from here -->
         <div class="col-md-7">
-            <h3 class="title">My Replies</h3>
-            <div class="row" id="repliesContainer">
-
+            <h3 class="title" id="userName"  data-th-text="|${user.getName()} ${user.getSurname()}|">Name Surname</h3>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="vstack gap-2 align-content-center text-center">
+                        <img src="../static/assets/placeholder_user.png" data-th-src="@{/static/assets/placeholder_user.png}" style="width:100%; height: auto;"/>
+                        <div class="badge w-100 bg-success" data-th-if="${isPolicyMaker}">Policy Maker</div>
+                        <div class="badge w-100 bg-warning" data-th-if="${!isPolicyMaker}">User</div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="alert alert-info">You are authenticated through an identity provider</div>
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Name</label>
+                                <input type="text" class="form-control" name="name" value="Name" data-th-value="${user.getName()}" disabled/>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Surname</label>
+                                <input type="text" class="form-control" name="surname" value="Surname" data-th-value="${user.getSurname()}" disabled/>
+                            </div>
+                            <div class="col-12">
+                                <label>Email</label>
+                                <input type="email" name="mail" value="test@test.test" data-th-value="${user.getMail()}" disabled class="form-control"/>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Date of birth</label>
+                                <input type="text" class="form-control" name="dateOfBirth" value="00/00/0000" data-th-value="${user.getDateOfBirth()}" disabled/>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Area of residence</label>
+                                <input type="text" class="form-control" name="areaOfResidence" value="Telengana" data-th-value="${user.getAreaOfResidence()}" disabled/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
         <!-- Content end here -->
@@ -101,6 +134,6 @@
 <script src="../static/js/jQuery.js" data-th-src="@{/static/js/jQuery.js}"></script>
 <script src="../static/js/bootstrap/bootstrap.bundle.min.js" data-th-src="@{/static/js/bootstrap/bootstrap.bundle.min.js}"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script data-th-src="@{/static/js/MyReplyManager.js}"></script>
+<script data-th-src="@{/static/js/ProfileManager.js}"></script>
 </body>
 </html>

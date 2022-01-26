@@ -156,7 +156,13 @@ public class PostController {
      */
     public List<PostBean> getPostsByUser(Long creatorId) throws Exception {
         if(userService.getUserById(creatorId) != null){
-            return postMapper.mapEntityListToBeanList(postService.getPostsByCreator(creatorId));
+            List<PostBean> posts = postMapper.mapEntityListToBeanList(postService.getPostsByCreator(creatorId));
+            for (int i = 0; i < posts.size(); i++){
+                if (posts.get(i).getStatus() == 0) {
+                    posts.remove(i);
+                }
+            }
+            return posts;
         } else {
             throw new Exception("The user Id inserted not exist.");
         }
