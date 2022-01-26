@@ -182,6 +182,12 @@ $(function () {
                 }
             });
         });
+
+        $('#discussionModify').on('click', function (e){
+
+        });
+
+
     }
 
     function createPrimaryDiscussion(p, d){
