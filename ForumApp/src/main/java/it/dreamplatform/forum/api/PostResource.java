@@ -1,6 +1,7 @@
 package it.dreamplatform.forum.api;
 
 import com.google.gson.Gson;
+import it.dreamplatform.forum.bean.DiscussionBean;
 import it.dreamplatform.forum.bean.PostBean;
 import it.dreamplatform.forum.bean.UserBean;
 import it.dreamplatform.forum.controller.PostController;
@@ -155,6 +156,22 @@ public class PostResource {
             return Response.ok().entity("{\"success\":1}").build();
         } catch (Exception e) {
             return Response.status(400).entity("{\"success\":0}").build();
+        }
+    }
+
+    /**
+     * This function is the api used to retrieve all the Posts published by a User, by going at "/post/my".
+     * @return a response with a JSON format of the searched List of Post.
+     */
+    @GET
+    @Path("/my")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
+    public Response getMyPosts(){
+        try {
+            List<PostBean> posts = postController.getPostsByUser(((UserBean) request.getSession().getAttribute("user")).getUserId());
+            return Response.ok().entity(gson.toJson(posts)).build();
+        } catch (Exception e) {
+            return Response.status(204).entity("[]").build();
         }
     }
 }

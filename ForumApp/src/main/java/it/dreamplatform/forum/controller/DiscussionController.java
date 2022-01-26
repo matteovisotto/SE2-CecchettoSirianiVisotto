@@ -74,7 +74,7 @@ public class DiscussionController {
      * @return the List of Discussion created by that Policy maker.
      * @throws Exception when the Policy maker is not found.
      */
-    public List<DiscussionBean> getDiscussionByPolicyMaker(String policyMakerId) throws Exception {
+    public List<DiscussionBean> getDiscussionsByPolicyMaker(String policyMakerId) throws Exception {
         if (userService.getUserByPolicyMakerId(policyMakerId) != null) {
             return discussionMapper.mapEntityListToBeanList(discussionService.getDiscussionByPolicyMaker(policyMakerId));
         } else {
@@ -109,6 +109,4 @@ public class DiscussionController {
         post.setStatus(1);
         postService.savePost(post);
     }
-
-
 }

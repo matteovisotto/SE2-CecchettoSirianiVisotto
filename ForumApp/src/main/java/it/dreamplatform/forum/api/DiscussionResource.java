@@ -52,7 +52,7 @@ public class DiscussionResource {
     @RolesAllowed("policy_maker")
     public Response getDiscussionsByPolicyMaker(@PathParam("policyMakerId") String policyMakerId){
         try {
-            List<DiscussionBean> discussions = discussionController.getDiscussionByPolicyMaker(policyMakerId);
+            List<DiscussionBean> discussions = discussionController.getDiscussionsByPolicyMaker(policyMakerId);
             return Response.ok().entity(gson.toJson(discussions)).build();
         } catch (Exception e) {
             return Response.status(204).entity("[]").build();
@@ -69,7 +69,7 @@ public class DiscussionResource {
     @RolesAllowed("policy_maker")
     public Response getMyDiscussions(){
         try {
-            List<DiscussionBean> discussions = discussionController.getDiscussionByPolicyMaker(((UserBean) request.getSession().getAttribute("user")).getPolicyMakerID());
+            List<DiscussionBean> discussions = discussionController.getDiscussionsByPolicyMaker(((UserBean) request.getSession().getAttribute("user")).getPolicyMakerID());
             return Response.ok().entity(gson.toJson(discussions)).build();
         } catch (Exception e) {
             return Response.status(204).entity("[]").build();
