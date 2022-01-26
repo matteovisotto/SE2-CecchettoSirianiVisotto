@@ -1,43 +1,82 @@
 $(function () {
-
+    var MODAL_ACTION = "create";
+    var current_selected_post = undefined;
     if(typeof userId !== 'undefined'){
         CKEDITOR.replace('replyContent');
 
         $('#modalCreateReplyButton').on('click', function (e){
             var form = $('#newReplyForm');
-            var postObj = {};
+            if(MODAL_ACTION === 'create'){
+                var postObj = {};
 
-            var text = CKEDITOR.instances.replyContent.getData();
-            postObj.text = text;
-            postObj.timestamp = new Date();
-            postObj.creator = {"userId": userId};
-            postObj.discussionId = discussionId;
-            $.ajax({
-                type: "POST",
-                url: "../api/post/publish",
-                data: JSON.stringify(postObj),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function(data){
-                    $('#newReplyModal').modal('hide');
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Post successfully added',
-                        showConfirmButton: false,
-                        timer: 1500
-                    }).then((r) => {
-                        loadData();
-                    });
-                },
-                error: function(e) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'An error occurred. Please try again',
-                        showConfirmButton: false,
-                        timer: 1500
+                var text = CKEDITOR.instances.replyContent.getData();
+
+                postObj.text = text;
+                postObj.timestamp = new Date();
+                postObj.creator = {"userId": userId};
+                postObj.discussionId = discussionId;
+                $.ajax({
+                    type: "POST",
+                    url: "../api/post/publish",
+                    data: JSON.stringify(postObj),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(data){
+                        $('#newReplyModal').modal('hide');
+                        CKEDITOR.instances.replyContent.setData("");
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Post successfully added',
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then((r) => {
+                            loadData();
+                        });
+                    },
+                    error: function(e) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'An error occurred. Please try again',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                });
+            } else {
+                if(current_selected_post !== undefined){
+                    current_selected_post.text = CKEDITOR.instances.replyContent.getData();
+                    current_selected_post.timestamp = new Date();
+                    $.ajax({
+                        type: "POST",
+                        url: "../api/post/modify",
+                        data: JSON.stringify(current_selected_post),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function(data){
+                            $('#newReplyModal').modal('hide');
+                            CKEDITOR.instances.replyContent.setData("");
+                            $('#modalCreateReplyButton').text("Create");
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Post successfully modified',
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then((r) => {
+                                loadData();
+                            });
+                        },
+                        error: function(e) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'An error occurred. Please try again',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
                     });
                 }
-            });
+            }
+
         });
 
     }
@@ -71,8 +110,16 @@ $(function () {
 
     function registerActions() {
         $('.modifyDropdown').on('click', function (e){
+            MODAL_ACTION = "update";
             var postId = $(e.target).data('post-id');
-
+            fetch('../api/post/'+postId).then(response => {
+                return response.json();
+            }).then(json => {
+               current_selected_post = json;
+               CKEDITOR.instances.replyContent.setData(json.text);
+                $('#modalCreateReplyButton').text("Update");
+               $('#newReplyModal').modal('show');
+            });
         });
 
         $('.deleteDropdown').on('click', function (e){
