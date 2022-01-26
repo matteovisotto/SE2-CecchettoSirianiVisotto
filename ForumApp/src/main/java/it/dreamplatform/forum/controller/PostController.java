@@ -28,6 +28,13 @@ public class PostController {
     NotificationController notificationController;
 
     /**
+     * This function is used to retrieve the List of pending posts (the posts with status 0) from the DB.
+     */
+    public List<PostBean> getPendingPosts() {
+        return postMapper.mapEntityListToBeanList(postService.getPendingPosts());
+    }
+
+    /**
      * This function is used to approve a post, setting its status to 1, that is in pending list. So it's initial status is set 0.
      * @param postId the id of the selected Post.
      * @throws Exception when the post didn't exist or when the post has already been approved.

@@ -22,8 +22,6 @@ import java.util.List;
  */
 @Path("/post")
 public class PostResource {
-    @EJB(name = "it.dreamplatform.forum.services/PostService")
-    private PostService postService;
     @Inject
     private PostController postController;
     private final Gson gson = new Gson();
@@ -67,6 +65,24 @@ public class PostResource {
     }
 
     /**
+     * This function is the api used to retrieve the List of pending posts (the posts with status 0). It can be used by going at "/post/pending".
+     * @return a response with a JSON format of the Pending Posts.
+     */
+    @GET
+    @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
+    @Path("/pending")
+    @RolesAllowed({"policy_maker"})
+    public Response getPendingPosts(){
+        List<PostBean> posts;
+        try {
+            posts = postController.getPendingPosts();
+            return Response.ok().entity(gson.toJson(posts)).build();
+        } catch (Exception e) {
+            return Response.status(204).entity("[]]").build();
+        }
+    }
+
+    /**
      * This function is the api used to approve a post in the pending list (the posts with status 0). It can be used by going at "/post/approve/{postId}".
      * @param postId is the id of the Post to approve.
      * @return a response with a JSON format about the success of the operation.
@@ -74,6 +90,7 @@ public class PostResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
     @Path("/approve/{postId: [0-9]+}")
+    @RolesAllowed({"policy_maker"})
     public Response approvePost(@PathParam("postId") Long postId){
         try {
             postController.approvePendingPost(postId);
@@ -91,6 +108,7 @@ public class PostResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
     @Path("/decline/{postId: [0-9]+}")
+    @RolesAllowed({"policy_maker"})
     public Response declinePost(@PathParam("postId") Long postId){
         try {
             postController.declinePendingPost(postId);
