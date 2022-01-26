@@ -4,11 +4,14 @@ import com.google.gson.Gson;
 import it.dreamplatform.forum.bean.DiscussionBean;
 import it.dreamplatform.forum.bean.DiscussionContentBean;
 import it.dreamplatform.forum.bean.PublicUserBean;
+import it.dreamplatform.forum.bean.UserBean;
 import it.dreamplatform.forum.controller.DiscussionController;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -21,6 +24,9 @@ public class DiscussionResource {
     @Inject
     private DiscussionController discussionController;
     private final Gson gson = new Gson();
+
+    @Context
+    HttpServletRequest request;
 
     /**
      * This function is the api used to retrieve a specific Discussion by going at "/discussion/{discussionId}".
@@ -47,6 +53,19 @@ public class DiscussionResource {
     public Response getDiscussionsByPolicyMaker(@PathParam("policyMakerId") String policyMakerId){
         try {
             List<DiscussionBean> discussions = discussionController.getDiscussionByPolicyMaker(policyMakerId);
+            return Response.ok().entity(gson.toJson(discussions)).build();
+        } catch (Exception e) {
+            return Response.status(204).entity("[]").build();
+        }
+    }
+
+    @GET
+    @Path("/my")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
+    @RolesAllowed("policy_maker")
+    public Response getMyDiscussions(){
+        try {
+            List<DiscussionBean> discussions = discussionController.getDiscussionByPolicyMaker(((UserBean) request.getSession().getAttribute("user")).getPolicyMakerID());
             return Response.ok().entity(gson.toJson(discussions)).build();
         } catch (Exception e) {
             return Response.status(204).entity("[]").build();

@@ -4,7 +4,7 @@ $(function () {
     var topicTitle = $('#topicTitle');
     $.ajax(
         {
-            'url': '../api/discussion/explore',
+            'url': '../api/discussion/my',
             'method': 'GET',
             'success': function(json){
                 topicTitle.text(json.title);
