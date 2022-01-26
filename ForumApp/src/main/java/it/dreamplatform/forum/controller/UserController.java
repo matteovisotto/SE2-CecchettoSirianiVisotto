@@ -1,6 +1,5 @@
 package it.dreamplatform.forum.controller;
 
-import it.dreamplatform.forum.bean.PostBean;
 import it.dreamplatform.forum.bean.PublicUserBean;
 import it.dreamplatform.forum.bean.UserBean;
 import it.dreamplatform.forum.mapper.UserMapper;

@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import it.dreamplatform.forum.bean.PublicUserBean;
 import it.dreamplatform.forum.bean.UserBean;
 import it.dreamplatform.forum.controller.UserController;
-import it.dreamplatform.forum.entities.User;
 import it.dreamplatform.forum.services.UserService;
 
 import javax.annotation.security.RolesAllowed;
@@ -85,7 +84,6 @@ public class UserResource {
      * This function is the api used to retrieve the List of the most active User in the forum, by going at "/user/active".
      * @return a response with a JSON format of the List of searched Users.
      */
-    //Si puó aggiungere quanti ne si vuole vedere direttamente da api, per ora nell'api inserisco brutalmente 10
     @GET
     @Path("/active")
     @Produces("application/json")

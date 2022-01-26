@@ -15,11 +15,17 @@ import org.json.JSONObject;
 import javax.inject.Inject;
 import java.util.List;
 
+/**
+ * This class contains all the controller used to send notification to the User who interacted with a Discussion.
+ */
 public class NotificationController {
-
     @Inject
     DiscussionService discussionService;
 
+    /**
+     * This function notifies the followers of a discussion by emailing them.
+     * @param discussionId is the id of the selected Discussion.
+     */
     public void notifyFollowers(Long discussionId) throws MailjetException, Exception {
         MailjetClient client;
         MailjetRequest request;
@@ -28,10 +34,10 @@ public class NotificationController {
 
         List<User> discussionFollowers = discussionService.getDiscussionFollowers(discussionId);
         JSONArray receivers = new JSONArray();
-        for (User user:discussionFollowers) {
+        for (User user : discussionFollowers) {
             receivers.put(new JSONObject()
                     .put("Email", user.getMail())
-                    .put("Name", user.getName()+" "+user.getSurname()));
+                    .put("Name", user.getName() + " " + user.getSurname()));
         }
         client = new MailjetClient("b6f77ce70757e21a3bf469064b4d1e4d", "3493a06a827721a61fd331945a863690", new ClientOptions("v3.1"));
         request = new MailjetRequest(Emailv31.resource)

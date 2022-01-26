@@ -59,6 +59,10 @@ public class DiscussionResource {
         }
     }
 
+    /**
+     * This function is the api used to retrieve all the Discussions published by a Policy maker, by going at "/discussion/my".
+     * @return a response with a JSON format of the searched List of Discussion.
+     */
     @GET
     @Path("/my")
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
@@ -114,7 +118,6 @@ public class DiscussionResource {
      * This function is the api used to retrieve a List of the most commented Discussions, by going at "/discussion/explore".
      * @return a response with a JSON format of a List of the most commented Discussions.
      */
-    //Si puó aggiungere quanti ne si vuole vedere direttamente da api, per ora inserisco brutalmente 10
     @GET
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
     @Path("/explore")

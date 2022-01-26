@@ -1,26 +1,17 @@
 package it.dreamplatform.forum.controller;
 
-import com.mailjet.client.ClientOptions;
-import com.mailjet.client.MailjetClient;
-import com.mailjet.client.MailjetRequest;
-import com.mailjet.client.MailjetResponse;
-import com.mailjet.client.errors.MailjetException;
-import com.mailjet.client.resource.Emailv31;
 import it.dreamplatform.forum.bean.DiscussionBean;
 import it.dreamplatform.forum.bean.DiscussionContentBean;
 import it.dreamplatform.forum.bean.PostBean;
 import it.dreamplatform.forum.bean.PublicUserBean;
 import it.dreamplatform.forum.entities.Discussion;
 import it.dreamplatform.forum.entities.Post;
-import it.dreamplatform.forum.entities.User;
 import it.dreamplatform.forum.mapper.DiscussionMapper;
 import it.dreamplatform.forum.mapper.PostMapper;
 import it.dreamplatform.forum.mapper.UserMapper;
 import it.dreamplatform.forum.services.DiscussionService;
 import it.dreamplatform.forum.services.PostService;
 import it.dreamplatform.forum.services.UserService;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
