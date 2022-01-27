@@ -7,8 +7,10 @@ import com.mailjet.client.MailjetResponse;
 import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.resource.Emailv31;
 import it.dreamplatform.forum.entities.Discussion;
+import it.dreamplatform.forum.entities.Post;
 import it.dreamplatform.forum.entities.User;
 import it.dreamplatform.forum.services.DiscussionService;
+import it.dreamplatform.forum.services.PostService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -21,6 +23,8 @@ import java.util.List;
 public class NotificationController {
     @Inject
     DiscussionService discussionService;
+    @Inject
+    PostService postService;
 
     /**
      * This function notifies the followers of a discussion by emailing them.
@@ -48,6 +52,64 @@ public class NotificationController {
                                         .put("Name", "Dream Platform Forum"))
                                 .put(Emailv31.Message.TO, receivers)
                                 .put(Emailv31.Message.SUBJECT, "The discussion \""+discussion.getTitle()+"\"  was updated!")
+                                .put(Emailv31.Message.TEXTPART, "Dear passenger 1, welcome to Mailjet! May the delivery force be with you!")
+                                .put(Emailv31.Message.HTMLPART, "<h3>Dear passenger 1, welcome to <a href=\"https://www.mailjet.com/\">Mailjet</a>!</h3><br />May the delivery force be with you!")));
+        response = client.post(request);
+        System.out.println(response.getStatus());
+        System.out.println(response.getData());
+    }
+
+    /**
+     * This function notifies a User that one of its post has been approved.
+     * @param post is the approved Post.
+     */
+    public void notifyApprovePost(Post post) throws MailjetException, Exception {
+        MailjetClient client;
+        MailjetRequest request;
+        MailjetResponse response;
+        User creator = post.getCreator();
+        JSONArray receivers = new JSONArray();
+        receivers.put(new JSONObject()
+                .put("Email", creator.getMail())
+                .put("Name", creator.getName() + " " + creator.getSurname()));
+        client = new MailjetClient("b6f77ce70757e21a3bf469064b4d1e4d", "3493a06a827721a61fd331945a863690", new ClientOptions("v3.1"));
+        request = new MailjetRequest(Emailv31.resource)
+                .property(Emailv31.MESSAGES, new JSONArray()
+                        .put(new JSONObject()
+                                .put(Emailv31.Message.FROM, new JSONObject()
+                                        .put("Email", "noreply@dreamplatform.it")
+                                        .put("Name", "Dream Platform Forum"))
+                                .put(Emailv31.Message.TO, receivers)
+                                .put(Emailv31.Message.SUBJECT, "The post you have published has been approved.\nThe content of the post was: \""+post.getText()+"\"")
+                                .put(Emailv31.Message.TEXTPART, "Dear passenger 1, welcome to Mailjet! May the delivery force be with you!")
+                                .put(Emailv31.Message.HTMLPART, "<h3>Dear passenger 1, welcome to <a href=\"https://www.mailjet.com/\">Mailjet</a>!</h3><br />May the delivery force be with you!")));
+        response = client.post(request);
+        System.out.println(response.getStatus());
+        System.out.println(response.getData());
+    }
+
+    /**
+     * This function notifies a User that one of its post has been declined.
+     * @param post is the declined Post.
+     */
+    public void notifyDeclinePost(Post post) throws MailjetException, Exception {
+        MailjetClient client;
+        MailjetRequest request;
+        MailjetResponse response;
+        User creator = post.getCreator();
+        JSONArray receivers = new JSONArray();
+        receivers.put(new JSONObject()
+                    .put("Email", creator.getMail())
+                    .put("Name", creator.getName() + " " + creator.getSurname()));
+        client = new MailjetClient("b6f77ce70757e21a3bf469064b4d1e4d", "3493a06a827721a61fd331945a863690", new ClientOptions("v3.1"));
+        request = new MailjetRequest(Emailv31.resource)
+                .property(Emailv31.MESSAGES, new JSONArray()
+                        .put(new JSONObject()
+                                .put(Emailv31.Message.FROM, new JSONObject()
+                                        .put("Email", "noreply@dreamplatform.it")
+                                        .put("Name", "Dream Platform Forum"))
+                                .put(Emailv31.Message.TO, receivers)
+                                .put(Emailv31.Message.SUBJECT, "The post you have published has been declined.\nThe content of the post was: \""+post.getText()+"\"")
                                 .put(Emailv31.Message.TEXTPART, "Dear passenger 1, welcome to Mailjet! May the delivery force be with you!")
                                 .put(Emailv31.Message.HTMLPART, "<h3>Dear passenger 1, welcome to <a href=\"https://www.mailjet.com/\">Mailjet</a>!</h3><br />May the delivery force be with you!")));
         response = client.post(request);

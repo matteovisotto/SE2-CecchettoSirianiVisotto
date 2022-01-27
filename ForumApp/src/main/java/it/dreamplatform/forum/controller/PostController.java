@@ -49,7 +49,7 @@ public class PostController {
         }
         post.setStatus(1);
         postService.savePost(post);
-        notificationController.notifyFollowers(post.getDiscussion().getDiscussionId());
+        notificationController.notifyApprovePost(post);
     }
 
     /**
@@ -65,6 +65,7 @@ public class PostController {
         if(post.getStatus() == 1){
             throw new Exception("The post can't be declined.");
         }
+        notificationController.notifyDeclinePost(post);
         postService.deletePost(post);
     }
 
