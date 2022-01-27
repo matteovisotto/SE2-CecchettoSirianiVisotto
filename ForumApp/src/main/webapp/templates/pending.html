@@ -39,16 +39,16 @@
         <div class="col-md-2">
             <h5 class="title">Menu</h5>
             <ul class="side-menu">
-                <li class="active"><a href="moderator.html" data-th-href="@{/moderator}"><i class="fas fa-home"></i> Home</a></li>
-                <li class=""><a href="pending.html" data-th-href="@{/moderator/pending}"><i class="fas fa-comments"></i> Pending List</a></li>
+                <li class=""><a href="moderator.html" data-th-href="@{/moderator}"><i class="fas fa-home"></i> Home</a></li>
+                <li class="active"><a href="pending.html" data-th-href="@{/moderator/pending}"><i class="fas fa-comments"></i> Pending List</a></li>
                 <li class=""><a href="home.html" data-th-href="@{/}"><i class="fas fa-angle-double-left"></i> Back to forum</a></li>
             </ul>
         </div>
         <!-- Content from here -->
         <div class="col-md-7">
-            <h5 class="title">Moderator Area</h5><br/>
-            <div class="row">
-                FARE PAGINA
+            <h5 class="title">Pending list</h5><br/>
+            <div class="row" id="moderatorRepliesContainer">
+
             </div>
         </div>
         <!-- Content end here -->
@@ -94,7 +94,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="approveReplyModalTitle">Approve a reply</h5>
+                <h5 class="modal-title" id="approveReplyModalTitle">Review reply</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -107,8 +107,9 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="modalUpdateButton">Approve</button>
+                <button type="button" class="btn btn-secondary float-start" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" id="modalDeclineButton">Decline</button>
+                <button type="button" class="btn btn-primary" id="modalApproveButton">Approve</button>
             </div>
         </div>
     </div>
@@ -123,6 +124,6 @@
     const isPolicyMaker = /*[[${isPolicyMaker}]]*/ false;
 </script>
 
-
+<script data-th-src="@{/static/js/PendingManager.js}"></script>
 </body>
 </html>
