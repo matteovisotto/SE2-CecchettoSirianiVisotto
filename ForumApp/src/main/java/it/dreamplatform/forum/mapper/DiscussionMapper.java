@@ -46,6 +46,25 @@ public class DiscussionMapper {
     }
 
     /**
+     * This function sets the values of a DiscussionBean using the values retrieve from a Discussion entity.
+     * @param entity is the entity of the DB.
+     * @param bean is the object into which the function will set all the values.
+     * @param numberOfReplies is the modified number of replies without the post with status = 0;
+     * @return the corresponding DiscussionBean or null if the entity is null.
+     */
+    public DiscussionBean mapEntityToBeanForDiscussion(Discussion entity, DiscussionBean bean, int numberOfReplies){
+        if (entity == null) {return null;}
+        bean.setDiscussionId(entity.getDiscussionId());
+        bean.setTitle(entity.getTitle());
+        bean.setText(entity.getText());
+        bean.setTimestamp(entity.getTimestamp());
+        bean.setTopicId(entity.getTopic().getTopicId());
+        bean.setNumberReplies(numberOfReplies);
+        bean.setCreator(userMapper.mapEntityToPublicBean(entity.getPosts().stream().min(Comparator.comparingLong(Post::getPostId)).get().getCreator()));
+        return bean;
+    }
+
+    /**
      * This function creates a Discussion entity and call another function to maps the values.
      * @param bean is the DiscussionBean from which the value will be retrieved.
      * @return the corresponding Discussion entity just created.
@@ -145,4 +164,21 @@ public class DiscussionMapper {
         entity.setTopic(topic);
         return entity;
     }
+
+    /**
+     * This function maps a DiscussionContentBean into a DiscussionBean.
+     * @param discussionContentBean is the object from which the values will be retrieved.
+     * @param discussionBean is the DiscussionBean.
+     * @return the corresponding DiscussionBean or null if the Bean is null.
+    public DiscussionBean mapContentBeanToBean(DiscussionContentBean discussionContentBean, DiscussionBean discussionBean){
+        if (discussionContentBean == null) {return null;}
+        discussionBean.setText(discussionContentBean.getText());
+        discussionBean.setTimestamp(discussionContentBean.getTimestamp());
+        discussionBean.setTitle(discussionContentBean.getTitle());
+        discussionBean.setTopicId(discussionContentBean.getTopicId());
+        discussionBean.setNumberReplies(discussionContentBean.getNumberReplies());
+        discussionBean.setCreator(discussionContentBean.getCreator());
+        discussionBean.setDiscussionId(discussionContentBean.getDiscussionId());
+        return discussionBean;
+    }*/
 }
