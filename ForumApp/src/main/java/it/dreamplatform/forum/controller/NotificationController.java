@@ -50,7 +50,7 @@ public class NotificationController {
                                 .put(Emailv31.Message.FROM, new JSONObject()
                                         .put("Email", "noreply@dreamplatform.it")
                                         .put("Name", "Dream Platform Forum"))
-                                .put(Emailv31.Message.TO, receivers)
+                                .put(Emailv31.Message.BCC, receivers)
                                 .put(Emailv31.Message.SUBJECT, "The discussion \""+discussion.getTitle()+"\"  was updated!")
                                 .put(Emailv31.Message.TEXTPART, "Dear user, the discussion \""+discussion.getTitle()+"\" you are following has been modified.")
                                 .put(Emailv31.Message.HTMLPART, "<p>Dear user, the discussion \"<strong>"+discussion.getTitle()+"</strong>\" you are following has been modified.</p>")));
