@@ -129,6 +129,19 @@ p {
 
 }
 
+/* MODERATOR AREA */
+.moderator-dashboard-card-content{
+    margin: 3px;
+    border-left: 3px solid var(--bs-orange);
+}
+.moderator-dashboard-card-content  .heading {
+    color: var(--bs-orange);
+}
+
+.moderator-dashboard-card-content .hstack {
+    margin-left: 10px;
+}
+
 @media only screen and (max-width: 900px) {
 
     .nav-item > .btn {
