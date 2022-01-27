@@ -48,7 +48,27 @@
         <div class="col-md-7">
             <h5 class="title">Moderator Area</h5><br/>
             <div class="row">
-                FARE PAGINA
+                <div class="col-md-6">
+                <div class="card-text">Hi <span data-th-text="|${user.getName()} ${user.getSurname()}|">Name Surname</span>, welcome
+                in your moderator area.<br/>
+                    From here you can look at all the user's replies waiting for a review.</div>
+                </div>
+               <div class="col-md-6">
+                   <div class="border-0 shadow dream-card">
+                       <div class="card-body moderator-dashboard">
+                           <div class="moderator-dashboard-card-content">
+                               <div class="hstack gap-4">
+                                    <div class="far fa-clock heading fa-2x" style="width: 35px; height: auto"></div>
+                                   <div class="vstack gap-2">
+                                       <strong class="heading">WAITING APPROVAL</strong>
+                                       X replies are waiting for approval
+                                   </div>
+                               </div>
+                           </div>
+
+                       </div>
+                   </div>
+               </div>
             </div>
         </div>
         <!-- Content end here -->
