@@ -42,11 +42,62 @@ $(function () {
         }
 
         this.onApprove = function() {
-
+            self.currentPost.timestamp = new Date();
+            self.currentPost.text = CKEDITOR.instances.replyContent.getData();
+            $.ajax({
+                type: "POST",
+                url: "../api/post/approve",
+                data: JSON.stringify(self.currentPost),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(data){
+                    self.modal.modal('hide');
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Post successfully approved',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then((r) => {
+                        pendingController.loadData();
+                    });
+                },
+                error: function(e) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'An error occurred. Please try again',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            });
         }
 
         this.onDecline = function() {
-
+            $.ajax({
+                type: "POST",
+                url: "../api/post/decline/"+self.currentPost.postId,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(data){
+                    self.modal.modal('hide');
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Post successfully deleted',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then((r) => {
+                        pendingController.loadData();
+                    });
+                },
+                error: function(e) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'An error occurred. Please try again',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            });
         }
 
     }

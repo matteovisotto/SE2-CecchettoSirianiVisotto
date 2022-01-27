@@ -126,6 +126,7 @@ public class PostController {
             }
         }
         postService.savePost(postMapper.mapBeanToEntity(post));
+        notificationController.notifyFollowers(post.getDiscussionId());
     }
 
     /**

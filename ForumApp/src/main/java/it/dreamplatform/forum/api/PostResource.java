@@ -78,22 +78,23 @@ public class PostResource {
             posts = postController.getPendingPosts();
             return Response.ok().entity(gson.toJson(posts)).build();
         } catch (Exception e) {
-            return Response.status(204).entity("[]]").build();
+            return Response.status(204).entity("[]").build();
         }
     }
 
     /**
      * This function is the api used to approve a post in the pending list (the posts with status 0). It can be used by going at "/post/approve/{postId}".
-     * @param postId is the id of the Post to approve.
+     * @param post is the Post to approve.
      * @return a response with a JSON format about the success of the operation.
      */
-    @GET
+    @POST
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
-    @Path("/approve/{postId: [0-9]+}")
+    @Path("/approve")
     @RolesAllowed({"policy_maker"})
-    public Response approvePost(@PathParam("postId") Long postId){
+    public Response approvePost(PostBean post){
         try {
-            postController.approvePendingPost(postId);
+            postController.modifyPost(post, (UserBean) request.getSession().getAttribute("user"));
+            postController.approvePendingPost(post.getPostId());
             return Response.ok().entity("{\"success\":1}").build();
         } catch (Exception e) {
             return Response.status(400).entity("{\"success\":0}").build();
@@ -105,7 +106,7 @@ public class PostResource {
      * @param postId is the id of the Post to decline.
      * @return a response with a JSON format about the success of the operation.
      */
-    @GET
+    @POST
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
     @Path("/decline/{postId: [0-9]+}")
     @RolesAllowed({"policy_maker"})

@@ -54,14 +54,14 @@
                     From here you can look at all the user's replies waiting for a review.</div>
                 </div>
                <div class="col-md-6">
-                   <div class="border-0 shadow dream-card">
+                   <div class="card border-0 shadow dream-card">
                        <div class="card-body moderator-dashboard">
                            <div class="moderator-dashboard-card-content">
                                <div class="hstack gap-4">
                                     <div class="far fa-clock heading fa-2x" style="width: 35px; height: auto"></div>
                                    <div class="vstack gap-2">
                                        <strong class="heading">WAITING APPROVAL</strong>
-                                       X replies are waiting for approval
+                                       <p><span class="heading" id="numberPending"></span> replies are waiting for approval</p>
                                    </div>
                                </div>
                            </div>
@@ -80,13 +80,7 @@
                         <div class="card-body">
                             <strong class="card-text">Top users</strong>
                             <table class="table table-borderless">
-                                <tbody>
-
-                                </tbody>
-                            </table>
-                            <hr/>
-                            <table class="table table-borderless">
-                                <tbody>
+                                <tbody id="topUsers">
 
                                 </tbody>
                             </table>
@@ -138,6 +132,8 @@
 <script src="../static/js/bootstrap/bootstrap.bundle.min.js" data-th-src="@{/static/js/bootstrap/bootstrap.bundle.min.js}"></script>
 <script src="../static/ckeditor/ckeditor.js" data-th-src="@{/static/ckeditor/ckeditor.js}"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script data-th-src="@{/static/js/ModeratorManager.js}"></script>
+<script data-th-src="@{/static/js/TopUsersManager.js}"></script>
 <script data-th-if="${user}" data-th-inline="javascript">
     const userId = /*[[${user.getUserId()}]]*/ 0;
     const isPolicyMaker = /*[[${isPolicyMaker}]]*/ false;

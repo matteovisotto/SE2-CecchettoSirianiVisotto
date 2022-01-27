@@ -52,8 +52,8 @@ public class NotificationController {
                                         .put("Name", "Dream Platform Forum"))
                                 .put(Emailv31.Message.TO, receivers)
                                 .put(Emailv31.Message.SUBJECT, "The discussion \""+discussion.getTitle()+"\"  was updated!")
-                                .put(Emailv31.Message.TEXTPART, "Dear passenger 1, welcome to Mailjet! May the delivery force be with you!")
-                                .put(Emailv31.Message.HTMLPART, "<h3>Dear passenger 1, welcome to <a href=\"https://www.mailjet.com/\">Mailjet</a>!</h3><br />May the delivery force be with you!")));
+                                .put(Emailv31.Message.TEXTPART, "Dear user, the discussion \""+discussion.getTitle()+"\" you are following has been modified.")
+                                .put(Emailv31.Message.HTMLPART, "<p>Dear user, the discussion \"<strong>"+discussion.getTitle()+"</strong>\" you are following has been modified.</p>")));
         response = client.post(request);
         System.out.println(response.getStatus());
         System.out.println(response.getData());
@@ -80,9 +80,9 @@ public class NotificationController {
                                         .put("Email", "noreply@dreamplatform.it")
                                         .put("Name", "Dream Platform Forum"))
                                 .put(Emailv31.Message.TO, receivers)
-                                .put(Emailv31.Message.SUBJECT, "The post you have published has been approved.\nThe content of the post was: \""+post.getText()+"\"")
-                                .put(Emailv31.Message.TEXTPART, "Dear passenger 1, welcome to Mailjet! May the delivery force be with you!")
-                                .put(Emailv31.Message.HTMLPART, "<h3>Dear passenger 1, welcome to <a href=\"https://www.mailjet.com/\">Mailjet</a>!</h3><br />May the delivery force be with you!")));
+                                .put(Emailv31.Message.SUBJECT, "The post you have published has been approved")
+                                .put(Emailv31.Message.TEXTPART, "The post you have published has been approved. \n The content of the post was:\n "+post.getText())
+                                .put(Emailv31.Message.HTMLPART, "<div>The post you have published has been approved.<br/> The content of the post was:<br/>"+post.getText()+"</div>")));
         response = client.post(request);
         System.out.println(response.getStatus());
         System.out.println(response.getData());
@@ -109,9 +109,9 @@ public class NotificationController {
                                         .put("Email", "noreply@dreamplatform.it")
                                         .put("Name", "Dream Platform Forum"))
                                 .put(Emailv31.Message.TO, receivers)
-                                .put(Emailv31.Message.SUBJECT, "The post you have published has been declined.\nThe content of the post was: \""+post.getText()+"\"")
-                                .put(Emailv31.Message.TEXTPART, "Dear passenger 1, welcome to Mailjet! May the delivery force be with you!")
-                                .put(Emailv31.Message.HTMLPART, "<h3>Dear passenger 1, welcome to <a href=\"https://www.mailjet.com/\">Mailjet</a>!</h3><br />May the delivery force be with you!")));
+                                .put(Emailv31.Message.SUBJECT, "The post you have published has been declined")
+                                .put(Emailv31.Message.TEXTPART, "Sorry, the post you have asked to publish has been declined. \n The content of the post was:\n "+post.getText())
+                                .put(Emailv31.Message.HTMLPART, "<div>Sorry, the post you have asked to publish has been declined.<br/> The content of the post was:<br/>"+post.getText()+"</div>")));
         response = client.post(request);
         System.out.println(response.getStatus());
         System.out.println(response.getData());
