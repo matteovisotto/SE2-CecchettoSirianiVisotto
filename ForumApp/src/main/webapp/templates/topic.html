@@ -71,13 +71,13 @@
             <div class="card-body">
               <strong class="card-text">Top users</strong>
               <table class="table table-borderless">
-                <tbody>
+                <tbody id="topUsers">
 
                 </tbody>
               </table>
               <hr/>
               <table class="table table-borderless">
-                <tbody>
+                <tbody id="actualUser">
 
                 </tbody>
               </table>
@@ -141,5 +141,6 @@
   const isPolicyMaker = /*[[${isPolicyMaker}]]*/ false;
 </script>
 <script data-th-src="@{/static/js/DiscussionManager.js}"></script>
+<script data-th-src="@{/static/js/TopUsersManager.js}"></script>
 </body>
 </html>

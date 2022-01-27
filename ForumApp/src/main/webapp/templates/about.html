@@ -76,7 +76,25 @@
         <!-- Content end here -->
         <div class="col-md-3">
 
-            <div class="row right-sidebar" >
+            <div class="row right-sidebar">
+                <div class="col-12 card-container">
+                    <div class="card border-0 shadow dream-card">
+                        <div class="card-body">
+                            <strong class="card-text">Top users</strong>
+                            <table class="table table-borderless">
+                                <tbody id="topUsers">
+
+                                </tbody>
+                            </table>
+                            <hr/>
+                            <table class="table table-borderless">
+                                <tbody id="actualUser">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-12 card-container">
                     <div class="card border-0 shadow dream-card">
                         <div class="card-body">
@@ -96,6 +114,7 @@
 
 <script src="../static/js/jQuery.js" data-th-src="@{/static/js/jQuery.js}"></script>
 <script src="../static/js/bootstrap/bootstrap.bundle.min.js" data-th-src="@{/static/js/bootstrap/bootstrap.bundle.min.js}"></script>
+<script data-th-src="@{/static/js/TopUsersManager.js}"></script>
 
 </body>
 </html>
