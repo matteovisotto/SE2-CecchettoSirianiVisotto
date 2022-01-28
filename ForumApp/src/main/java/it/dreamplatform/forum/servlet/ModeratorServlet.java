@@ -1,5 +1,6 @@
 package it.dreamplatform.forum.servlet;
 
+import it.dreamplatform.forum.bean.UserBean;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -33,7 +34,10 @@ public class ModeratorServlet extends HttpServlet {
         String path = "templates/moderator";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
-        ctx.setVariable("user", req.getSession().getAttribute("user"));
+        if(req.getSession().getAttribute("user")!=null){
+            ctx.setVariable("user", req.getSession().getAttribute("user"));
+            ctx.setVariable("isPolicyMaker", !(((UserBean) req.getSession().getAttribute("user")).getPolicyMakerID()==null));
+        }
         templateEngine.process(path, ctx, resp.getWriter());
     }
 
