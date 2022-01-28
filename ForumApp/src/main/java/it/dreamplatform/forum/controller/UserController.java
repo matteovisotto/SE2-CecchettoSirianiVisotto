@@ -44,6 +44,17 @@ public class UserController {
         return userService.createUser(userMapper.mapBeanToEntity(userBean));
     }
 
+
+    /**
+     * This function is used to update a User.
+     * @param userBean is the Bean containing all the information of the User that the function is going to update.
+     * @return the id of the User just updated.
+     */
+    public Long updateUser(UserBean userBean){
+        return userService.updateUser(userMapper.mapBeanToEntity(userBean));
+    }
+
+
     /**
      * This function is used to retrieve the List of the most active User in the forum.
      * @param numberOfUser is the number of the top users to be retrieved.

@@ -38,6 +38,7 @@ public class DreamLoginServlet extends HttpServlet {
         user = userController.searchUser((String) req.getAttribute("mail"));
 
         if(user != null){
+            user = updateUserInfo(user, req);
             req.getSession().setAttribute("user", user);
             resp.sendRedirect(req.getContextPath()+"/");
             return;
@@ -78,4 +79,33 @@ public class DreamLoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
     }
+
+    private UserBean updateUserInfo(UserBean userBean, HttpServletRequest req){
+        if( req.getAttribute("areaOfResidence") != null){
+            userBean.setAreaOfResidence((String) req.getAttribute("areaOfResidence"));
+        }
+
+        if( req.getAttribute("givenName") != null){
+            userBean.setName((String) req.getAttribute("givenName"));
+        }
+
+        if( req.getAttribute("sn") != null){
+            userBean.setSurname((String) req.getAttribute("sn"));
+        }
+
+        if( req.getAttribute("policyMakerID") != null){
+            userBean.setPolicyMakerID((String) req.getAttribute("policyMakerID"));
+        }
+
+        if( req.getAttribute("dateOfBirth") != null){
+            try{
+                userBean.setDateOfBirth(new SimpleDateFormat("yyyy-MM-dd").parse((String) req.getAttribute("dateOfBirth")));
+            } catch (Exception e){}
+        }
+
+        userController.updateUser(userBean);
+
+        return userBean;
+    }
+
 }

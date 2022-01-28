@@ -64,6 +64,19 @@ public class UserService {
         return user.getUserId();
     }
 
+
+    /**
+     * This function query the DB in order to update an existing User
+     * @param user is the User to update
+     * @return the id of the updated user
+     */
+    public Long updateUser(User user){
+        user = em.merge(user);
+        em.flush();
+        return user.getUserId();
+    }
+
+
     /**
      * This function query the DB, in order to delete a User.
      * @param user is the User entity.
