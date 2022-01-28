@@ -127,6 +127,10 @@
             <div class="modal-body">
                 <form id="newReplyForm">
                     <div class="row">
+                        <div class="col-12" id="discussionEditTitle" hidden data-th-if="${isPolicyMaker}">
+                            <label>Discussion title</label>
+                            <input type="text" name="discussionTitle" class="form-control"/>
+                        </div>
                         <div class="col-12">
                             <textarea name="replyContent" id="replyContent"></textarea>
                         </div>

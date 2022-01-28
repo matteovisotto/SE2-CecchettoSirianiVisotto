@@ -11,6 +11,7 @@ import it.dreamplatform.forum.services.UserService;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This class contains all the controller used by a Post entity or a Post bean.
@@ -121,7 +122,7 @@ public class PostController {
             throw new Exception("The post to modify is not present");
         }
         if(user.getPolicyMakerID() == null){
-            if(postToModify.getCreator() != userMapper.mapBeanToEntity(user)){
+            if(!Objects.equals(postToModify.getCreator().getUserId(), userMapper.mapBeanToEntity(user).getUserId())){
                 throw new Exception("You don't have the permission to modify the post.");
             }
         }

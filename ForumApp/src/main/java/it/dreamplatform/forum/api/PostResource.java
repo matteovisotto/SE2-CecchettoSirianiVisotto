@@ -155,6 +155,7 @@ public class PostResource {
             postController.modifyPost(post, user);
             return Response.ok().entity("{\"success\":1}").build();
         } catch (Exception e) {
+            e.printStackTrace();
             return Response.status(400).entity("{\"success\":0}").build();
         }
     }
