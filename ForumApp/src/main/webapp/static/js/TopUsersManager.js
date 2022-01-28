@@ -6,7 +6,7 @@ $(function(){
     function TopUserController(_container){
         var self = this;
         this.container = _container;
-        this.basePath = '/forum_war_exploded/';
+        this.basePath = '/';
         this.loadData = function(){
             this.container.html("");
             $.get(this.basePath+'api/user/active', (json) => {

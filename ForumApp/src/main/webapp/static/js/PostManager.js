@@ -193,6 +193,7 @@ $(function () {
     function createPrimaryDiscussion(p, d){
         discussionTitle.text(d.title);
         $('#discussionText').html(p.text);
+        $('#discussionModify').attr('data-post-id', p.postId);
         $('#discussionCreatorName').text(p.creator.name+' '+p.creator.surname);
         $('#discussionCreatorArea').text('District of '+ p.creator.areaOfResidence);
     }
