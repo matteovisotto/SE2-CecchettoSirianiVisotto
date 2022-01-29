@@ -13,6 +13,8 @@ public class Area implements Serializable {
     private String areaId;
     private String name;
 
+
+
     public String getAreaId() {
         return areaId;
     }

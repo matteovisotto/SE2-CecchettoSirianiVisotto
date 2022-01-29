@@ -1,17 +1,8 @@
-package it.dreamplatform.data.dataapp.entity;
+package it.dreamplatform.data.dataapp.bean;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.sql.Timestamp;
 
-@Entity
-@Table(name = "Data", schema = "dream_data")
-public class Data implements Serializable {
-    private static final long serialVersionUID = 1L;
-
-    @Id
-    @Column(columnDefinition = "integer")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class DataBean {
     private Long dataId;
     private String value;
     private double longitude;
@@ -19,14 +10,6 @@ public class Data implements Serializable {
     private Timestamp timestamp;
     private Long dataSourceId;
     private String district;
-
-    public String getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(String district) {
-        this.district = district;
-    }
 
     public Long getDataId() {
         return dataId;
@@ -74,5 +57,13 @@ public class Data implements Serializable {
 
     public void setDataSourceId(Long dataSourceId) {
         this.dataSourceId = dataSourceId;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
     }
 }
