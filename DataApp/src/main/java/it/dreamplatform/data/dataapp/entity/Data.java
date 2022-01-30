@@ -13,7 +13,7 @@ public class Data implements Serializable {
     @Column(columnDefinition = "integer")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long dataId;
-    private String value;
+    private double value;
     private double longitude;
     private double latitude;
     private Timestamp timestamp;
@@ -36,11 +36,11 @@ public class Data implements Serializable {
         this.dataId = dataId;
     }
 
-    public String getValue() {
+    public double getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(double value) {
         this.value = value;
     }
 

@@ -1,15 +1,18 @@
 package it.dreamplatform.data.dataapp.bean;
 
+import it.dreamplatform.data.dataapp.utils.ZoneEnum;
+
 import java.sql.Timestamp;
 
 public class DataBean {
     private Long dataId;
-    private String value;
+    private double value;
     private double longitude;
     private double latitude;
     private Timestamp timestamp;
     private Long dataSourceId;
     private String district;
+    private ZoneEnum zone;
 
     public Long getDataId() {
         return dataId;
@@ -19,11 +22,11 @@ public class DataBean {
         this.dataId = dataId;
     }
 
-    public String getValue() {
+    public double getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(double value) {
         this.value = value;
     }
 
@@ -65,5 +68,13 @@ public class DataBean {
 
     public void setDistrict(String district) {
         this.district = district;
+    }
+
+    public ZoneEnum getZone() {
+        return zone;
+    }
+
+    public void setZone(ZoneEnum zone) {
+        this.zone = zone;
     }
 }
