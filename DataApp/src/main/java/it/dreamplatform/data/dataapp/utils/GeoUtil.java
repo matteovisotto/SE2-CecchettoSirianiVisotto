@@ -5,11 +5,13 @@ import com.google.gson.JsonObject;
 import it.dreamplatform.data.dataapp.bean.DataBean;
 import it.dreamplatform.data.dataapp.bean.DataSetBean;
 import it.dreamplatform.data.dataapp.bean.DistrictBean;
+import it.dreamplatform.data.dataapp.bean.RankingBean;
 import it.dreamplatform.data.dataapp.entity.Data;
 import it.dreamplatform.data.dataapp.mapper.DataMapper;
 
 import javax.inject.Inject;
-import java.util.List;
+import java.sql.Timestamp;
+import java.util.*;
 
 public class GeoUtil {
     @Inject
@@ -133,5 +135,54 @@ public class GeoUtil {
         return dataSetBean;
     }
 
+    public List<RankingBean> calculateRanking(List<DataSetBean> dataSetBeans, String district) throws Exception {
+        double rankNE = 0;
+        double rankNW = 0;
+        double rankSE = 0;
+        double rankSW = 0;
 
+        RankingBean zoneNE = new RankingBean();
+        RankingBean zoneNW = new RankingBean();
+        RankingBean zoneSE = new RankingBean();
+        RankingBean zoneSW = new RankingBean();
+
+        zoneNE.setDistrict(district);
+        zoneNW.setDistrict(district);
+        zoneSE.setDistrict(district);
+        zoneSW.setDistrict(district);
+
+        zoneNE.setZone(ZoneEnum.NORTH_EAST);
+        zoneNW.setZone(ZoneEnum.SOUTH_WEST);
+        zoneSE.setZone(ZoneEnum.SOUTH_EAST);
+        zoneSW.setZone(ZoneEnum.SOUTH_WEST);
+
+        for (DataSetBean dataSet : dataSetBeans) {
+            if(!dataSet.getDistrict().equals(district)){
+                throw new Exception("DataSet must belong to district " + district+ "!\n");
+            }
+            rankNE += dataSet.getValueNE();
+            rankNW += dataSet.getValueNW();
+            rankSE += dataSet.getValueSE();
+            rankSW += dataSet.getValueSW();
+        }
+        zoneNE.setValue(rankNE);
+        zoneNW.setValue(rankNW);
+        zoneSE.setValue(rankSE);
+        zoneSW.setValue(rankSW);
+
+        List<RankingBean> rankingList = null;
+        rankingList.add(zoneNE);
+        rankingList.add(zoneNW);
+        rankingList.add(zoneSE);
+        rankingList.add(zoneSW);
+
+        Comparator<RankingBean> compareByValue = Comparator.comparingDouble(RankingBean::getValue);
+        Collections.sort(rankingList, compareByValue);
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        for (int i = 0; i<rankingList.size(); i++) {
+            rankingList.get(i).setTimestamp(timestamp);
+            rankingList.get(i).setPosition(i+1);
+        }
+        return rankingList;
+    }
 }
