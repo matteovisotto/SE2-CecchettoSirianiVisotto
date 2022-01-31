@@ -36,7 +36,7 @@ public class GeoUtil {
         return districts;
     }
 
-    public List<DataBean> valueDistrict(List<Data> dataList, List<DistrictBean> districts) {
+    public List<DataBean> valueDistricts(List<Data> dataList, List<DistrictBean> districts) {
         List<DataBean> toReturn = null;
         SpatialReference spatialReference = SpatialReference.create(1984);
         for (Data data: dataList) {
@@ -54,8 +54,24 @@ public class GeoUtil {
         return toReturn;
     }
 
+    public List<DataBean> valueSingleDistrict(List<Data> dataList, DistrictBean district) {
+        List<DataBean> toReturn = null;
+        SpatialReference spatialReference = SpatialReference.create(1984);
+        for (Data data: dataList) {
+            Point dataPoint = new Point(data.getLongitude(), data.getLatitude());
+            boolean contains = OperatorContains.local().execute(district.getPolygon(), dataPoint, spatialReference,null);
+            if(contains){
+                data.setDistrict(district.getName());
+                DataBean dataBean = dataMapper.mapEntityToBean(data);
+                toReturn.add(dataBean);
+                break;
+            }
+        }
+        return toReturn;
+    }
+
     //input DataBean che hanno stesso district
-    public Point mediumPoit (List<DataBean> dataBeanList) {
+    public Point mediumPoint (List<DataBean> dataBeanList) {
         double mediumLatitude = 0;
         double mediumLongitude = 0;
         int counter = dataBeanList.size();
