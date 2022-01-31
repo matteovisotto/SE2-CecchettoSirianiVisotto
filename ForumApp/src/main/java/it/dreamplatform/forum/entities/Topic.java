@@ -12,7 +12,7 @@ import java.util.List;
  * multiple discussions that it contains).
  */
 @Entity
-@Table(name = "Topic", schema = "dream_forum")
+@Table(name = "Topic")
 @NamedQuery(name = "Topic.findAll", query = "SELECT t FROM Topic t")
 public class Topic implements Serializable {
     private static final long serialVersionUID = 1L;

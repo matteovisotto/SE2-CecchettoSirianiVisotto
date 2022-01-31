@@ -18,6 +18,10 @@ public class TopicService {
 
     public TopicService(){}
 
+    public TopicService(EntityManager em){
+        this.em = em;
+    }
+
     /**
      * This function query the DB to retrieve all the Topic entities stored.
      * @return a List of Topic entities.

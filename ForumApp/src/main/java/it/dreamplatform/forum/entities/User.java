@@ -11,7 +11,7 @@ import java.sql.Timestamp;
  * the policyMakerID that is nullable since you should have it only to register as a Policy maker.
  */
 @Entity
-@Table(name = "User", schema = "dream_forum")
+@Table(name = "User")
 @NamedQuery(name = "User.findByMail", query = "SELECT u FROM User u WHERE u.mail = :mail")
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;

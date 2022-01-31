@@ -12,7 +12,7 @@ import java.util.Date;
  * from all the post to the single discussion that contains them all).
  */
 @Entity
-@Table(name = "Post", schema = "dream_forum")
+@Table(name = "Post")
 public class Post implements Serializable {
     @Id
     @Column(columnDefinition = "integer")

@@ -20,6 +20,10 @@ public class DiscussionService {
 
     public DiscussionService(){}
 
+    public DiscussionService(EntityManager em){
+        this.em = em;
+    }
+
     /**
      * This function query the DB to retrieve a List of Discussion of a given Topic.
      * @param topicId is the id of the Topic.

@@ -164,21 +164,4 @@ public class DiscussionMapper {
         entity.setTopic(topic);
         return entity;
     }
-
-    /**
-     * This function maps a DiscussionContentBean into a DiscussionBean.
-     * @param discussionContentBean is the object from which the values will be retrieved.
-     * @param discussionBean is the DiscussionBean.
-     * @return the corresponding DiscussionBean or null if the Bean is null.
-    public DiscussionBean mapContentBeanToBean(DiscussionContentBean discussionContentBean, DiscussionBean discussionBean){
-        if (discussionContentBean == null) {return null;}
-        discussionBean.setText(discussionContentBean.getText());
-        discussionBean.setTimestamp(discussionContentBean.getTimestamp());
-        discussionBean.setTitle(discussionContentBean.getTitle());
-        discussionBean.setTopicId(discussionContentBean.getTopicId());
-        discussionBean.setNumberReplies(discussionContentBean.getNumberReplies());
-        discussionBean.setCreator(discussionContentBean.getCreator());
-        discussionBean.setDiscussionId(discussionContentBean.getDiscussionId());
-        return discussionBean;
-    }*/
 }
