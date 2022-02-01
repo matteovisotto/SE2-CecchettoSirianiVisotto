@@ -380,7 +380,7 @@ public class DiscussionIntegrationTest {
         discussionTest2.setTopic(topic);
         discussionTest2.setPosts(posts2);
 
-        Long discussionId2 = discussionService.saveDiscussion(discussionTest);
+        Long discussionId2 = discussionService.saveDiscussion(discussionTest2);
 
         Post post3 = new Post();
         post3.setPostId(null);
@@ -390,10 +390,10 @@ public class DiscussionIntegrationTest {
         post3.setCreator(policyMaker);
         post3.setDiscussion(discussionTest2);
 
-        //Long postId3 = postService.savePost(post3);
+        Long postId3 = postService.savePost(post3);
 
         assertEquals(discussionId, discussionService.getMostActiveDiscussions(2).get(0).getDiscussionId());
-        //assertEquals(discussionId2, discussionService.getMostActiveDiscussions(2).get(1).getDiscussionId());
+        assertEquals(discussionId2, discussionService.getMostActiveDiscussions(2).get(1).getDiscussionId());
 
         this.provider.rollback();
     }
