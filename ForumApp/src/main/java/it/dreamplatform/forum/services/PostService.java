@@ -18,6 +18,10 @@ public class PostService {
 
     public PostService(){}
 
+    public PostService(EntityManager em) {
+        this.em = em;
+    }
+
     /**
      * This function query the DB to retrieve a List of Post of a given Discussion.
      * @param discussionId is the id of the Discussion.

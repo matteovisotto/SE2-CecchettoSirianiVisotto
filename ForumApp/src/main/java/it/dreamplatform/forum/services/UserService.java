@@ -19,6 +19,10 @@ public class UserService {
 
     public UserService() {}
 
+    public UserService(EntityManager em) {
+        this.em = em;
+    }
+
     /**
      * This function query the DB to retrieve a given User using its id.
      * @param userId is the id of the User.

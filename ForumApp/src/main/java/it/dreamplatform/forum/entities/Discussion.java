@@ -13,7 +13,7 @@ import java.util.List;
  * the single Discussion to the multiple posts that it contains).
  */
 @Entity
-@Table(name = "Discussion", schema = "dream_forum")
+@Table(name = "Discussion")
 public class Discussion implements Serializable {
     private static final long serialVersionUID = 1L;
 
