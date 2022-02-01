@@ -12,6 +12,7 @@ import it.dreamplatform.data.dataapp.utils.GeoUtil;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,8 +24,16 @@ public class DataController {
     @Inject
     private DataService dataService;
 
+    public DistrictBean createSingleDistrict(String geoJsons) {
+        return geoUtil.createSingleDistrict(geoJsons);
+    }
+
     public List<DistrictBean> createDistrict(List<String> geoJsons) {
         return geoUtil.createDistrict(geoJsons);
+    }
+
+    public String retrieveDistrict(String districtId) {
+        return "[]";
     }
 
     public  DataSetBean createDataSet (DataSource dataSource, DistrictBean districtOfInterest) {
@@ -50,7 +59,6 @@ public class DataController {
             DataSetBean dataSetBean = createDataSet(dataSource, district);
             dataSetBeans.add(dataSetBean);
         }
-
         return geoUtil.calculateRanking(dataSetBeans, district.getName());
 
     }

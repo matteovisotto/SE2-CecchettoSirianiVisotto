@@ -14,17 +14,29 @@ import java.sql.Timestamp;
 import java.util.*;
 
 public class GeoUtil {
+
     @Inject
-    OperatorImportFromGeoJson operatorImportFromGeoJson;
-    @Inject
-    DataMapper dataMapper;
+    private DataMapper dataMapper;
+
+    public DistrictBean createSingleDistrict(String geoJson) {
+        DistrictBean districtBean = new DistrictBean();
+
+        Polygon polygon = (Polygon) OperatorImportFromGeoJson.local().execute(GeoJsonImportFlags.geoJsonImportDefaults, Geometry.Type.Polygon, geoJson, null).getGeometry();
+        districtBean.setPolygon(polygon);
+
+        JsonObject element = com.google.gson.JsonParser.parseString(geoJson).getAsJsonObject();
+        JsonObject properties = element.get("properties").getAsJsonObject();
+        districtBean.setName(properties.get("Dist_Name").getAsString());
+
+        return districtBean;
+    }
 
     public List<DistrictBean> createDistrict(List<String> geoJsons) {
-        List<DistrictBean> districts = null;
+        List<DistrictBean> districts = new ArrayList<>();
         for (String geoJson : geoJsons) {
-            DistrictBean districtBean = null;
+            DistrictBean districtBean = new DistrictBean();
 
-            Polygon polygon = (Polygon) operatorImportFromGeoJson.execute(GeoJsonImportFlags.geoJsonImportDefaults, Geometry.Type.Polygon, geoJson, null).getGeometry();
+            Polygon polygon = (Polygon) OperatorImportFromGeoJson.local().execute(GeoJsonImportFlags.geoJsonImportDefaults, Geometry.Type.Polygon, geoJson, null).getGeometry();
             districtBean.setPolygon(polygon);
 
             JsonObject element = com.google.gson.JsonParser.parseString(geoJson).getAsJsonObject();
@@ -37,7 +49,7 @@ public class GeoUtil {
     }
 
     public List<DataBean> valueDistricts(List<Data> dataList, List<DistrictBean> districts) {
-        List<DataBean> toReturn = null;
+        List<DataBean> toReturn = new ArrayList<>();
         SpatialReference spatialReference = SpatialReference.create(1984);
         for (Data data: dataList) {
             Point dataPoint = new Point(data.getLongitude(), data.getLatitude());
@@ -55,7 +67,7 @@ public class GeoUtil {
     }
 
     public List<DataBean> valueSingleDistrict(List<Data> dataList, DistrictBean district) {
-        List<DataBean> toReturn = null;
+        List<DataBean> toReturn = new ArrayList<>();
         SpatialReference spatialReference = SpatialReference.create(1984);
         for (Data data: dataList) {
             Point dataPoint = new Point(data.getLongitude(), data.getLatitude());
@@ -82,8 +94,7 @@ public class GeoUtil {
         mediumLatitude = mediumLatitude / counter;
         mediumLongitude= mediumLongitude / counter;
 
-        Point dataPoint = new Point(mediumLongitude, mediumLatitude);
-        return dataPoint;
+        return new Point(mediumLongitude, mediumLatitude);
     }
 
     public List<DataBean> valueZone (List<DataBean> dataBeanList, Point mediumPoint) {
@@ -186,14 +197,14 @@ public class GeoUtil {
         zoneSE.setValue(rankSE);
         zoneSW.setValue(rankSW);
 
-        List<RankingBean> rankingList = null;
+        List<RankingBean> rankingList = new ArrayList<>();
         rankingList.add(zoneNE);
         rankingList.add(zoneNW);
         rankingList.add(zoneSE);
         rankingList.add(zoneSW);
 
         Comparator<RankingBean> compareByValue = Comparator.comparingDouble(RankingBean::getValue);
-        Collections.sort(rankingList, compareByValue);
+        rankingList.sort(compareByValue);
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         for (int i = 0; i<rankingList.size(); i++) {
             rankingList.get(i).setTimestamp(timestamp);
