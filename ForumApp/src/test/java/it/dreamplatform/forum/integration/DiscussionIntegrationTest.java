@@ -223,20 +223,6 @@ public class DiscussionIntegrationTest {
     }
 
     @Test
-    public void tryToDeleteDiscussionNotPresentTest() {
-        this.provider.begin();
-        assertThrows(Exception.class, () -> discussionController.deleteDiscussion(0L));
-        this.provider.rollback();
-    }
-
-    @Test
-    public void tryToRetrieveADiscussionByAPolicyMakerThatHasNotCreatedDiscussionsTest() {
-        this.provider.begin();
-        assertThrows(Exception.class, () -> discussionController.getDiscussionsByPolicyMaker("tryThis"));
-        this.provider.rollback();
-    }
-
-    @Test
     public void deleteDiscussionTest() {
         this.provider.begin();
 
@@ -481,6 +467,20 @@ public class DiscussionIntegrationTest {
         //The first user is the Policy maker.
         assertEquals(userService.getUserByMail("mail").getPolicyMakerID(), usersFollowers.get(0).getPolicyMakerID());
 
+        this.provider.rollback();
+    }
+
+    @Test
+    public void tryToDeleteDiscussionNotPresentTest() {
+        this.provider.begin();
+        assertThrows(Exception.class, () -> discussionController.deleteDiscussion(0L));
+        this.provider.rollback();
+    }
+
+    @Test
+    public void tryToRetrieveADiscussionByAPolicyMakerThatHasNotCreatedDiscussionsTest() {
+        this.provider.begin();
+        assertThrows(Exception.class, () -> discussionController.getDiscussionsByPolicyMaker("tryThis"));
         this.provider.rollback();
     }
 }
