@@ -5,12 +5,11 @@
              version="2.2">
     <persistence-unit name="data-persistence-provider" transaction-type="JTA">
         <jta-data-source>DreamForumDB</jta-data-source>
-        <class>it.dreamplatform.data.dataapp.entity.Administrator</class>
-        <class>it.dreamplatform.data.dataapp.entity.Area</class>
-        <class>it.dreamplatform.data.dataapp.entity.Data</class>
-        <class>it.dreamplatform.data.dataapp.entity.DataSource</class>
-        <class>it.dreamplatform.data.dataapp.entity.DataType</class>
-        <class>it.dreamplatform.data.dataapp.entity.User</class>
+        <class>it.dreamplatform.data.entity.Administrator</class>
+        <class>it.dreamplatform.data.entity.Area</class>
+        <class>it.dreamplatform.data.entity.Data</class>
+        <class>it.dreamplatform.data.entity.DataSource</class>
+        <class>it.dreamplatform.data.entity.DataType</class>
         <properties>
             <property name="eclipselink.logging.level" value="FINE" />
             <property name="eclipselink.cache.shared.default" value="false" />
