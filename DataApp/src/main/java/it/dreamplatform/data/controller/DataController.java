@@ -28,21 +28,24 @@ public class DataController {
     @Inject
     private DataService dataService;
 
-    public DistrictBean createSingleDistrict(String geoJsons) {
-        return geoUtil.createSingleDistrict(geoJsons);
+    public DistrictBean createSingleDistrict(String districtId) throws URISyntaxException {
+        /*String fileName = retrieveDistrict(districtId);
+        File file = getFileFromResource(fileName);*/
+        return geoUtil.createSingleDistrict(districtId);
     }
 
-    public List<DistrictBean> createDistrict(List<String> geoJsons) {
-        return geoUtil.createDistrict(geoJsons);
+    public List<DistrictBean> createDistrict() {
+        return new ArrayList<>();
+        //return geoUtil.createDistrict(geoJsons);
     }
 
-    public String retrieveDistrict(String districtId) throws URISyntaxException {
-        String correctDistrict = getCorrectDistrict(districtId);
-        System.out.println("\ngetResource : " + correctDistrict);
-        File file = getFileFromResource(correctDistrict);
-        printFile(file);
-        return "[]";
-    }
+    /*public String retrieveDistrict(String districtId) throws URISyntaxException {
+        return getCorrectDistrict(districtId);
+        //System.out.println("\ngetResource : " + correctDistrict);
+        //File file = getFileFromResource(correctDistrict);
+        //printFile(file);
+        //return correctDistrict;
+    }*/
 
     private String getCorrectDistrict(String districtId) {
         switch (districtId) {

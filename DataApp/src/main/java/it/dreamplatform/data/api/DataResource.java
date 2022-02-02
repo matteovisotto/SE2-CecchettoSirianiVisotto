@@ -42,8 +42,13 @@ public class DataResource {
     @GET
     @Path("/district/{districtId}")
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
-    public Response createFile(@PathParam("districtId") String districtId) throws URISyntaxException {
-        String result = dataController.retrieveDistrict(districtId);
-        return Response.ok().entity(gson.toJson(result)).build();
+    public Response createFile(@PathParam("districtId") String districtId) {
+        try {
+            DistrictBean districtBean = dataController.createSingleDistrict(districtId);
+            return Response.ok().entity(districtBean.getName()/*"{\"success\":1}"*/).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(400).entity("{\"success\":0}").build();
+        }
     }
 }
