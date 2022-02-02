@@ -24,24 +24,20 @@ public class DataController {
     @Inject
     private DataService dataService;
 
+    @Inject
+    public DataController (GeoUtil geoUtil, DataService dataService) {
+        this.geoUtil = geoUtil;
+        this.dataService = dataService;
+    }
+
     public DistrictBean createSingleDistrict(String districtId) throws Exception {
-        /*String fileName = retrieveDistrict(districtId);
-        File file = getFileFromResource(fileName);*/
         return geoUtil.createSingleDistrict(districtId);
     }
 
-    public List<DistrictBean> createDistrict() {
+    public List<DistrictBean> createDistricts() {
         return new ArrayList<>();
         //return geoUtil.createDistrict(geoJsons);
     }
-
-    /*public String retrieveDistrict(String districtId) throws URISyntaxException {
-        return getCorrectDistrict(districtId);
-        //System.out.println("\ngetResource : " + correctDistrict);
-        //File file = getFileFromResource(correctDistrict);
-        //printFile(file);
-        //return correctDistrict;
-    }*/
 
     public DataSetBean createDataSet (DataSource dataSource, DistrictBean districtOfInterest) throws URISyntaxException {
         List<Data> dataList = dataService.getDataByDataSourceId(dataSource.getDataSourceId());
@@ -63,8 +59,9 @@ public class DataController {
         return geoUtil.calculateZoneValue(filteredDataBeans);
     }
 
-    public List<RankingBean> createRanking (List<DataSource> dataSources, String districtId) throws Exception {
+    public List<RankingBean> createRanking (String districtId) throws Exception {
         List<DataSetBean> dataSetBeans = new ArrayList<>();
+        List<DataSource> dataSources = new ArrayList<>();
         DataSource ds = new DataSource();
         ds.setDataSourceId(1L);
         ds.setName("Meta");

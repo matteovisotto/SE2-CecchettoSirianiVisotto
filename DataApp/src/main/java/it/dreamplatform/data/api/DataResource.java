@@ -35,7 +35,7 @@ public class DataResource {
     @RolesAllowed("policy_maker")
     public Response createRanking(/*@FormParam("dataSources") List<DataSource> dataSources,*/ @FormParam("districtId") String districtId){
         try {
-            List<RankingBean> rankings = dataController.createRanking(new ArrayList<>(), districtId);
+            List<RankingBean> rankings = dataController.createRanking(districtId);
             return Response.ok().entity(gson.toJson(rankings)).build();
         } catch (Exception e) {
             e.printStackTrace();

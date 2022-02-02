@@ -24,6 +24,11 @@ public class GeoUtil {
     @Inject
     private DataMapper dataMapper;
 
+    @Inject
+    public GeoUtil(DataMapper dataMapper){
+        this.dataMapper = dataMapper;
+    }
+
     public DistrictBean createSingleDistrict(String districtId) throws Exception {
         String district = getCorrectDistrict(districtId);
         if (district.equals("")){

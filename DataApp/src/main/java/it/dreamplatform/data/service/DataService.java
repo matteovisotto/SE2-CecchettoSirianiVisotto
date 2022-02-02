@@ -13,6 +13,12 @@ public class DataService {
     @PersistenceContext(unitName = "data-persistence-provider")
     private EntityManager em;
 
+    public DataService() {}
+
+    public DataService(EntityManager em) {
+        this.em = em;
+    }
+
     public List<Data> getDataByDataSourceId(Long dataSourceId){
         TypedQuery<Data> query = em.createQuery("SELECT d FROM Data d WHERE d.dataSourceId = :dataSourceId", Data.class);
         query.setParameter("dataSourceId", dataSourceId);
