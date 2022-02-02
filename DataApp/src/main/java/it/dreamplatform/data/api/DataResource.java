@@ -12,6 +12,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @Path("/data")
@@ -41,7 +42,7 @@ public class DataResource {
     @GET
     @Path("/district/{districtId}")
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
-    public Response createFile(@PathParam("districtId") String districtId){
+    public Response createFile(@PathParam("districtId") String districtId) throws URISyntaxException {
         String result = dataController.retrieveDistrict(districtId);
         return Response.ok().entity(gson.toJson(result)).build();
     }
