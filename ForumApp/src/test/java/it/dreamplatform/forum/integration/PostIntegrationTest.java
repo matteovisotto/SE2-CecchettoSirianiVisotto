@@ -322,21 +322,21 @@ public class PostIntegrationTest {
     }
 
     @Test
-    public void tryToAccessNotExistingPostTest() {
+    public void tryToAccessNotExistingPostTest() throws Exception  {
         this.provider.begin();
         assertThrows(Exception.class, () -> postController.getPostById(0L));
         this.provider.rollback();
     }
 
     @Test
-    public void tryToApproveNotExistingPostTest() {
+    public void tryToApproveNotExistingPostTest() throws Exception  {
         this.provider.begin();
         assertThrows(Exception.class, () -> postController.approvePendingPost(0L));
         this.provider.rollback();
     }
 
     @Test
-    public void tryToApproveAlreadyApprovedPostTest() {
+    public void tryToApproveAlreadyApprovedPostTest() throws Exception  {
         Post post1 = new Post();
         post1.setStatus(1);
         post1.setText("Post Text 1");
@@ -354,14 +354,14 @@ public class PostIntegrationTest {
     }
 
     @Test
-    public void tryToDeclineNotExistingPostTest() {
+    public void tryToDeclineNotExistingPostTest() throws Exception  {
         this.provider.begin();
         assertThrows(Exception.class, () -> postController.declinePendingPost(0L));
         this.provider.rollback();
     }
 
     @Test
-    public void tryToDeclineAlreadyApprovedPostTest() {
+    public void tryToDeclineAlreadyApprovedPostTest() throws Exception  {
         Post post1 = new Post();
         post1.setStatus(1);
         post1.setText("Post Text 1");
@@ -379,14 +379,14 @@ public class PostIntegrationTest {
     }
 
     @Test
-    public void notValidIdToDeletePostTest() {
+    public void notValidIdToDeletePostTest() throws Exception  {
         this.provider.begin();
         assertThrows(Exception.class, () -> postController.deletePost(null));
         this.provider.rollback();
     }
 
     @Test
-    public void tryToDeleteNotExistingPostTest() {
+    public void tryToDeleteNotExistingPostTest() throws Exception {
         this.provider.begin();
         assertThrows(Exception.class, () -> postController.deletePost(null));
         this.provider.rollback();
@@ -550,9 +550,157 @@ public class PostIntegrationTest {
     }
 
     @Test
-    public void tryToRetrievePostOfNotExistingUser() {
+    public void tryToRetrievePostOfNotExistingUserTest() {
         this.provider.begin();
         assertThrows(Exception.class, () -> postController.getPostsByUser(0L));
+        this.provider.rollback();
+    }
+
+    @Test
+    public void tryToModifyNotExistingPostTest() throws Exception {
+        User user2 = new User();
+        user2.setName("nameUser2");
+        user2.setSurname("surnameUser2");
+        user2.setAreaOfResidence("areaUser2");
+        user2.setMail("mailUser2");
+        user2.setDateOfBirth(new Date());
+        user2.setPolicyMakerID("ThisPolicyMakerId2");
+
+        this.provider.begin();
+
+        userService.createUser(user2);
+
+        UserBean userBean = new UserBean();
+        userBean.setName("nameUser2");
+        userBean.setSurname("surnameUser2");
+        userBean.setAreaOfResidence("areaUser2");
+        userBean.setPolicyMakerID("ThisPolicyMakerId2");
+        userBean.setMail("mailUser2");
+        userBean.setDateOfBirth(new Date());
+        userBean.setUserId(userService.getUserByMail("mailUser2").getUserId());
+
+        PublicUserBean publicUserBean = new PublicUserBean();
+        publicUserBean.setName("nameUser2");
+        publicUserBean.setSurname("surnameUser2");
+        publicUserBean.setAreaOfResidence("areaUser2");
+        publicUserBean.setPolicyMaker(true);
+        publicUserBean.setUserId(0L);
+
+        PostBean post = new PostBean();
+        post.setStatus(1);
+        post.setTimestamp(new Date());
+        post.setCreator(publicUserBean);
+
+        assertThrows(Exception.class, () -> postController.modifyPost(post, userBean));
+        this.provider.rollback();
+    }
+
+    @Test
+    public void tryToModifyExistingPostWithoutAuthorizationTest() throws Exception {
+        User user2 = new User();
+        user2.setName("nameUser2");
+        user2.setSurname("surnameUser2");
+        user2.setAreaOfResidence("areaUser2");
+        user2.setMail("mailUser2");
+        user2.setDateOfBirth(new Date());
+        //user2.setPolicyMakerID("ThisPolicyMakerId2");
+
+        this.provider.begin();
+
+        userService.createUser(user2);
+
+        Post post1 = new Post();
+        post1.setStatus(1);
+        post1.setText("Post Text 1");
+        post1.setTimestamp(new Date());
+        post1.setCreator(policyMaker);
+        post1.setDiscussion(discussion);
+
+        Long postId = postService.savePost(post1);
+
+        UserBean userBean = new UserBean();
+        userBean.setName("nameUser2");
+        userBean.setSurname("surnameUser2");
+        userBean.setAreaOfResidence("areaUser2");
+        //userBean.setPolicyMakerID("ThisPolicyMakerId2");
+        userBean.setMail("mailUser2");
+        userBean.setDateOfBirth(new Date());
+        userBean.setUserId(userService.getUserByMail("mailUser2").getUserId());
+
+        PublicUserBean publicUserBean = new PublicUserBean();
+        publicUserBean.setName("nameUser2");
+        publicUserBean.setSurname("surnameUser2");
+        publicUserBean.setAreaOfResidence("areaUser2");
+        publicUserBean.setPolicyMaker(false);
+        publicUserBean.setUserId(userService.getUserByMail("mailUser2").getUserId());
+
+        PostBean postBean = postController.getPostById(postId);
+
+        PostBean post3 = new PostBean();
+        post3.setStatus(postBean.getStatus());
+        post3.setTimestamp(postBean.getTimestamp());
+        post3.setDiscussionId(postBean.getDiscussionId());
+        post3.setPostId(postBean.getPostId());
+        post3.setText("New Text");
+        post3.setCreator(publicUserBean);
+
+        assertThrows(Exception.class, () -> postController.modifyPost(post3, userBean));
+        this.provider.rollback();
+    }
+
+    @Test
+    public void modifyExistingPostWithoutAuthorizationTest() throws Exception {
+        User user2 = new User();
+        user2.setName("nameUser2");
+        user2.setSurname("surnameUser2");
+        user2.setAreaOfResidence("areaUser2");
+        user2.setMail("mailUser2");
+        user2.setDateOfBirth(new Date());
+        //user2.setPolicyMakerID("ThisPolicyMakerId2");
+
+        this.provider.begin();
+
+        userService.createUser(user2);
+
+        Post post1 = new Post();
+        post1.setStatus(1);
+        post1.setText("Post Text 1");
+        post1.setTimestamp(new Date());
+        post1.setCreator(user2);
+        post1.setDiscussion(discussion);
+
+        Long postId = postService.savePost(post1);
+
+        UserBean userBean = new UserBean();
+        userBean.setName("nameUser2");
+        userBean.setSurname("surnameUser2");
+        userBean.setAreaOfResidence("areaUser2");
+        userBean.setPolicyMakerID("ThisPolicyMakerId2");
+        userBean.setMail("mailUser2");
+        userBean.setDateOfBirth(new Date());
+        userBean.setUserId(userService.getUserByMail("mailUser2").getUserId());
+
+        PublicUserBean publicUserBean = new PublicUserBean();
+        publicUserBean.setName("nameUser2");
+        publicUserBean.setSurname("surnameUser2");
+        publicUserBean.setAreaOfResidence("areaUser2");
+        publicUserBean.setPolicyMaker(false);
+        publicUserBean.setUserId(userService.getUserByMail("mailUser2").getUserId());
+
+        PostBean postBean = postController.getPostById(postId);
+
+        PostBean post3 = new PostBean();
+        post3.setStatus(postBean.getStatus());
+        post3.setTimestamp(postBean.getTimestamp());
+        post3.setDiscussionId(postBean.getDiscussionId());
+        post3.setPostId(postBean.getPostId());
+        post3.setText("New Text");
+        post3.setCreator(publicUserBean);
+
+        postController.modifyPost(post3, userBean);
+
+        assertEquals("New Text", postService.getPostById(postId).getText());
+
         this.provider.rollback();
     }
 }

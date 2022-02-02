@@ -72,15 +72,13 @@ public class UserIntegrationTest {
 
         userController.createUser(user);
 
-        //userService.createUser(user);
+        UserBean userRetrieved = userController.getUserById(userService.getUserByMail("mailUserDB").getUserId());
 
-        User userRetrieved = userService.getUserByPolicyMakerId("ThisPolicyMakerId");
-
-        assertEquals("nameUserDB", userService.getUserById(userRetrieved.getUserId()).getName());
-        assertEquals("surnameUserDB", userService.getUserById(userRetrieved.getUserId()).getSurname());
-        assertEquals("areaUserDB", userService.getUserById(userRetrieved.getUserId()).getAreaOfResidence());
-        assertEquals("mailUserDB", userService.getUserById(userRetrieved.getUserId()).getMail());
-        assertEquals("ThisPolicyMakerId", userService.getUserById(userRetrieved.getUserId()).getPolicyMakerID());
+        assertEquals("nameUserDB", userRetrieved.getName());
+        assertEquals("surnameUserDB", userRetrieved.getSurname());
+        assertEquals("areaUserDB", userRetrieved.getAreaOfResidence());
+        assertEquals("mailUserDB", userRetrieved.getMail());
+        assertEquals("ThisPolicyMakerId", userRetrieved.getPolicyMakerID());
 
         this.provider.rollback();
     }
@@ -98,7 +96,8 @@ public class UserIntegrationTest {
 
         userController.createUser(user);
 
-        User userRetrieved = userService.getUserByMail("mailUserDB");
+        //User userRetrieved = userService.getUserByMail("mailUserDB");
+        UserBean userRetrieved = userController.searchUser("mailUserDB");
 
         assertEquals("nameUserDB", userService.getUserById(userRetrieved.getUserId()).getName());
         assertEquals("surnameUserDB", userService.getUserById(userRetrieved.getUserId()).getSurname());
