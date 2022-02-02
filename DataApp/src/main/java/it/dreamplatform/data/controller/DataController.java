@@ -52,6 +52,10 @@ public class DataController {
                                                     .filter(dataBean -> dataBean.getDistrict().equals(districtOfInterest.getName()))
                                                     .collect(Collectors.toList());
         //calcolo il punto medio del distretto sulla base dei dati raccolti
+        System.out.println(dataList.size());
+        System.out.println(dataBeans.size());
+        System.out.println(filteredDataBeans.size());
+
         Point mediumPoint = geoUtil.mediumPoint(filteredDataBeans);
         //ora che ho il punto medio, divido i dati nelle 4 aree di interesse che andremo a confrontare, andando a valorizzare il campo zone
         filteredDataBeans = geoUtil.valueZone(filteredDataBeans, mediumPoint);
@@ -61,6 +65,11 @@ public class DataController {
 
     public List<RankingBean> createRanking (List<DataSource> dataSources, String districtId) throws Exception {
         List<DataSetBean> dataSetBeans = new ArrayList<>();
+        DataSource ds = new DataSource();
+        ds.setDataSourceId(1L);
+        ds.setName("Meta");
+        ds.setDataTypeId(1L);
+        dataSources.add(ds);
         //creo il distretto corretto
         DistrictBean districtOfInterest = createSingleDistrict(districtId);
         for (DataSource dataSource: dataSources) {

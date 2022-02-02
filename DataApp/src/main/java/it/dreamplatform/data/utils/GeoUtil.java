@@ -183,7 +183,6 @@ public class GeoUtil {
                 data.setDistrict(district.getName());
                 DataBean dataBean = dataMapper.mapEntityToBean(data);
                 toReturn.add(dataBean);
-                break;
             }
         }
         return toReturn;
@@ -236,6 +235,7 @@ public class GeoUtil {
         int counterSE = 0;
         int counterSW = 0;
 
+
         for (DataBean dataBean:dataBeanList) {
             if(dataBean.getZone() == ZoneEnum.NORTH_EAST){
                 valueNE += dataBean.getValue();
@@ -286,7 +286,7 @@ public class GeoUtil {
         zoneSW.setDistrict(district);
 
         zoneNE.setZone(ZoneEnum.NORTH_EAST);
-        zoneNW.setZone(ZoneEnum.SOUTH_WEST);
+        zoneNW.setZone(ZoneEnum.NORTH_WEST);
         zoneSE.setZone(ZoneEnum.SOUTH_EAST);
         zoneSW.setZone(ZoneEnum.SOUTH_WEST);
 
