@@ -1,12 +1,16 @@
 package it.dreamplatform.forum.integration;
 
 import it.dreamplatform.forum.EntityManagerProvider;
+import it.dreamplatform.forum.bean.UserBean;
 import it.dreamplatform.forum.controller.DiscussionController;
 import it.dreamplatform.forum.controller.UserController;
 import it.dreamplatform.forum.entities.Discussion;
 import it.dreamplatform.forum.entities.Post;
 import it.dreamplatform.forum.entities.Topic;
 import it.dreamplatform.forum.entities.User;
+import it.dreamplatform.forum.mapper.DiscussionMapper;
+import it.dreamplatform.forum.mapper.PostMapper;
+import it.dreamplatform.forum.mapper.UserMapper;
 import it.dreamplatform.forum.services.DiscussionService;
 import it.dreamplatform.forum.services.PostService;
 import it.dreamplatform.forum.services.TopicService;
@@ -39,13 +43,24 @@ public class UserIntegrationTest {
         topicService = new TopicService(this.provider.em());
         userService = new UserService(this.provider.em());
         postService = new PostService(this.provider.em());
+        UserMapper userMapper = new UserMapper();
 
-        userController = new UserController();
+        userController = new UserController(userMapper, userService);
+
+        //userController = new UserController();
     }
 
     @Test
     public void createNewPolicyMakerTest() {
-        User user = new User();
+        /*User user = new User();
+        user.setName("nameUserDB");
+        user.setSurname("surnameUserDB");
+        user.setAreaOfResidence("areaUserDB");
+        user.setMail("mailUserDB");
+        user.setDateOfBirth(new Date());
+        user.setPolicyMakerID("ThisPolicyMakerId");*/
+
+        UserBean user = new UserBean();
         user.setName("nameUserDB");
         user.setSurname("surnameUserDB");
         user.setAreaOfResidence("areaUserDB");
@@ -55,7 +70,9 @@ public class UserIntegrationTest {
 
         this.provider.begin();
 
-        userService.createUser(user);
+        userController.createUser(user);
+
+        //userService.createUser(user);
 
         User userRetrieved = userService.getUserByPolicyMakerId("ThisPolicyMakerId");
 
@@ -70,7 +87,7 @@ public class UserIntegrationTest {
 
     @Test
     public void createNewUserTest() {
-        User user = new User();
+        UserBean user = new UserBean();
         user.setName("nameUserDB");
         user.setSurname("surnameUserDB");
         user.setAreaOfResidence("areaUserDB");
@@ -79,7 +96,7 @@ public class UserIntegrationTest {
 
         this.provider.begin();
 
-        userService.createUser(user);
+        userController.createUser(user);
 
         User userRetrieved = userService.getUserByMail("mailUserDB");
 

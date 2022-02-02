@@ -17,6 +17,12 @@ public class UserController {
     @Inject
     UserService userService;
 
+    @Inject
+    public UserController(UserMapper userMapper, UserService userService) {
+        this.userMapper = userMapper;
+        this.userService = userService;
+    }
+
     /**
      * This function retrieve a given User, given its id.
      * @param userId is the id of the selected user.

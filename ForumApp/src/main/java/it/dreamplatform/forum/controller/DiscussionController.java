@@ -34,6 +34,16 @@ public class DiscussionController {
     @Inject
     UserMapper userMapper;
 
+    @Inject
+    public DiscussionController(DiscussionMapper discussionMapper, DiscussionService discussionService, UserService userService, PostService postService, PostMapper postMapper, UserMapper userMapper) {
+        this.discussionMapper = discussionMapper;
+        this.discussionService = discussionService;
+        this.userService = userService;
+        this.postService = postService;
+        this.postMapper = postMapper;
+        this.userMapper = userMapper;
+    }
+
     /**
      * This function is used to retrieve a DiscussionContentBean.
      * @param discussionId is the id of the selected Discussion.

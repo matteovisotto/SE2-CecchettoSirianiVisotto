@@ -26,6 +26,12 @@ public class NotificationController {
     @Inject
     PostService postService;
 
+    @Inject
+    public NotificationController(DiscussionService discussionService, PostService postService) {
+        this.discussionService = discussionService;
+        this.postService = postService;
+    }
+
     /**
      * This function notifies the followers of a discussion by emailing them.
      * @param discussionId is the id of the selected Discussion.

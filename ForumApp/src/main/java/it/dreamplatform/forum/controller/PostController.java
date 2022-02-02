@@ -28,6 +28,15 @@ public class PostController {
     @Inject
     NotificationController notificationController;
 
+    @Inject
+    public PostController(PostService postService, PostMapper postMapper, UserService userService, UserMapper userMapper, NotificationController notificationController) {
+        this.postService = postService;
+        this.postMapper = postMapper;
+        this.userService = userService;
+        this.userMapper = userMapper;
+        this.notificationController = notificationController;
+    }
+
     /**
      * This function is used to retrieve the List of pending posts (the posts with status 0) from the DB.
      */

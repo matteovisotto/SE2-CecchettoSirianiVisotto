@@ -18,6 +18,12 @@ public class DiscussionMapper {
     @Inject
     UserMapper userMapper;
 
+    @Inject
+    public DiscussionMapper(PostMapper postMapper, UserMapper userMapper) {
+        this.postMapper = postMapper;
+        this.userMapper = userMapper;
+    }
+
     /**
      * This function creates a DiscussionBean and call another function to maps the values.
      * @param entity is the entity of the DB.

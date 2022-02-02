@@ -4,6 +4,7 @@ import it.dreamplatform.forum.entities.Discussion;
 import it.dreamplatform.forum.entities.Post;
 import it.dreamplatform.forum.bean.PostBean;
 import it.dreamplatform.forum.services.DiscussionService;
+import it.dreamplatform.forum.services.PostService;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -18,6 +19,12 @@ public class PostMapper {
     UserMapper userMapper;
     @Inject
     DiscussionService discussionService;
+
+    @Inject
+    public PostMapper(UserMapper userMapper, DiscussionService discussionService) {
+        this.userMapper = userMapper;
+        this.discussionService = discussionService;
+    }
 
     /**
      * This function creates a PostBean and call another function to maps the values.
