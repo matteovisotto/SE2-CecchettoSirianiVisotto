@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "Area", schema = "dream_data")
+@Table(name = "Area")
 public class Area implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

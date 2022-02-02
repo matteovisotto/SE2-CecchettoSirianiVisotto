@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "Data", schema = "dream_data")
+@Table(name = "Data")
 public class Data implements Serializable {
     private static final long serialVersionUID = 1L;
 

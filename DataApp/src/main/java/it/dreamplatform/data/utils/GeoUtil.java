@@ -270,6 +270,7 @@ public class GeoUtil {
     }
 
     public List<RankingBean> calculateRanking(List<DataSetBean> dataSetBeans, String district) throws Exception {
+        //Fare lista di rank per avere i vari dataset divisi
         double rankNE = 0;
         double rankNW = 0;
         double rankSE = 0;

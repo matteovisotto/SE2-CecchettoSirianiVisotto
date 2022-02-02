@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "DataType", schema = "dream_data")
+@Table(name = "DataType")
 public class DataType implements Serializable {
     private static final long serialVersionUID = 1L;
 
