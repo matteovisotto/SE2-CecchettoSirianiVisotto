@@ -24,8 +24,11 @@ public class GeoUtil {
     @Inject
     private DataMapper dataMapper;
 
-    public DistrictBean createSingleDistrict(String districtId) throws URISyntaxException {
+    public DistrictBean createSingleDistrict(String districtId) throws Exception {
         String district = getCorrectDistrict(districtId);
+        if (district.equals("")){
+            throw new Exception("Invalid district inserted");
+        }
         File file = getFileFromResource(district);
         List<String> lines = new ArrayList<>();
         try {
@@ -311,7 +314,7 @@ public class GeoUtil {
         rankingList.add(zoneSE);
         rankingList.add(zoneSW);
 
-        Comparator<RankingBean> compareByValue = Comparator.comparingDouble(RankingBean::getValue);
+        Comparator<RankingBean> compareByValue = Comparator.comparingDouble(RankingBean::getValue).reversed();
         rankingList.sort(compareByValue);
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         for (int i = 0; i<rankingList.size(); i++) {

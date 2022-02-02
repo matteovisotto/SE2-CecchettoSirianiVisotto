@@ -24,7 +24,7 @@ public class DataController {
     @Inject
     private DataService dataService;
 
-    public DistrictBean createSingleDistrict(String districtId) throws URISyntaxException {
+    public DistrictBean createSingleDistrict(String districtId) throws Exception {
         /*String fileName = retrieveDistrict(districtId);
         File file = getFileFromResource(fileName);*/
         return geoUtil.createSingleDistrict(districtId);

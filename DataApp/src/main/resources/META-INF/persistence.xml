@@ -4,7 +4,7 @@
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
              version="2.2">
     <persistence-unit name="data-persistence-provider" transaction-type="JTA">
-        <jta-data-source>DreamForumDB</jta-data-source>
+        <jta-data-source>DreamDataDB</jta-data-source>
         <class>it.dreamplatform.data.entity.Administrator</class>
         <class>it.dreamplatform.data.entity.Area</class>
         <class>it.dreamplatform.data.entity.Data</class>
