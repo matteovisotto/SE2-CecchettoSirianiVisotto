@@ -34,15 +34,18 @@ public class GeoUtil {
             e.printStackTrace();
             return null;
         }
-        String geoJson = lines.get(0);
+        StringBuilder stringBuilder = new StringBuilder();
+        for(String line: lines){
+            stringBuilder.append(line);
+        }
         DistrictBean districtBean = new DistrictBean();
 
-        System.out.println(geoJson);
+        System.out.println(stringBuilder.toString());
 
-        Polygon polygon = (Polygon) OperatorImportFromGeoJson.local().execute(GeoJsonImportFlags.geoJsonImportDefaults, Geometry.Type.Polygon, geoJson, null).getGeometry();
+        Polygon polygon = (Polygon) OperatorImportFromGeoJson.local().execute(GeoJsonImportFlags.geoJsonImportDefaults, Geometry.Type.Polygon, stringBuilder.toString(), null).getGeometry();
         districtBean.setPolygon(polygon);
 
-        JsonObject element = com.google.gson.JsonParser.parseString(geoJson).getAsJsonObject();
+        JsonObject element = com.google.gson.JsonParser.parseString(stringBuilder.toString()).getAsJsonObject();
         JsonObject properties = element.get("properties").getAsJsonObject();
         districtBean.setName(properties.get("Dist_Name").getAsString());
 
