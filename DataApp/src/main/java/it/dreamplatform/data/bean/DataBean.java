@@ -2,9 +2,10 @@ package it.dreamplatform.data.bean;
 
 import it.dreamplatform.data.utils.ZoneEnum;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class DataBean {
+public class DataBean implements Serializable {
     private Long dataId;
     private double value;
     private double longitude;

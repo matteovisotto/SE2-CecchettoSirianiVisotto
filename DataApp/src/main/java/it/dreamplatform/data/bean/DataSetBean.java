@@ -1,6 +1,8 @@
 package it.dreamplatform.data.bean;
 
-public class DataSetBean {
+import java.io.Serializable;
+
+public class DataSetBean implements Serializable {
 
     private Long dataSetId;
     private Long dataSourceId;

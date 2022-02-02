@@ -2,7 +2,9 @@ package it.dreamplatform.data.bean;
 
 import com.esri.core.geometry.Polygon;
 
-public class DistrictBean {
+import java.io.Serializable;
+
+public class DistrictBean implements Serializable {
     private String name;
     private Polygon polygon;
 

@@ -195,11 +195,11 @@ public class GeoUtil {
         double mediumLongitude = 0;
         int counter = dataBeanList.size();
         for (DataBean data: dataBeanList) {
-            mediumLatitude+= data.getLatitude();
-            mediumLongitude+= data.getLongitude();
+            mediumLatitude += data.getLatitude();
+            mediumLongitude += data.getLongitude();
         }
         mediumLatitude = mediumLatitude / counter;
-        mediumLongitude= mediumLongitude / counter;
+        mediumLongitude = mediumLongitude / counter;
 
         return new Point(mediumLongitude, mediumLatitude);
     }
@@ -223,7 +223,7 @@ public class GeoUtil {
         return dataBeanList;
     }
 
-    public DataSetBean CalculateZoneValue (List<DataBean> dataBeanList) {
+    public DataSetBean calculateZoneValue(List<DataBean> dataBeanList) {
         DataSetBean dataSetBean = new DataSetBean();
 
         double valueNE = 0;

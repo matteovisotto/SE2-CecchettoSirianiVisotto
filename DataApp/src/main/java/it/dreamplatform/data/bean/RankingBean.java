@@ -2,9 +2,10 @@ package it.dreamplatform.data.bean;
 
 import it.dreamplatform.data.utils.ZoneEnum;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class RankingBean {
+public class RankingBean implements Serializable {
     private String district;
     private ZoneEnum zone;
     private int position;
