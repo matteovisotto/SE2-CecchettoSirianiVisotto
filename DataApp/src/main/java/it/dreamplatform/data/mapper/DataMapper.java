@@ -3,6 +3,9 @@ package it.dreamplatform.data.mapper;
 import it.dreamplatform.data.bean.DataBean;
 import it.dreamplatform.data.entity.Data;
 
+/**
+ * This class do different mappings between a Data entity to its corresponding bean and vice versa.
+ */
 public class DataMapper {
     public DataBean mapEntityToBean (Data entity){
         return mapEntityToBean(entity, new DataBean());

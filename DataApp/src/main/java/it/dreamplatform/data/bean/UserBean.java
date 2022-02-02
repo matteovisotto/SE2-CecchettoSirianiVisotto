@@ -1,11 +1,13 @@
 package it.dreamplatform.data.bean;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.sql.Timestamp;
 
-
+/**
+ * This class represents a User. Those values have been assigned to the User when he login on the service.
+ * The policyMakerId defines if the User is a Policy maker or a normal User.
+ */
 public class UserBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -17,7 +19,6 @@ public class UserBean implements Serializable {
     private String areaOfResidence;
     private String policyMakerID;
     private Timestamp createdAt;
-
 
     public Long getUserId() {
         return userId;

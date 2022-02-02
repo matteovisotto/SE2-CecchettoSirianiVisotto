@@ -19,6 +19,10 @@ import java.nio.file.Files;
 import java.sql.Timestamp;
 import java.util.*;
 
+/**
+ * This class is an util class in which are present functions used to manage the GeoJson format and to also other
+ * functions to do spatial calculations.
+ */
 public class GeoUtil {
 
     @Inject
@@ -47,8 +51,6 @@ public class GeoUtil {
             stringBuilder.append(line);
         }
         DistrictBean districtBean = new DistrictBean();
-
-        System.out.println(stringBuilder.toString());
 
         Polygon polygon = (Polygon) OperatorImportFromGeoJson.local().execute(GeoJsonImportFlags.geoJsonImportDefaults, Geometry.Type.Polygon, stringBuilder.toString(), null).getGeometry();
         districtBean.setPolygon(polygon);

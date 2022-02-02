@@ -2,6 +2,10 @@ package it.dreamplatform.data.bean;
 
 import java.io.Serializable;
 
+/**
+ * This class represents a DataSet. It is mapped from the DataSet entity. It contains the value retrieved associated to
+ * a precise longitude and latitude, to the zone it is situated (according to ZoneEnum) and the district name.
+ */
 public class DataSetBean implements Serializable {
 
     private Long dataSetId;

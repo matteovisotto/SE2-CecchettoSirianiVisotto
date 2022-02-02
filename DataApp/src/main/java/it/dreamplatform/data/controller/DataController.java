@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * This class contains all the controller used by a Data entity or a DataBean of every genre.
+ */
 public class DataController {
 
     @Inject

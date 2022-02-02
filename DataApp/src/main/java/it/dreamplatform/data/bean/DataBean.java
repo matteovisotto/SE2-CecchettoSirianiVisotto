@@ -5,6 +5,12 @@ import it.dreamplatform.data.utils.ZoneEnum;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+/**
+ * This class represents a DataBean. It is mapped from the Data entity. It contains the value retrieved associated to a
+ * precise longitude and latitude, the district we are using and the ZoneEnum that defines in which part of the district
+ * this data is, considering that the zone are divided according to a point taken dynamically in the middle of the
+ * district.
+ */
 public class DataBean implements Serializable {
     private Long dataId;
     private double value;
