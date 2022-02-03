@@ -3,10 +3,10 @@ package it.dreamplatform.data.api;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import it.dreamplatform.data.bean.DataBean;
-import it.dreamplatform.data.bean.DataSetBean;
 import it.dreamplatform.data.bean.DistrictBean;
 import it.dreamplatform.data.bean.RankingBean;
 import it.dreamplatform.data.controller.DataController;
+import it.dreamplatform.data.entity.Data;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
@@ -68,18 +68,35 @@ public class DataResource {
     }
 
     /**
-     * This function is the api used the dataSet of a searched district by going at "/data/datasets/{districtId}".
+     * This function is the api used to retrieve the data of a searched district according to all the datasets present in the DB.
+     * It is accessible by going at "/data/filter/{districtId}".
      * @param districtId is the id of the District.
      * @return a response with a JSON format of the searched dataset.
      */
     @GET
-    @Path("/datasets/{districtId}")
+    @Path("/filter/{districtId}")
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
-    public Response retrieve(@PathParam("districtId") String districtId) {
+    public Response retrieveDataParsedByDistrict(@PathParam("districtId") String districtId) {
         try {
             List<List<DataBean>> dataBeansOfDistrict = dataController.getDataOfDistrict(districtId);
-            //DistrictBean districtBean = dataController.createSingleDistrict(districtId);
             return Response.ok().entity(gson.toJson(dataBeansOfDistrict)).build();
+        } catch (Exception e) {
+            return Response.status(400).entity("{\"success\":0}").build();
+        }
+    }
+
+    /**
+     * This function is the api used to retrieve all the data of a given dataSet using the id of its dataSource, by going at "/data/dataset/{dataSourceId}".
+     * @param dataSourceId is the id of the dataSource.
+     * @return a response with a JSON format of the searched dataset.
+     */
+    @GET
+    @Path("/dataset/{dataSourceId}")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
+    public Response retrieveDataSetByDataSource(@PathParam("dataSourceId") Long dataSourceId) {
+        try {
+            List<Data> dataSource = dataController.retrieveDataSetByDataSourceId(dataSourceId);
+            return Response.ok().entity(gson.toJson(dataSource)).build();
         } catch (Exception e) {
             return Response.status(400).entity("{\"success\":0}").build();
         }

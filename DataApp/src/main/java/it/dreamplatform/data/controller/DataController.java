@@ -95,7 +95,7 @@ public class DataController {
         return geoUtil.calculateRanking(dataSetBeans, districtOfInterest.getName());
     }
 
-    public List<List<DataBean>> getDataOfDistrict(String districtId) throws Exception {
+    public List<List<DataBean>> getDataOfDistrict (String districtId) throws Exception {
         List<DataBean> dataSetBeans = new ArrayList<>();
         List<DataSource> dataSources = dataSourceService.getDataSources();
         List<List<DataBean>> dataBeansOfDistrict = new ArrayList<>();
@@ -116,5 +116,9 @@ public class DataController {
         return dataBeans.stream()
                 .filter(dataBean -> dataBean.getDistrict().equals(districtOfInterest.getName()))
                 .collect(Collectors.toList());
+    }
+
+    public List<Data> retrieveDataSetByDataSourceId (Long dataSourceId) {
+        return dataService.getDataByDataSourceId(dataSourceId);
     }
 }

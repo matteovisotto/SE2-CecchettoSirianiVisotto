@@ -4,6 +4,7 @@ import it.dreamplatform.data.EntityManagerProvider;
 import it.dreamplatform.data.bean.DataBean;
 import it.dreamplatform.data.bean.RankingBean;
 import it.dreamplatform.data.controller.DataController;
+import it.dreamplatform.data.entity.Data;
 import it.dreamplatform.data.mapper.DataMapper;
 import it.dreamplatform.data.service.DataService;
 import it.dreamplatform.data.service.DataSourceService;
@@ -66,8 +67,14 @@ public class DataIntegrationTest {
     }
 
     @Test
-    public void getDataForAllDataSetsAccordingToSingleDistrict() throws Exception {
+    public void getDataForAllDataSetsAccordingToSingleDistrictTest() throws Exception {
         List<List<DataBean>> dataOfDistrict = dataController.getDataOfDistrict("19_1");
         assertEquals(dataOfDistrict.size(), dataSourceService.getDataSources().size());
+    }
+
+    @Test
+    public void getDataOfGivenDataSetTest() {
+        List<Data> dataSet = dataController.retrieveDataSetByDataSourceId(1L);
+        assertEquals(dataSet.size(), dataService.getDataByDataSourceId(1L).size());
     }
 }
