@@ -8,6 +8,7 @@ import it.dreamplatform.data.bean.RankingBean;
 import it.dreamplatform.data.entity.Data;
 import it.dreamplatform.data.entity.DataSource;
 import it.dreamplatform.data.service.DataService;
+import it.dreamplatform.data.service.DataSourceService;
 import it.dreamplatform.data.utils.GeoUtil;
 
 import javax.inject.Inject;
@@ -28,9 +29,13 @@ public class DataController {
     private DataService dataService;
 
     @Inject
-    public DataController (GeoUtil geoUtil, DataService dataService) {
+    private DataSourceService dataSourceService;
+
+    @Inject
+    public DataController (GeoUtil geoUtil, DataService dataService, DataSourceService dataSourceService) {
         this.geoUtil = geoUtil;
         this.dataService = dataService;
+        this.dataSourceService = dataSourceService;
     }
 
     /**
@@ -80,13 +85,8 @@ public class DataController {
      */
     public List<RankingBean> createRanking (String districtId) throws Exception {
         List<DataSetBean> dataSetBeans = new ArrayList<>();
-        List<DataSource> dataSources = new ArrayList<>();
-        DataSource ds = new DataSource();
-        ds.setDataSourceId(1L);
-        ds.setName("Meta");
-        ds.setDataTypeId(1L);
-        dataSources.add(ds);
-        //creo il distretto corretto
+        List<DataSource> dataSources = dataSourceService.getDataSources();
+
         DistrictBean districtOfInterest = createSingleDistrict(districtId);
         for (DataSource dataSource: dataSources) {
             DataSetBean dataSetBean = createDataSet(dataSource, districtOfInterest);

@@ -5,6 +5,7 @@ import it.dreamplatform.data.bean.RankingBean;
 import it.dreamplatform.data.controller.DataController;
 import it.dreamplatform.data.mapper.DataMapper;
 import it.dreamplatform.data.service.DataService;
+import it.dreamplatform.data.service.DataSourceService;
 import it.dreamplatform.data.utils.GeoUtil;
 import org.junit.Before;
 import org.junit.Rule;
@@ -18,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class DataIntegrationTest {
 
     private DataService dataService;
+    private DataSourceService dataSourceService;
 
     private DataController dataController;
 
@@ -27,9 +29,10 @@ public class DataIntegrationTest {
     @Before
     public void setUp() {
         dataService = new DataService(this.provider.em());
+        dataSourceService = new DataSourceService(this.provider.em());
         DataMapper dataMapper = new DataMapper();
         GeoUtil geoUtil = new GeoUtil(dataMapper);
-        dataController = new DataController(geoUtil, dataService);
+        dataController = new DataController(geoUtil, dataService, dataSourceService);
     }
 
     @Test
