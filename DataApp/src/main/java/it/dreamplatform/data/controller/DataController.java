@@ -37,11 +37,6 @@ public class DataController {
         return geoUtil.createSingleDistrict(districtId);
     }
 
-    public List<DistrictBean> createDistricts() {
-        return new ArrayList<>();
-        //return geoUtil.createDistrict(geoJsons);
-    }
-
     public DataSetBean createDataSet (DataSource dataSource, DistrictBean districtOfInterest) throws URISyntaxException {
         List<Data> dataList = dataService.getDataByDataSourceId(dataSource.getDataSourceId());
         //creo dei dataBean indicando a quale distretto appartengono

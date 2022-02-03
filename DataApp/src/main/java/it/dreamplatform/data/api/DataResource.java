@@ -59,7 +59,7 @@ public class DataResource {
     public Response createFile(@PathParam("districtId") String districtId) {
         try {
             DistrictBean districtBean = dataController.createSingleDistrict(districtId);
-            return Response.ok().entity(gson.toJson(districtBean)/*"{\"success\":1}"*/).build();
+            return Response.ok().entity(gson.toJson(districtBean)).build();
         } catch (Exception e) {
             return Response.status(400).entity("{\"success\":0}").build();
         }

@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -40,5 +41,23 @@ public class DataIntegrationTest {
     public void getRankingsForAdilabadDistrictTest() throws Exception {
         List<RankingBean> rankings = dataController.createRanking("19_1");
         assertEquals("Adilabad", rankings.get(0).getDistrict());
+        assertEquals("Adilabad", rankings.get(1).getDistrict());
+        assertEquals("Adilabad", rankings.get(2).getDistrict());
+        assertEquals("Adilabad", rankings.get(3).getDistrict());
+        assertEquals(4, rankings.size());
+        rankings = new ArrayList<>();
+        rankings = dataController.createRanking("22_2");
+        assertEquals("Bhadradri Kothagudem", rankings.get(0).getDistrict());
+        assertEquals("Bhadradri Kothagudem", rankings.get(1).getDistrict());
+        assertEquals("Bhadradri Kothagudem", rankings.get(2).getDistrict());
+        assertEquals("Bhadradri Kothagudem", rankings.get(3).getDistrict());
+        assertEquals(4, rankings.size());
+        rankings = new ArrayList<>();
+        rankings = dataController.createRanking("21_1");
+        assertEquals("Hyderabad", rankings.get(0).getDistrict());
+        assertEquals("Hyderabad", rankings.get(1).getDistrict());
+        assertEquals("Hyderabad", rankings.get(2).getDistrict());
+        assertEquals("Hyderabad", rankings.get(3).getDistrict());
+        assertEquals(4, rankings.size());
     }
 }
