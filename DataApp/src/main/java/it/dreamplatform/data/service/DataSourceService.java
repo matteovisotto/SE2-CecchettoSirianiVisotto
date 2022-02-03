@@ -9,7 +9,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
- * This class creates and call the queries to retrieve Data entities from the DB.
+ * This class creates and call the queries to retrieve DataSource entities from the DB.
  */
 @Stateless
 public class DataSourceService {
@@ -23,7 +23,7 @@ public class DataSourceService {
     }
 
     /**
-     * This function query the DB to retrieve the List of all available DataSet.
+     * This function query the DB to retrieve the List of all available DataSources.
      * @return a List of all DataSources.
      */
     public List<DataSource> getDataSources(){

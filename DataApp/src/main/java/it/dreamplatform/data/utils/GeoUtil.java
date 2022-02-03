@@ -33,6 +33,13 @@ public class GeoUtil {
         this.dataMapper = dataMapper;
     }
 
+    /**
+     * In this function we read the corresponding GeoJson file of a given district, we create the district polygon and
+     * we give to it its corresponding district name.
+     * @param districtId is the id of the selected district.
+     * @return a DistrictBean with all the information of the district.
+     * @throws Exception when the districtId is not valid.
+     */
     public DistrictBean createSingleDistrict(String districtId) throws Exception {
         String district = getCorrectDistrict(districtId);
         if (district.equals("")){
@@ -62,7 +69,7 @@ public class GeoUtil {
         return districtBean;
     }
 
-    public List<DistrictBean> createDistrict() {
+    /*public List<DistrictBean> createDistrict() {
         //Initially read all files.
         //Created to not cause errors.
         List<String> geoJsons = new ArrayList<>();
@@ -80,8 +87,13 @@ public class GeoUtil {
             districts.add(districtBean);
         }
         return districts;
-    }
+    }*/
 
+    /**
+     * This function is needed to retrieve the name of the GeoJson file given the districtId.
+     * @param districtId is the id of the searched district.
+     * @return the name of the file of the GeoJson district.
+     */
     private String getCorrectDistrict(String districtId) {
         switch (districtId) {
             case "19_1":
@@ -155,6 +167,12 @@ public class GeoUtil {
         }
     }
 
+    /**
+     * This function opens the file of the GeoJson of a district.
+     * @param fileName is the name of the file.
+     * @return the GeoJson file.
+     * @throws URISyntaxException when the name of the file is not present.
+     */
     private File getFileFromResource(String fileName) throws URISyntaxException {
         ClassLoader classLoader = getClass().getClassLoader();
         URL resource = classLoader.getResource(fileName);
@@ -165,7 +183,7 @@ public class GeoUtil {
         }
     }
 
-    public List<DataBean> valueDistricts(List<Data> dataList, List<DistrictBean> districts) {
+    /*public List<DataBean> valueDistricts(List<Data> dataList, List<DistrictBean> districts) {
         List<DataBean> toReturn = new ArrayList<>();
         SpatialReference spatialReference = SpatialReference.create(1984);
         for (Data data: dataList) {
@@ -181,8 +199,15 @@ public class GeoUtil {
             }
         }
         return toReturn;
-    }
+    }*/
 
+    /**
+     * This function check for each point of the dataList, if a point belongs to the given district.
+     * @param dataList is the List of Data from which the points will be retrieved.
+     * @param district is the Bean of the district.
+     * @return a list of DataBean (that contains more information related to the position according to the district
+     * (if it's in the district the name of the district is set in the DataBean)).
+     */
     public List<DataBean> valueSingleDistrict(List<Data> dataList, DistrictBean district) {
         List<DataBean> toReturn = new ArrayList<>();
         SpatialReference spatialReference = SpatialReference.create(1984);
@@ -198,7 +223,12 @@ public class GeoUtil {
         return toReturn;
     }
 
-    //input DataBean che hanno stesso district
+    /**
+     * This function dynamically creates a medium according to all the values of a given DataSet. This medium point will
+     * be used to divide the district into four zones, in order to apply a ranking algorithm for every district.
+     * @param dataBeanList is the List of DataBean.
+     * @return the medium point.
+     */
     public Point mediumPoint (List<DataBean> dataBeanList) {
         double mediumLatitude = 0;
         double mediumLongitude = 0;
@@ -213,6 +243,12 @@ public class GeoUtil {
         return new Point(mediumLongitude, mediumLatitude);
     }
 
+    /**
+     * This function maps very value in its corresponding zone (relying on the position of the medium point).
+     * @param dataBeanList is the List of DataBean.
+     * @param mediumPoint is the medium point.
+     * @return a mapped List of DataBean.
+     */
     public List<DataBean> valueZone (List<DataBean> dataBeanList, Point mediumPoint) {
         for (DataBean dataBean:dataBeanList) {
             if(dataBean.getLongitude() > mediumPoint.getX()){
@@ -232,6 +268,12 @@ public class GeoUtil {
         return dataBeanList;
     }
 
+    /**
+     * This function calculate the value that each zone has. Then this value will be used to calculate the
+     * ranking. Each value is calculate by doing an arithmetic mean.
+     * @param dataBeanList is the mapped List of DataBean.
+     * @return a DataSetBean containing the value to be used to calculate the ranking.
+     */
     public DataSetBean calculateZoneValue(List<DataBean> dataBeanList) {
         DataSetBean dataSetBean = new DataSetBean();
 
@@ -279,8 +321,16 @@ public class GeoUtil {
         return dataSetBean;
     }
 
+    /**
+     * This function calculate the ranking of a given district. As scoring function for our ranking is being adopted the
+     * sum of the elements of all the DataSetBean.
+     * @param dataSetBeans is a List of DataSetBean that contains the values used to calculate the ranking.
+     * @param district is the name of the district.
+     * @return a RankingBean that contains the result of the ranking function (considering that higher
+     * values are better).
+     * @throws Exception when there is a value that doesn't belong to the selected district.
+     */
     public List<RankingBean> calculateRanking(List<DataSetBean> dataSetBeans, String district) throws Exception {
-        //Fare lista di rank per avere i vari dataset divisi
         double rankNE = 0;
         double rankNW = 0;
         double rankSE = 0;
@@ -301,9 +351,10 @@ public class GeoUtil {
         zoneSE.setZone(ZoneEnum.SOUTH_EAST);
         zoneSW.setZone(ZoneEnum.SOUTH_WEST);
 
+        //Here the ranking function is done
         for (DataSetBean dataSet : dataSetBeans) {
             if(!dataSet.getDistrict().equals(district)){
-                throw new Exception("DataSet must belong to district " + district+ "!\n");
+                throw new Exception("DataSet must belong to district " + district + "!\n");
             }
             rankNE += dataSet.getValueNE();
             rankNW += dataSet.getValueNW();
