@@ -33,10 +33,23 @@ public class DataController {
         this.dataService = dataService;
     }
 
+    /**
+     * This function is used to retrieve a DistrictBean.
+     * @param districtId is the id of the selected District.
+     * @return a Bean containing all the elements of a District.
+     */
     public DistrictBean createSingleDistrict(String districtId) throws Exception {
         return geoUtil.createSingleDistrict(districtId);
     }
 
+    /**
+     * This function is used to retrieve a DataSetBean. Initially, by giving it a dataSource, it retrieves all the data
+     * of the dataSet from the DB and then select only the interesting data (the ones inside the district of interest).
+     * Then a dynamical medium point is found (according to all the points in the dataSet)
+     * @param dataSource is the dataSource from which the data will be retrieved.
+     * @param districtOfInterest is the district of interest.
+     * @return a DataSetBean containing all the information filtered by zone.
+     */
     public DataSetBean createDataSet (DataSource dataSource, DistrictBean districtOfInterest) throws URISyntaxException {
         List<Data> dataList = dataService.getDataByDataSourceId(dataSource.getDataSourceId());
         //creo dei dataBean indicando a quale distretto appartengono
@@ -57,6 +70,14 @@ public class DataController {
         return geoUtil.calculateZoneValue(filteredDataBeans);
     }
 
+    /**
+     * This function is used to retrieve a List of RankingBean. Initially, by giving it a districtId, retrieve the
+     * information of the district and then all the dataSource available.
+     * Then for each dataSource it retrieves the correct dataSet.
+     * In the end a ranking is calculated according to all the dataSetBean involved
+     * @param districtId is the id of the interested district.
+     * @return a List of RankingBean.
+     */
     public List<RankingBean> createRanking (String districtId) throws Exception {
         List<DataSetBean> dataSetBeans = new ArrayList<>();
         List<DataSource> dataSources = new ArrayList<>();
