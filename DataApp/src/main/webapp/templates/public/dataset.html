@@ -52,10 +52,13 @@
     </section><!-- End Breadcrumbs Section -->
 
     <section class="inner-page pt-4">
-      <div class="container">
+      <div class="container" id="downloadContainer">
         <p>
-          Example inner page template
+          Example inner page template download
         </p>
+        <br />
+        <textarea id="dataSetIdText" placeholder="Insert id of dataSet">1</textarea>
+        <input type="button" id="downloadBtn" value="Download" />
       </div>
     </section>
 
@@ -75,6 +78,8 @@
 
 <!-- Template Main JS File -->
 <script src="../../static/public/assets/js/main.js"  data-th-src="@{/static/public/assets/js/main.js}"></script>
+
+<script data-th-src="@{../../static/public/assets/js/DownloadManager.js}"></script>
 
 </body>
 
