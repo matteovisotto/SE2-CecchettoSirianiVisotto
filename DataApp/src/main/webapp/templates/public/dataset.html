@@ -53,12 +53,28 @@
 
     <section class="inner-page pt-4">
       <div class="container" id="downloadContainer">
-        <p>
-          Example inner page template download
-        </p>
+        Please select the dataset you would like to download and select  the format you prefere
         <br />
-        <textarea id="dataSetIdText" placeholder="Insert id of dataSet">1</textarea>
-        <input type="button" id="downloadBtn" value="Download" />
+        <div class="row">
+          <div class="col-md-6">
+            <select id="datasetId" class="form-control">
+              <option value="1">RWI</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <select id="datasetFormat" class="form-control">
+              <option value="json">JSON</option>
+            </select>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-12">
+            <button type="button" id="downloadBtn" class="btn btn-primary float-end">Request dataset</button>
+          </div>
+          <div class="col-12 mt-2">
+            <a id="downloaderHref" class="btn btn-success w-100" hidden>Your dataset is ready. Download</a>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -66,7 +82,7 @@
 
 
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
+<script   src="https://code.jquery.com/jquery-3.6.0.min.js"   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="   crossorigin="anonymous"></script>
 <!-- Vendor JS Files -->
 <script src="../../static/public/assets/vendor/purecounter/purecounter.js" data-th-src="@{/static/public/assets/vendor/purecounter/purecounter.js}"></script>
 <script src="../../static/public/assets/vendor/aos/aos.js" data-th-src="@{/static/public/assets/vendor/aos/aos.js}"></script>

@@ -1,6 +1,6 @@
 $(function () {
 
-    const downloadController = new DownloadController( $('#downloadContainer'), $('#downloadBtn'), $('#dataSetIdText'));
+    const downloadController = new DownloadController( $('#downloadContainer'), $('#downloadBtn'), $('#datasetId'));
     downloadController.addListener();
 
     function DownloadController(_container, _downloadBtn, _dataSetIdText) {
@@ -10,7 +10,7 @@ $(function () {
         this.dataSetIdText = _dataSetIdText;
 
         this.loadData = function (dataSetId) {
-            $.get('../api/data/dataset/' + dataSetId, (json) => {
+            $.get('api/data/dataset/' + dataSetId, (json) => {
                 if(json.length === 0) {
                     self.container.append('<div class="alert alert-danger">The dataSet selected is empty</div>');
                 } else {
@@ -21,19 +21,16 @@ $(function () {
             });
         }
         this.download = function (json) {
-            var filename = "dataset.json";
-            var element = document.createElement('a');
-            element.setAttribute('href','data:text/plain;charset=utf-8, ' + encodeURIComponent(json));
-            element.setAttribute('download', filename);
-            document.body.appendChild(element);
-            element.click();
-            document.body.removeChild(element);
+            var element = $('#downloaderHref');
+            element.attr('href',"data:text/plain;charset=UTF-8," + encodeURIComponent(JSON.stringify(json)));
+            element.attr('download', 'dataset.json');
+            element.removeAttr('hidden');
         }
         this.addListener = function () {
-            self.downloadBtn.addEventListener("click", function () {
-                var dataSetId = self.dataSetIdText.value();
+            self.downloadBtn.on("click", function () {
+                var dataSetId = self.dataSetIdText.val();
                 self.loadData(dataSetId);
-                }, false);
+                });
         }
     }
 });
