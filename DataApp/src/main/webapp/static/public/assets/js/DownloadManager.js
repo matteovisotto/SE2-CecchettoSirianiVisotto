@@ -10,7 +10,7 @@ $(function () {
         this.dataSetIdText = _dataSetIdText;
 
         this.loadData = function (dataSetId) {
-            $.get('../../api/data/dataset/' + dataSetId, (json) => {
+            $.get('../api/data/dataset/' + dataSetId, (json) => {
                 if(json.length === 0) {
                     self.container.append('<div class="alert alert-danger">The dataSet selected is empty</div>');
                 } else {
