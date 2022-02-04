@@ -101,4 +101,24 @@ public class DataResource {
             return Response.status(400).entity("{\"success\":0}").build();
         }
     }
+
+    /**
+     * This function is the api used to retrieve the ranking of a district according to some dataset present at DB, by going at "/ranking/recalculate".
+     * @param districtId is the id of the district.
+     * @param dataSourcesIds are the id of the different data source.
+     * @return a response with a JSON format of the ranking retrieved.
+     */
+    @POST
+    @Path("/ranking/recalculate")
+    @Consumes("application/x-www-form-urlencoded")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
+    @RolesAllowed("policy_maker")
+    public Response recalculateRanking(@FormParam("districtId") String districtId, @FormParam("dataSourcesIds") List<Long> dataSourcesIds) {
+        try {
+            List<RankingBean> rankings = dataController.createRankingForSelectedDataSets(districtId, dataSourcesIds);
+            return Response.ok().entity(gson.toJson(rankings)).build();
+        } catch (Exception e) {
+            return Response.status(400).entity("{\"success\":0}").build();
+        }
+    }
 }

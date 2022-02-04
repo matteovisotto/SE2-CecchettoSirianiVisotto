@@ -51,12 +51,12 @@ public class DataController {
      * This function is used to retrieve a DataSetBean. Initially, by giving it a dataSource, it retrieves all the data
      * of the dataSet from the DB and then select only the interesting data (the ones inside the district of interest).
      * Then a dynamical medium point is found (according to all the points in the dataSet)
-     * @param dataSource is the dataSource from which the data will be retrieved.
+     * @param dataSourceId is the id of the dataSource from which the data will be retrieved.
      * @param districtOfInterest is the district of interest.
      * @return a DataSetBean containing all the information filtered by zone.
      */
-    public DataSetBean createDataSet (DataSource dataSource, DistrictBean districtOfInterest) throws URISyntaxException {
-        List<Data> dataList = dataService.getDataByDataSourceId(dataSource.getDataSourceId());
+    public DataSetBean createDataSet (Long dataSourceId, DistrictBean districtOfInterest) throws URISyntaxException {
+        List<Data> dataList = dataService.getDataByDataSourceId(dataSourceId);
         //Create dataBean indicating at what district they belong to
         List<DataBean> dataBeans = geoUtil.valueSingleDistrict(dataList, districtOfInterest);
         //Filter keeping only the data of the searched district
@@ -78,7 +78,7 @@ public class DataController {
      * This function is used to retrieve a List of RankingBean. Initially, by giving it a districtId, retrieve the
      * information of the district and then all the dataSource available.
      * Then for each dataSource it retrieves the correct dataSet.
-     * In the end a ranking is calculated according to all the dataSetBean involved
+     * In the end a ranking is calculated according to all the dataSetBean involved.
      * @param districtId is the id of the searched district.
      * @return a List of RankingBean.
      */
@@ -88,7 +88,29 @@ public class DataController {
 
         DistrictBean districtOfInterest = createSingleDistrict(districtId);
         for (DataSource dataSource: dataSources) {
-            DataSetBean dataSetBean = createDataSet(dataSource, districtOfInterest);
+            DataSetBean dataSetBean = createDataSet(dataSource.getDataSourceId(), districtOfInterest);
+            dataSetBeans.add(dataSetBean);
+        }
+        return geoUtil.calculateRanking(dataSetBeans, districtOfInterest.getName());
+    }
+
+    /**
+     * This function is used to retrieve a List of RankingBean. Initially, by giving it a districtId, retrieve the
+     * information of the district. In the end a ranking is calculated according to all the dataSetBean involved.
+     * @param districtId is the id of the searched district.
+     * @return a List of RankingBean.
+     */
+    public List<RankingBean> createRankingForSelectedDataSets (String districtId, List<Long> dataSourcesIds) throws Exception {
+        List<DataSetBean> dataSetBeans = new ArrayList<>();
+        List<DataSource> dataSources = dataSourceService.getDataSources();
+        for (int i = 0; i < dataSources.size(); i++){
+            if (!dataSourcesIds.contains(dataSources.get(i).getDataSourceId())){
+                dataSources.remove(dataSources.get(i));
+            }
+        }
+        DistrictBean districtOfInterest = createSingleDistrict(districtId);
+        for (DataSource dataSource: dataSources) {
+            DataSetBean dataSetBean = createDataSet(dataSource.getDataSourceId(), districtOfInterest);
             dataSetBeans.add(dataSetBean);
         }
         return geoUtil.calculateRanking(dataSetBeans, districtOfInterest.getName());
