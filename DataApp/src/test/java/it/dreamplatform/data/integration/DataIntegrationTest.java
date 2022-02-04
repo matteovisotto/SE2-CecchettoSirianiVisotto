@@ -43,7 +43,7 @@ public class DataIntegrationTest {
     }
 
     @Test
-    public void getRankingsForAdilabadDistrictTest() throws Exception {
+    public void getRankingsForDifferentDistrictsTest() throws Exception {
         List<RankingBean> rankings = dataController.createRanking("19_1");
         assertEquals("Adilabad", rankings.get(0).getDistrict());
         assertEquals("Adilabad", rankings.get(1).getDistrict());
@@ -76,5 +76,32 @@ public class DataIntegrationTest {
     public void getDataOfGivenDataSetTest() {
         List<Data> dataSet = dataController.retrieveDataSetByDataSourceId(1L);
         assertEquals(dataSet.size(), dataService.getDataByDataSourceId(1L).size());
+    }
+
+    @Test
+    public void getRankingsForDifferentDistrictsForSelectedDataSourcesTest() throws Exception {
+        List<Long> dataSourcesIds = new ArrayList<>();
+        dataSourcesIds.add(1L);
+        dataSourcesIds.add(2L);
+        List<RankingBean> rankings = dataController.createRankingForSelectedDataSets("19_1", dataSourcesIds);
+        assertEquals("Adilabad", rankings.get(0).getDistrict());
+        assertEquals("Adilabad", rankings.get(1).getDistrict());
+        assertEquals("Adilabad", rankings.get(2).getDistrict());
+        assertEquals("Adilabad", rankings.get(3).getDistrict());
+        assertEquals(4, rankings.size());
+        rankings = new ArrayList<>();
+        rankings = dataController.createRankingForSelectedDataSets("22_2", dataSourcesIds);
+        assertEquals("Bhadradri Kothagudem", rankings.get(0).getDistrict());
+        assertEquals("Bhadradri Kothagudem", rankings.get(1).getDistrict());
+        assertEquals("Bhadradri Kothagudem", rankings.get(2).getDistrict());
+        assertEquals("Bhadradri Kothagudem", rankings.get(3).getDistrict());
+        assertEquals(4, rankings.size());
+        rankings = new ArrayList<>();
+        rankings = dataController.createRankingForSelectedDataSets("21_1", dataSourcesIds);
+        assertEquals("Hyderabad", rankings.get(0).getDistrict());
+        assertEquals("Hyderabad", rankings.get(1).getDistrict());
+        assertEquals("Hyderabad", rankings.get(2).getDistrict());
+        assertEquals("Hyderabad", rankings.get(3).getDistrict());
+        assertEquals(4, rankings.size());
     }
 }
