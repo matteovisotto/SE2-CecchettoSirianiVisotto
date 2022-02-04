@@ -122,10 +122,11 @@
                                             <thead class="text-primary">
                                                 <th class="text-center">Pos.</th>
                                                 <th>Area</th>
-                                                <th class="text-center">Trend</th>
+                                                <th>Value</th>
+                                                <th>Trend</th>
                                             </thead>
-                                            <tbody>
-                                                <tr>
+                                            <tbody id="rankingContainer">
+                                                <!--<tr>
                                                     <td class="text-center align-middle">1</td>
                                                     <td class="align-middle"><strong>Area</strong><p>Some useful data</p></td>
                                                     <td class="text-center align-middle"><i class="fas fa-arrow-up"></i> </td>
@@ -164,7 +165,7 @@
                                                     <td class="text-center align-middle">1</td>
                                                     <td class="align-middle"><strong>Area</strong><p>Some useful data</p></td>
                                                     <td class="text-center align-middle"><i class="fas fa-arrow-up"></i> </td>
-                                                </tr>
+                                                </tr>-->
                                             </tbody>
                                         </table>
                                     </div>
@@ -193,6 +194,9 @@
             });
         });
     </script>
+
+<script data-th-src="@{/static/policymaker/js/RankingManager.js}"></script>
+
 </body>
 
 </html>

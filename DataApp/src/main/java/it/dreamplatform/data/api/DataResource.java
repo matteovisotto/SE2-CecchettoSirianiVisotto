@@ -35,12 +35,14 @@ public class DataResource {
      * @param districtId is the id of the District.
      * @return a response with a JSON format of the ranking retrieved.
      */
-    @POST
-    @Path("/ranking")
-    @Consumes("application/x-www-form-urlencoded")
+    //Non sarebbe meglio se fosse una GET?
+    @GET
+    //@POST
+    @Path("/ranking/{districtId}")
+    //@Consumes("application/x-www-form-urlencoded")
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
     @RolesAllowed("policy_maker")
-    public Response createRanking(@FormParam("districtId") String districtId){
+    public Response createRanking(/*FormParam*/@PathParam("districtId") String districtId){
         try {
             List<RankingBean> rankings = dataController.createRanking(districtId);
             return Response.ok().entity(gson.toJson(rankings)).build();
@@ -109,6 +111,7 @@ public class DataResource {
      * @return a response with a JSON format of the ranking retrieved.
      */
     @POST
+    //Non sarebbe meglio se fosse una GET?
     @Path("/ranking/recalculate")
     @Consumes("application/x-www-form-urlencoded")
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
