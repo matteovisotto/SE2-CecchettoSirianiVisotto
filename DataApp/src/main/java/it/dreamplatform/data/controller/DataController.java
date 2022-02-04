@@ -105,7 +105,7 @@ public class DataController {
         List<DataSource> dataSources = dataSourceService.getDataSources();
         for (int i = 0; i < dataSources.size(); i++){
             if (!dataSourcesIds.contains(dataSources.get(i).getDataSourceId())){
-                dataSources.remove(dataSources.get(i));
+                dataSources.remove(i);
             }
         }
         DistrictBean districtOfInterest = createSingleDistrict(districtId);
