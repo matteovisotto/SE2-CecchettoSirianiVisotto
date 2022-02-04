@@ -1,11 +1,15 @@
 $(function(){
 
-    const rankingController = new RankingController($('#rankingContainer'));
+    const rankingController = new RankingController($('#rankingContainer'), $('#firstDataSet'), $('#secondDataSet'), $('#recalculateBtn'));
+    rankingController.addListener();
     rankingController.loadData();
 
-    function RankingController(_container){
+    function RankingController(_container, _firstDataSetCheckBox, _secondDataSetCheckBox, _recalculateBtn){
         var self = this;
         this.container = _container;
+        this.firstDataSetCheckBox = _firstDataSetCheckBox;
+        this.secondDataSetCheckBox = _secondDataSetCheckBox;
+        this.recalculateBtn = _recalculateBtn;
         var districtId = '19_1'
 
         this.loadData = function(){
@@ -20,6 +24,11 @@ $(function(){
             });
         }
 
+        this.recalculateDeviance = function(firstDataSetValue, secondDataSetValue){
+            this.container.html("");
+
+        }
+
         this.createNode = function(ranking) {
             var position = $('<td/>').addClass('text-center align-middle').text(ranking.position);
             var area = $('<strong/>').text(ranking.district);
@@ -31,6 +40,14 @@ $(function(){
             var arrowZone = $('<td/>').addClass('align-middle').append(arrow);
             var tableNode = $('<tr/>').append(position).append(contentZone).append(valueZone).append(arrowZone);
             this.container.append(tableNode);
+        }
+
+        this.addListener = function () {
+            self.recalculateBtn.on("click", function () {
+                var firstDataSetValue = self.firstDataSetCheckBox.val();
+                var secondDataSetValue = self.secondDataSetCheckBox.val();
+                self.recalculateDeviance(firstDataSetValue, secondDataSetValue);
+            });
         }
     }
 

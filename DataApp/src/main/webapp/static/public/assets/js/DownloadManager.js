@@ -20,12 +20,14 @@ $(function () {
                 self.container.append('<div class="alert alert-danger">An error occurred. Please try later</div>');
             });
         }
+
         this.download = function (json) {
             var element = $('#downloaderHref');
             element.attr('href',"data:text/plain;charset=UTF-8," + encodeURIComponent(JSON.stringify(json)));
             element.attr('download', 'dataset.json');
             element.removeAttr('hidden');
         }
+
         this.addListener = function () {
             self.downloadBtn.on("click", function () {
                 var dataSetId = self.dataSetIdText.val();
