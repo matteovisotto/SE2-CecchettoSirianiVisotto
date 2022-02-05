@@ -112,7 +112,7 @@ public class DataResource {
     @Consumes("application/x-www-form-urlencoded")
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
     @RolesAllowed("policy_maker")
-    public Response recalculateRanking(String districtId, List<Long> dataSourcesIds) {
+    public Response recalculateRanking(@FormParam("districtId") String districtId, @FormParam("dataSourcesIds") List<Long> dataSourcesIds) {
         try {
             List<RankingBean> rankings = dataController.createRankingForSelectedDataSets(districtId, dataSourcesIds);
             return Response.ok().entity(gson.toJson(rankings)).build();

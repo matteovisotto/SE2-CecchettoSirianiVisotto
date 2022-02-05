@@ -46,10 +46,9 @@ $(function(){
             $.ajax({
                 type: "POST",
                 url: "../api/data/ranking/recalculate",
-                data: JSON.stringify(self.getParameters(firstDataSetValue, secondDataSetValue)),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
+                data: self.getParameters(firstDataSetValue, secondDataSetValue),
                 success: function(json){
+                    console.log(JSON.stringify(json));
                     json.forEach(r => {
                         self.createNode(r);
                     });
@@ -75,8 +74,10 @@ $(function(){
 
         this.addListener = function () {
             self.recalculateBtn.on("click", function () {
-                var firstDataSetValue = self.firstDataSetCheckBox.val() === true ? 1 : 0;
-                var secondDataSetValue = self.secondDataSetCheckBox.val() === true ? 1 : 0;
+                var firstDataSetValue = self.firstDataSetCheckBox.is(
+                    ":checked") ? 1 : 0;
+                var secondDataSetValue = self.secondDataSetCheckBox.is(
+                    ":checked") ? 1 : 0;
                 self.recalculateDeviance(firstDataSetValue, secondDataSetValue);
             });
         }
