@@ -109,7 +109,13 @@ public class DataController {
             }
         }
         if (dataSources.isEmpty()){
-            return new ArrayList<>();
+            RankingBean rankingBean = new RankingBean();
+            rankingBean.setDistrict("No data");
+            rankingBean.setValue(0);
+            rankingBean.setZone(null);
+            List<RankingBean> rankingList = new ArrayList<>();
+            rankingList.add(rankingBean);
+            return rankingList;
         }
         DistrictBean districtOfInterest = createSingleDistrict(districtId);
         for (DataSource dataSource: dataSources) {

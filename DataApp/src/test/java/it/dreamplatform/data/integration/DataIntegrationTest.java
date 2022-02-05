@@ -103,5 +103,10 @@ public class DataIntegrationTest {
         assertEquals("Hyderabad", rankings.get(2).getDistrict());
         assertEquals("Hyderabad", rankings.get(3).getDistrict());
         assertEquals(4, rankings.size());
+        rankings = dataController.createRankingForSelectedDataSets("21_1", new ArrayList<>());
+        assertEquals("No data", rankings.get(0).getDistrict());
+        assertEquals(0, rankings.get(0).getValue());
+        assertNull(rankings.get(0).getZone());
+        assertEquals(1, rankings.size());
     }
 }
