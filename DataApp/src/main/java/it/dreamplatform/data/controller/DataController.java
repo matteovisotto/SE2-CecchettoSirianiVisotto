@@ -108,6 +108,9 @@ public class DataController {
                 dataSources.remove(i);
             }
         }
+        if (dataSources.isEmpty()){
+            return new ArrayList<>();
+        }
         DistrictBean districtOfInterest = createSingleDistrict(districtId);
         for (DataSource dataSource: dataSources) {
             DataSetBean dataSetBean = createDataSet(dataSource.getDataSourceId(), districtOfInterest);
