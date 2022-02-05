@@ -114,8 +114,6 @@ public class DataResource {
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
     @RolesAllowed("policy_maker")
     public Response recalculateRanking(@FormParam("districtId") String districtId, @FormParam("dataSourcesIds") List<Long> dataSourcesIds) {
-        System.out.println(districtId);
-        System.out.println(dataSourcesIds.size());
         try {
             List<RankingBean> rankings = dataController.createRankingForSelectedDataSets(districtId, dataSourcesIds);
             return Response.ok().entity(gson.toJson(rankings)).build();
