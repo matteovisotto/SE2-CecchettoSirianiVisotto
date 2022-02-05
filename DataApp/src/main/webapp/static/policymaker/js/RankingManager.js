@@ -1,14 +1,12 @@
 $(function(){
 
-    const rankingController = new RankingController($('#rankingContainer'), $('#firstDataSet'), $('#secondDataSet'), $('#recalculateBtn'));
+    const rankingController = new RankingController($('#rankingContainer'), $('#recalculateBtn'));
     rankingController.addListener();
     rankingController.loadData();
 
-    function RankingController(_container, _firstDataSetCheckBox, _secondDataSetCheckBox, _recalculateBtn){
+    function RankingController(_container, _recalculateBtn){
         var self = this;
         this.container = _container;
-        this.firstDataSetCheckBox = _firstDataSetCheckBox;
-        this.secondDataSetCheckBox = _secondDataSetCheckBox;
         this.recalculateBtn = _recalculateBtn;
 
 
@@ -33,16 +31,15 @@ $(function(){
             });
         }
 
-        this.recalculateDeviance = function(firstDataSetValue, secondDataSetValue){
+        this.recalculateDeviance = function(){
             this.container.html("");
             self.prepareDistrictId();
             $.ajax({
-                type: "POST",
+                type: "GET",
                 url: "../api/data/ranking/recalculate",
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 data: $("#recalculateForm").serialize(),
                 success: function(json){
-                    console.log(JSON.stringify(json));
                     json.forEach(r => {
                         self.createNode(r);
                     });
@@ -68,11 +65,7 @@ $(function(){
 
         this.addListener = function () {
             self.recalculateBtn.on("click", function () {
-                var firstDataSetValue = self.firstDataSetCheckBox.is(
-                    ":checked") ? 1 : 0;
-                var secondDataSetValue = self.secondDataSetCheckBox.is(
-                    ":checked") ? 1 : 0;
-                self.recalculateDeviance(firstDataSetValue, secondDataSetValue);
+                self.recalculateDeviance();
             });
         }
 
