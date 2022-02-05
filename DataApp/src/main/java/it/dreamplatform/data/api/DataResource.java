@@ -10,6 +10,7 @@ import it.dreamplatform.data.entity.Data;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
+import javax.print.attribute.standard.Media;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -109,10 +110,12 @@ public class DataResource {
      */
     @POST
     @Path("/ranking/recalculate")
-    @Consumes("application/x-www-form-urlencoded")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
     @RolesAllowed("policy_maker")
     public Response recalculateRanking(@FormParam("districtId") String districtId, @FormParam("dataSourcesIds") List<Long> dataSourcesIds) {
+        System.out.println(districtId);
+        System.out.println(dataSourcesIds.size());
         try {
             List<RankingBean> rankings = dataController.createRankingForSelectedDataSets(districtId, dataSourcesIds);
             return Response.ok().entity(gson.toJson(rankings)).build();

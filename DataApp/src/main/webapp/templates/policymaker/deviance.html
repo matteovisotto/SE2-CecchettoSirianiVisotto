@@ -74,15 +74,16 @@
                                 <div class="card shadow-sm dream-card">
                                     <div class="card-body">
                                         <h5 class="card-title">Actions</h5>
-                                        <form>
+                                        <form id="recalculateForm">
+                                            <input type="hidden" name="districtId" value="" id="districtId">
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <label>Meta</label>
-                                                    <input type="checkbox" id="firstDataSet"/>
+                                                    <input type="checkbox" id="firstDataSet" name="dataSourcesIds" value="1"/>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label>Other dataSet</label>
-                                                    <input type="checkbox" id="secondDataSet"/>
+                                                    <input type="checkbox" id="secondDataSet" name="dataSourcesIds" value="2"/>
                                                 </div>
                                             </div>
                                             <button type="button" class="btn btn-primary float-end mt-2" id="recalculateBtn"><i class="fas fa-sync-alt"></i> Recalculate</button>

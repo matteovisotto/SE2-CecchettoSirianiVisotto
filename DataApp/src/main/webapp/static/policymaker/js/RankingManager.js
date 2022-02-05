@@ -10,14 +10,7 @@ $(function(){
         this.firstDataSetCheckBox = _firstDataSetCheckBox;
         this.secondDataSetCheckBox = _secondDataSetCheckBox;
         this.recalculateBtn = _recalculateBtn;
-        var districtId = 0;
 
-        this.getParameters = function(firstDataSetValue, secondDataSetValue) {
-            return {
-                "districtId": districtId,
-                "dataSourcesIds": [firstDataSetValue, secondDataSetValue]
-            };
-        }
 
         this.loadData = function(){
             this.container.html("");
@@ -42,11 +35,12 @@ $(function(){
 
         this.recalculateDeviance = function(firstDataSetValue, secondDataSetValue){
             this.container.html("");
-            districtId = self.getDistrictId();
+            self.prepareDistrictId();
             $.ajax({
                 type: "POST",
                 url: "../api/data/ranking/recalculate",
-                data: self.getParameters(firstDataSetValue, secondDataSetValue),
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                data: $("#recalculateForm").serialize(),
                 success: function(json){
                     console.log(JSON.stringify(json));
                     json.forEach(r => {
@@ -80,6 +74,10 @@ $(function(){
                     ":checked") ? 1 : 0;
                 self.recalculateDeviance(firstDataSetValue, secondDataSetValue);
             });
+        }
+
+        this.prepareDistrictId = function(){
+            $('#districtId').val(self.getDistrictId());
         }
 
         this.getDistrictId = function () {
