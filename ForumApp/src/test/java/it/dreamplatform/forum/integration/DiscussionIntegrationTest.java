@@ -29,103 +29,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class DiscussionIntegrationTest {
 
-    /*private static EntityManagerFactory emf;
-    private static EntityManager em;
-
-    private DiscussionService discussionService;
-    private TopicService topicService;
-    private UserService userService;
-    private PostService postService;
-
-    private Discussion discussion1;
-    private Discussion discussion2;*/
-
     private DiscussionService discussionService;
     private TopicService topicService;
     private UserService userService;
     private PostService postService;
 
     private DiscussionController discussionController;
-    //private DiscussionMapper discussionMapper;
 
     private User policyMaker;
-    //private Topic topic;
 
     @Rule
     public EntityManagerProvider provider = EntityManagerProvider.withUnit("forum-test");
-
-    /*@BeforeAll
-    public static void setUpBeforeClass() {
-        emf = Persistence.createEntityManagerFactory("forum-test");
-    }
-
-    @AfterAll
-    public static void tearDownAfterClass() {
-        if (emf != null) {
-            emf.close();
-        }
-    }
-
-    @BeforeEach
-    public void setUp() {
-        em = emf.createEntityManager();
-        discussionService = new DiscussionService(em);
-        topicService = new TopicService(em);
-        userService = new UserService(em);
-        postService = new PostService(em);
-        createTestData();
-    }
-
-    @AfterEach
-    public void tearDown() {
-        if (em != null) {
-            removeTestData();
-            em.close();
-        }
-    }
-
-    private void createTestData() {
-        Topic topic = new Topic();
-        topic.setTitle("First topic");
-        topic.setTimestamp(new Date());
-
-        User user = new User();
-        user.setMail("mail");
-        user.setDateOfBirth(new Date());
-        user.setSurname("surname");
-        user.setName("name");
-        user.setAreaOfResidence("area");
-        user.setPolicyMakerID("policy");
-
-        em.getTransaction().begin();
-        em.persist(topic);
-        em.persist(user);
-        em.flush();
-        em.getTransaction().commit();
-
-        discussion1 = new Discussion();
-        discussion1.setText("Discussion Text 1");
-        discussion1.setTimestamp(new Date());
-        discussion1.setTitle("First Discussion");
-        discussion1.setTopic(topic);
-
-        discussion2 = new Discussion();
-        discussion2.setText("Discussion Text 2");
-        discussion2.setTimestamp(new Date());
-        discussion2.setTitle("Second Discussion");
-        discussion2.setTopic(topic);
-    }
-
-    private void removeTestData() {
-        em.getTransaction().begin();
-
-        //Discussions deleted on cascade
-        Topic topic = em.find(Topic.class, 1L);
-        if (topic != null) {
-            em.remove(topic);
-        }
-        em.getTransaction().commit();
-    }*/
 
     @Before
     public void setUp() {
@@ -147,18 +61,12 @@ public class DiscussionIntegrationTest {
         policyMaker.setMail("mail");
         policyMaker.setPolicyMakerID("policy");
 
-        /*topic = new Topic();
-        topic.setTitle("First topic");
-        topic.setTimestamp(new Date());*/
-
         this.provider.em().persist(policyMaker);
-        //this.provider.em().persist(topic);
     }
 
     @After
     public void close() {
         this.provider.em().remove(policyMaker);
-        //this.provider.em().remove(topic);
     }
 
     @Test
@@ -183,50 +91,21 @@ public class DiscussionIntegrationTest {
         posts.add(post);
 
         DiscussionContentBean discussionTest = new DiscussionContentBean();
-        //Discussion discussionTest = new Discussion();
         discussionTest.setText("Discussion Text 1");
         discussionTest.setTimestamp(new Date());
         discussionTest.setTitle("First Discussion");
         discussionTest.setTopicId(topic.getTopicId());
         discussionTest.setPosts(posts);
 
-        /*Post post = new Post();
-        post.setStatus(1);
-        post.setText("Discussion Text 1");
-        post.setTimestamp(new Date());
-        post.setCreator(policyMaker);
-
-        List<Post> posts = new ArrayList<>();
-
-        Discussion discussionTest = new Discussion();
-        discussionTest.setDiscussionId(null);
-        discussionTest.setText("Discussion Text 1");
-        discussionTest.setTimestamp(new Date());
-        discussionTest.setTitle("First Discussion");
-        discussionTest.setTopic(topic);
-        discussionTest.setPosts(posts);*/
-
         discussionController.createDiscussion(discussionTest);
-
-        /*Long discussionId = discussionService.saveDiscussion(discussionTest);
-        post.setDiscussion(discussionTest);
-        Long postId = postService.savePost(post);*/
 
         assertEquals("First Discussion", discussionService.getDiscussionByTitle("First Discussion").get(0).getTitle());
         assertEquals("Discussion Text 1", discussionService.getDiscussionByTitle("First Discussion").get(0).getText());
         assertEquals(1, discussionService.getDiscussionByTitle("First Discussion").size());
-        //assertEquals(topic.getTitle(), discussionService.getDiscussionByTitle("First Discussion").get(0).getTopic().getTitle());
 
         //To check if the first added post is in the discussion that we have created
         assertEquals("Discussion Text 1", postService.getPostsByDiscussionId(discussionService.getDiscussionByTitle("First Discussion").get(0).getDiscussionId()).get(0).getText());
 
-        /*assertEquals(discussionId, discussionService.getDiscussionById(discussionId).getDiscussionId());
-        assertEquals("Discussion Text 1", discussionService.getDiscussionById(discussionId).getText());
-        assertEquals("First Discussion", discussionService.getDiscussionById(discussionId).getTitle());
-        assertEquals(topic.getTitle(), discussionService.getDiscussionById(discussionId).getTopic().getTitle());
-
-        //To check if the first added post is in the discussion that we have created
-        assertEquals(postId, postService.getPostsByDiscussionId(discussionId).get(0).getPostId());*/
         this.provider.rollback();
     }
 
@@ -253,7 +132,6 @@ public class DiscussionIntegrationTest {
         posts.add(post);
 
         DiscussionContentBean discussionTest = new DiscussionContentBean();
-        //Discussion discussionTest = new Discussion();
         discussionTest.setText("Discussion Text 1");
         discussionTest.setTimestamp(new Date());
         discussionTest.setTitle("First Discussion");
@@ -275,46 +153,6 @@ public class DiscussionIntegrationTest {
         assertEquals(0, discussionService.getDiscussionsByTopicId(topic.getTopicId()).size());
         this.provider.rollback();
     }
-
-    /*@Test
-    public void deleteDiscussionTest() {
-        this.provider.begin();
-
-        Topic topic = topicService.getTopicById(27L);
-
-        Post post = new Post();
-        post.setStatus(1);
-        post.setText("Discussion Text 1");
-        post.setTimestamp(new Date());
-        post.setCreator(policyMaker);
-
-        List<Post> posts = new ArrayList<>();
-
-        Discussion discussionTest = new Discussion();
-        discussionTest.setDiscussionId(null);
-        discussionTest.setText("Discussion Text 1");
-        discussionTest.setTimestamp(new Date());
-        discussionTest.setTitle("First Discussion");
-        discussionTest.setTopic(topic);
-        discussionTest.setPosts(posts);
-
-        Long discussionId = discussionService.saveDiscussion(discussionTest);
-        post.setDiscussion(discussionTest);
-        Long postId = postService.savePost(post);
-
-        assertEquals(discussionId, discussionService.getDiscussionById(discussionId).getDiscussionId());
-        assertEquals("Discussion Text 1", discussionService.getDiscussionById(discussionId).getText());
-        assertEquals("First Discussion", discussionService.getDiscussionById(discussionId).getTitle());
-        assertEquals(topic.getTitle(), discussionService.getDiscussionById(discussionId).getTopic().getTitle());
-
-        //To check if the first added post is in the discussion that we have created
-        assertEquals(postId, postService.getPostsByDiscussionId(discussionId).get(0).getPostId());
-
-        discussionService.deleteDiscussion(discussionTest);
-
-        assertEquals(0, discussionService.getDiscussionsByTopicId(topic.getTopicId()).size());
-        this.provider.rollback();
-    }*/
 
     @Test
     public void updateDiscussionTest() {
@@ -514,12 +352,12 @@ public class DiscussionIntegrationTest {
 
         Long postId3 = postService.savePost(post3);
 
-        List<User> usersFollowers = discussionService.getDiscussionFollowers(discussionService.getDiscussionByPolicyMaker(userService.getUserByMail("mail").getPolicyMakerID()).get(0).getDiscussionId());
+        List<PublicUserBean> usersFollowers = discussionController.getDiscussionFollowers(discussionId);
 
         assertEquals(3, usersFollowers.size());
 
         //The first user is the Policy maker.
-        assertEquals(userService.getUserByMail("mail").getPolicyMakerID(), usersFollowers.get(0).getPolicyMakerID());
+        assertTrue(userService.getUserByMail("mail").getPolicyMakerID() != null && !userService.getUserByMail("mail").getPolicyMakerID().equals(""));
 
         this.provider.rollback();
     }

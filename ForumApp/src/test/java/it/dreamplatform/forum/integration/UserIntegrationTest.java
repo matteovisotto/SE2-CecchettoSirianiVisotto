@@ -1,15 +1,13 @@
 package it.dreamplatform.forum.integration;
 
 import it.dreamplatform.forum.EntityManagerProvider;
+import it.dreamplatform.forum.bean.PublicUserBean;
 import it.dreamplatform.forum.bean.UserBean;
-import it.dreamplatform.forum.controller.DiscussionController;
 import it.dreamplatform.forum.controller.UserController;
 import it.dreamplatform.forum.entities.Discussion;
 import it.dreamplatform.forum.entities.Post;
 import it.dreamplatform.forum.entities.Topic;
 import it.dreamplatform.forum.entities.User;
-import it.dreamplatform.forum.mapper.DiscussionMapper;
-import it.dreamplatform.forum.mapper.PostMapper;
 import it.dreamplatform.forum.mapper.UserMapper;
 import it.dreamplatform.forum.services.DiscussionService;
 import it.dreamplatform.forum.services.PostService;
@@ -46,19 +44,10 @@ public class UserIntegrationTest {
         UserMapper userMapper = new UserMapper();
 
         userController = new UserController(userMapper, userService);
-
-        //userController = new UserController();
     }
 
     @Test
     public void createNewPolicyMakerTest() {
-        /*User user = new User();
-        user.setName("nameUserDB");
-        user.setSurname("surnameUserDB");
-        user.setAreaOfResidence("areaUserDB");
-        user.setMail("mailUserDB");
-        user.setDateOfBirth(new Date());
-        user.setPolicyMakerID("ThisPolicyMakerId");*/
 
         UserBean user = new UserBean();
         user.setName("nameUserDB");
@@ -96,7 +85,6 @@ public class UserIntegrationTest {
 
         userController.createUser(user);
 
-        //User userRetrieved = userService.getUserByMail("mailUserDB");
         UserBean userRetrieved = userController.searchUser("mailUserDB");
 
         assertEquals("nameUserDB", userService.getUserById(userRetrieved.getUserId()).getName());
@@ -119,7 +107,7 @@ public class UserIntegrationTest {
 
     @Test
     public void updateUserTest() {
-        User user = new User();
+        UserBean user = new UserBean();
         user.setName("nameUserDB");
         user.setSurname("surnameUserDB");
         user.setAreaOfResidence("areaUserDB");
@@ -128,9 +116,9 @@ public class UserIntegrationTest {
 
         this.provider.begin();
 
-        userService.createUser(user);
+        userController.createUser(user);
 
-        User userRetrieved = userService.getUserByMail("mailUserDB");
+        UserBean userRetrieved = userController.searchUser("mailUserDB");
 
         assertEquals("nameUserDB", userService.getUserById(userRetrieved.getUserId()).getName());
         assertEquals("surnameUserDB", userService.getUserById(userRetrieved.getUserId()).getSurname());
@@ -139,8 +127,9 @@ public class UserIntegrationTest {
         assertNull(userService.getUserById(userRetrieved.getUserId()).getPolicyMakerID());
 
         user.setMail("newMail");
+        user.setUserId(userRetrieved.getUserId());
 
-        userService.updateUser(user);
+        userController.updateUser(user);
 
         assertEquals("newMail", userService.getUserById(userRetrieved.getUserId()).getMail());
 
@@ -190,6 +179,7 @@ public class UserIntegrationTest {
         user1.setMail("mail2");
 
         userService.createUser(user1);
+        User userRetrieved1 = userService.getUserByMail("mail2");
 
         User user2 = new User();
         user2.setName("name3");
@@ -199,6 +189,7 @@ public class UserIntegrationTest {
         user2.setMail("mail3");
 
         userService.createUser(user2);
+        User userRetrieved2 = userService.getUserByMail("mail3");
 
         Post post2 = new Post();
         post2.setStatus(0);
@@ -229,12 +220,11 @@ public class UserIntegrationTest {
 
         Long postId4 = postService.savePost(post4);
 
-
-        List<User> mostActiveUsers = userService.getMostActiveUsers(3);
+        List<PublicUserBean> mostActiveUsers = userController.getMostActiveUsers(3);//userService.getMostActiveUsers(3);
 
         assertEquals(2, mostActiveUsers.size());
-        assertEquals("mail2", mostActiveUsers.get(0).getMail());
-        assertEquals("mail3", mostActiveUsers.get(1).getMail());
+        assertEquals(userRetrieved1.getUserId(), mostActiveUsers.get(0).getUserId());
+        assertEquals(userRetrieved2.getUserId(), mostActiveUsers.get(1).getUserId());
 
         this.provider.rollback();
     }
