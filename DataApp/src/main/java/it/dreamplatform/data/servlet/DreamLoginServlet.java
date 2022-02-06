@@ -24,8 +24,7 @@ public class DreamLoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //Mail parameter is required
         if(req.getAttribute("mail") == null || req.getAttribute("policyMakerID") == null){
-            //resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "The user does not have the required attribute");
-            performFakeLogin(req, resp);
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "The user does not have the required attribute");
             return;
         }
 
@@ -48,19 +47,6 @@ public class DreamLoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
-    }
-
-    private void performFakeLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        UserBean user = new UserBean();
-        user.setAreaOfResidence("Wanaparthy");
-        user.setCreatedAt(new Timestamp(Calendar.getInstance().getTime().getTime()));
-        user.setName("Matteo");
-        user.setMail("matev1998@gmail.com");
-        user.setPolicyMakerID("this_is_my_policyMakerID");
-        user.setSurname("Visotto");
-        user.setDateOfBirth(new Timestamp(Calendar.getInstance().getTime().getTime()));
-        request.getSession().setAttribute("user", user);
-        response.sendRedirect(getServletContext().getContextPath() + "/policymaker");
     }
 
 
