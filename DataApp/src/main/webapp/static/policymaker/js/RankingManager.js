@@ -58,7 +58,7 @@ $(function(){
             var value = $('<p/>').text(ranking.value);
             var valueZone = $('<td/>').addClass('align-middle').append(value);
             var arrow = $('<i/>').addClass('fas fa-arrow-up');
-            var arrowZone = $('<td/>').addClass('align-middle').append(arrow);
+            var arrowZone = $('<td/>').addClass('text-center align-middle').append(arrow);
             var tableNode = $('<tr/>').append(position).append(contentZone).append(valueZone).append(arrowZone);
             this.container.append(tableNode);
         }

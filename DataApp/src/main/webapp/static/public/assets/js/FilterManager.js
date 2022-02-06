@@ -13,23 +13,24 @@ $(function () {
             self.filteredDataContainer.html("");
             $.get('api/data/filter/' + districtId, (json) => {
                 if(json.length === 0) {
-                    self.filteredDataContainer.append('<div class="alert alert-danger">The dataSet selected is empty for this district</div>');
+                    self.filteredDataContainer.parent().append('<div class="alert alert-danger">The dataSet selected is empty for this district</div>');
                 } else {
                     self.createNode(json);
                 }
             }).fail((error) => {
-                self.filteredDataContainer.append('<div class="alert alert-danger">An error occurred. Please try later</div>');
+                self.filteredDataContainer.parent().append('<div class="alert alert-danger">An error occurred. Please try later</div>');
             });
         }
 
         this.createNode = function(json) {
-            var data = $('<p/>').text(JSON.stringify(json));
-            this.filteredDataContainer.append(data);
+            this.filteredDataContainer.text(JSON.stringify(json));
         }
 
         this.addListener = function () {
             self.filterBtn.on("click", function () {
                 var districtId = self.districtId.val();
+                $('#apiUrlContainer').html('');
+                $('#apiUrlContainer').append($('<p/>').html('<strong>Api url:</strong> api/data/filter/'+districtId))
                 self.loadData(districtId);
                 });
         }
