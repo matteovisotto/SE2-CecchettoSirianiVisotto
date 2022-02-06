@@ -4,14 +4,12 @@ import it.dreamplatform.forum.EntityManagerProvider;
 import it.dreamplatform.forum.bean.PostBean;
 import it.dreamplatform.forum.bean.PublicUserBean;
 import it.dreamplatform.forum.bean.UserBean;
-import it.dreamplatform.forum.controller.DiscussionController;
 import it.dreamplatform.forum.controller.NotificationController;
 import it.dreamplatform.forum.controller.PostController;
 import it.dreamplatform.forum.entities.Discussion;
 import it.dreamplatform.forum.entities.Post;
 import it.dreamplatform.forum.entities.Topic;
 import it.dreamplatform.forum.entities.User;
-import it.dreamplatform.forum.mapper.DiscussionMapper;
 import it.dreamplatform.forum.mapper.PostMapper;
 import it.dreamplatform.forum.mapper.UserMapper;
 import it.dreamplatform.forum.services.DiscussionService;
@@ -25,6 +23,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -66,8 +65,6 @@ public class PostIntegrationTest {
 
         this.provider.em().persist(policyMaker);
 
-        //this.provider.begin();
-
         Topic topic = topicService.getTopicById(27L);
 
         discussion = new Discussion();
@@ -96,13 +93,6 @@ public class PostIntegrationTest {
 
     @Test
     public void insertNewPostPolicyMakerTest() throws Exception {
-        /*Post post1 = new Post();
-        post1.setStatus(1);
-        post1.setText("Post Text 1");
-        post1.setTimestamp(new Date());
-        post1.setCreator(policyMaker);
-        post1.setDiscussion(discussion);*/
-
         this.provider.begin();
 
         PublicUserBean publicUserBean = new PublicUserBean();
@@ -129,9 +119,11 @@ public class PostIntegrationTest {
 
         postController.publishPost(post1, userBean);
 
-        //Long postId = postService.savePost(post1);
+        User userRetrieved = userService.getUserByMail("mail");
 
-        assertEquals("Post Text 1", postService.getPostsByDiscussionId(discussionService.getDiscussionsByTopicId(27L).get(0).getDiscussionId()).get(1).getText());
+        List<PostBean> postsRetrieved = postController.getPostsByUser(userRetrieved.getUserId());
+
+        assertEquals("Post Text 1", postsRetrieved.get(1).getText());
 
         this.provider.rollback();
     }
@@ -170,15 +162,6 @@ public class PostIntegrationTest {
         post1.setDiscussionId(discussionService.getDiscussionsByTopicId(27L).get(0).getDiscussionId());
 
         postController.publishPost(post1, userBean);
-
-        /*Post post1 = new Post();
-        post1.setStatus(0);
-        post1.setText("Post Text 1");
-        post1.setTimestamp(new Date());
-        post1.setCreator(user1);
-        post1.setDiscussion(discussion);
-
-        Long postId = postService.savePost(post1);*/
 
         Post post = postService.getPostsByDiscussionId(discussionService.getDiscussionsByTopicId(27L).get(0).getDiscussionId()).get(1);
 
@@ -222,7 +205,6 @@ public class PostIntegrationTest {
         assertEquals("Post Text 1", retrievedPost.getText());
 
         postController.deletePost(retrievedPost.getPostId());
-        //postService.deletePost(postRetrieved);
 
         assertEquals(1, postService.getPostsByDiscussionId(discussionService.getDiscussionByPolicyMaker(userService.getUserByMail("mail").getPolicyMakerID()).get(0).getDiscussionId()).size());
 
@@ -230,25 +212,43 @@ public class PostIntegrationTest {
     }
 
     @Test
-    public void updatePostTest() {
-        Post post1 = new Post();
+    public void updatePostTest() throws Exception {
+        this.provider.begin();
+
+        PublicUserBean publicUserBean = new PublicUserBean();
+        publicUserBean.setName("name");
+        publicUserBean.setSurname("surname");
+        publicUserBean.setAreaOfResidence("area");
+        publicUserBean.setPolicyMaker(true);
+
+        UserBean userBean = new UserBean();
+        userBean.setName("name");
+        userBean.setSurname("surname");
+        userBean.setAreaOfResidence("area");
+        userBean.setDateOfBirth(new java.util.Date());
+        userBean.setMail("mail");
+        userBean.setPolicyMakerID("policy");
+        userBean.setUserId(userService.getUserByMail("mail").getUserId());
+
+        PostBean post1 = new PostBean();
         post1.setStatus(1);
         post1.setText("Post Text 1");
         post1.setTimestamp(new Date());
-        post1.setCreator(policyMaker);
-        post1.setDiscussion(discussion);
+        post1.setCreator(publicUserBean);
+        post1.setDiscussionId(discussionService.getDiscussionsByTopicId(27L).get(0).getDiscussionId());
 
-        this.provider.begin();
-        Long postId = postService.savePost(post1);
+        postController.publishPost(post1, userBean);
 
-        assertEquals(postId, postService.getPostById(postId).getPostId());
+        Post postInTheDB = postService.getPostsByDiscussionId(discussionService.getDiscussionsByTopicId(27L).get(0).getDiscussionId()).get(1);
 
-        post1.setText("New Text");
+        assertEquals("Post Text 1", postInTheDB.getText());
 
-        postService.savePost(post1);
+        post1.setPostId(postInTheDB.getPostId());
+        post1.setText("Modified Text");
 
-        assertNotEquals("Post Text 1", postService.getPostById(postId).getText());
-        assertEquals("New Text", postService.getPostById(postId).getText());
+        postController.modifyPost(post1, userBean);
+
+        assertEquals("Modified Text", postService.getPostsByDiscussionId(discussionService.getDiscussionsByTopicId(27L).get(0).getDiscussionId()).get(1).getText());
 
         this.provider.rollback();
     }
@@ -393,7 +393,7 @@ public class PostIntegrationTest {
     }
 
     @Test
-    public void tryToPublishPostWithNoValidUserTest() {
+    public void tryToPublishPostWithNoValidUserTest() throws Exception {
         PublicUserBean publicUserBean = new PublicUserBean();
         publicUserBean.setName("nameUserPublic");
         publicUserBean.setSurname("surnameUserPublic");
@@ -422,7 +422,7 @@ public class PostIntegrationTest {
     }
 
     @Test
-    public void tryToPublishPostWithNoTextTest() {
+    public void tryToPublishPostWithNoTextTest() throws Exception {
         PublicUserBean publicUserBean = new PublicUserBean();
         publicUserBean.setName("nameUserPublic");
         publicUserBean.setSurname("surnameUserPublic");
@@ -463,7 +463,7 @@ public class PostIntegrationTest {
     }
 
     @Test
-    public void modifyNotExistingPostTest() {
+    public void modifyNotExistingPostTest() throws Exception {
         PublicUserBean publicUserBean = new PublicUserBean();
         publicUserBean.setName("nameUserPublic");
         publicUserBean.setSurname("surnameUserPublic");
@@ -491,7 +491,7 @@ public class PostIntegrationTest {
     }
 
     @Test
-    public void userTryToModifyPostOfAnotherUserTest() {
+    public void userTryToModifyPostOfAnotherUserTest() throws Exception {
         User user1 = new User();
         user1.setName("nameUserDB");
         user1.setSurname("surnameUserDB");
@@ -550,7 +550,7 @@ public class PostIntegrationTest {
     }
 
     @Test
-    public void tryToRetrievePostOfNotExistingUserTest() {
+    public void tryToRetrievePostOfNotExistingUserTest() throws Exception {
         this.provider.begin();
         assertThrows(Exception.class, () -> postController.getPostsByUser(0L));
         this.provider.rollback();
@@ -603,7 +603,6 @@ public class PostIntegrationTest {
         user2.setAreaOfResidence("areaUser2");
         user2.setMail("mailUser2");
         user2.setDateOfBirth(new Date());
-        //user2.setPolicyMakerID("ThisPolicyMakerId2");
 
         this.provider.begin();
 
@@ -622,7 +621,6 @@ public class PostIntegrationTest {
         userBean.setName("nameUser2");
         userBean.setSurname("surnameUser2");
         userBean.setAreaOfResidence("areaUser2");
-        //userBean.setPolicyMakerID("ThisPolicyMakerId2");
         userBean.setMail("mailUser2");
         userBean.setDateOfBirth(new Date());
         userBean.setUserId(userService.getUserByMail("mailUser2").getUserId());
@@ -656,7 +654,6 @@ public class PostIntegrationTest {
         user2.setAreaOfResidence("areaUser2");
         user2.setMail("mailUser2");
         user2.setDateOfBirth(new Date());
-        //user2.setPolicyMakerID("ThisPolicyMakerId2");
 
         this.provider.begin();
 
