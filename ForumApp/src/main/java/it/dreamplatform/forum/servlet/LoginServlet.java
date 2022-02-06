@@ -34,34 +34,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String pathInfo = req.getPathInfo();
-        if(pathInfo!=null && pathInfo.equals("/user")){
-            System.out.println("In user");
-            UserBean user = new UserBean();
-            user.setUserId(4L);
-            user.setName("Test");
-            user.setSurname("User");
-            user.setAreaOfResidence("Milano");
-            user.setMail("tototia98@gmail.com");
-            user.setDateOfBirth(new Date(Calendar.getInstance().getTime().getTime()));
-            user.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-            req.getSession().setAttribute("user", user);
-            resp.sendRedirect(req.getContextPath()+"/");
-            return;
-        } else if(pathInfo!=null && pathInfo.equals("/policymaker")) {
-            UserBean user = new UserBean();
-            user.setUserId(3L);
-            user.setName("Test");
-            user.setSurname("PolicyMaker");
-            user.setAreaOfResidence("Milano");
-            user.setMail("matev1998@gmail.com");
-            user.setDateOfBirth(new Date(Calendar.getInstance().getTime().getTime()));
-            user.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-            user.setPolicyMakerID("this_is_my_policyMakerID_code");
-            req.getSession().setAttribute("user", user);
-            resp.sendRedirect(req.getContextPath()+"/");
-            return;
-        }
+
         //Delete the part above
         String path = "templates/login";
         ServletContext servletContext = getServletContext();
